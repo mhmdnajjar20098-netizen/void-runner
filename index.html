@@ -191,6 +191,8 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .reward.shipname{background:none;border:0;box-shadow:none;padding:0;min-width:0;text-shadow:0 0 18px var(--rc,#fff),0 2px 8px #000}
 .reward.shipname .big{font-size:30px;color:#fff}
 .freshbtn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:8px 14px;border-radius:14px;border:1px dashed rgba(255,176,46,.55);background:rgba(255,176,46,.08);color:#ffd48a;font-weight:700;font-size:14px}
+.adminbtn{border-color:rgba(125,240,255,.55);background:rgba(125,240,255,.08);color:#aeeeff}
+.adminbtn .lbadge{background:linear-gradient(180deg,#3fc1e6,#2276b8)}
 .lbadge{padding:3px 9px;border-radius:999px;background:linear-gradient(180deg,#ff7a5a,#d63a3a);color:#fff;font-size:10px;letter-spacing:.12em;font-weight:800;animation:blinkc 1.4s ease-in-out infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes shakec{0%,100%{transform:rotate(0)}20%{transform:rotate(-6deg) scale(1.03)}40%{transform:rotate(6deg) scale(1.05)}60%{transform:rotate(-8deg) scale(1.06)}80%{transform:rotate(7deg) scale(1.04)}}
@@ -267,6 +269,7 @@ body.cine-on #pauseBtn,body.cine-on #boostBtn,body.cine-on #skillBtn{opacity:0;p
           <button class="btn tile" id="b-set"><span class="ic" data-ic="settings"></span><span data-i="settings"></span></button>
         </div>
         <button class="btn freshbtn" id="b-fresh"><span id="fresh-t"></span><span class="lbadge" id="fresh-b">LIMITED TIME</span></button>
+        <button class="btn freshbtn adminbtn" id="b-admin"><span id="admin-t"></span><span class="lbadge" id="admin-b">TEMPORARY</span></button>
       </div>
     </section>
 
@@ -6996,7 +6999,7 @@ sectors:['Outer Rim','Jade Current','Violet Reach','Ember Belt','Rose Nebula','G
 play:'Play',cont:'Continue · Level {n}',levels:'Select Level',levelsHint:'Beat a level to unlock the next. Red-marked levels end with a boss.',
 shop:'Upgrade Shop',settings:'Settings',gfx:'Graphics',gfxAuto:'Auto',gfxHigh:'High',gfxLow:'Low',gfx2d:'Flat 2D',gfxFallback:'Switched to light graphics for smoother play.',back:'Back',resume:'Resume',restart:'Restart level',menu:'Main menu',paused:'Paused',
 sound:'Sound effects',volume:'Volume',vibration:'Vibration',shake:'Screen shake',language:'Language',on:'On',off:'Off',
-fresh:'Restart from zero',freshBadge:'LIMITED TIME',freshSure:'Tap again to erase progress and start over',reset:'Reset all progress',resetSure:'Tap again to erase everything',
+admin:'Admin: unlock everything',adminBadge:'TEMPORARY',adminDone:'Everything unlocked',fresh:'Restart from zero',freshBadge:'LIMITED TIME',freshSure:'Tap again to erase progress and start over',reset:'Reset all progress',resetSure:'Tap again to erase everything',
 tabUp:'Upgrades',tabPrem:'Premium',max:'MAX',buy:'Buy',equip:'Equip',equipped:'Equipped',owned:'Owned',
 u_engine:'Engine',d_engine:'Higher top speed for dodging.',
 u_stamina:'Stamina',d_stamina:'Longer boosts and faster recharge.',
@@ -7073,7 +7076,7 @@ sectors:['الحافة الخارجية','تيار اليشم','مدى البن�
 play:'ابدأ',cont:'تابع · المرحلة {n}',levels:'اختيار المرحلة',levelsHint:'اهزم المرحلة لتفتح التالية. المراحل الحمراء تنتهي بزعيم.',
 shop:'متجر التطويرات',settings:'الإعدادات',gfx:'الرسوم',gfxAuto:'تلقائي',gfxHigh:'عالية',gfxLow:'منخفضة',gfx2d:'2D',gfxFallback:'تم التحويل إلى رسوم أخف ليكون اللعب أسلس.',back:'رجوع',resume:'متابعة',restart:'إعادة المرحلة',menu:'القائمة الرئيسية',paused:'متوقفة مؤقتاً',
 sound:'المؤثرات الصوتية',volume:'مستوى الصوت',vibration:'الاهتزاز',shake:'اهتزاز الشاشة',language:'اللغة',on:'تشغيل',off:'إيقاف',
-fresh:'ابدأ من الصفر',freshBadge:'لفترة محدودة',freshSure:'اضغط مرة أخرى لمسح التقدم والبدء من جديد',reset:'مسح كل التقدم',resetSure:'اضغط مرة أخرى لمسح كل شيء',
+admin:'أدمن: افتح كل شيء',adminBadge:'مؤقت',adminDone:'تم فتح كل شيء',fresh:'ابدأ من الصفر',freshBadge:'لفترة محدودة',freshSure:'اضغط مرة أخرى لمسح التقدم والبدء من جديد',reset:'مسح كل التقدم',resetSure:'اضغط مرة أخرى لمسح كل شيء',
 tabUp:'التطويرات',tabPrem:'مميّز',max:'الأقصى',buy:'شراء',equip:'تجهيز',equipped:'مُجهّز',owned:'مملوك',
 u_engine:'المحرك',d_engine:'سرعة قصوى أعلى للمراوغة.',
 u_stamina:'الطاقة',d_stamina:'اندفاع أطول وشحن أسرع.',
@@ -7638,7 +7641,7 @@ function startLevel(L){
   run.tut=level===1&&!save.cleared[1]?{i:0,t:0,mv:0,bt:0,lx:player.x,ly:player.y}:null;
   run.tips=level===5&&!save.cleared[5]?[['tutB0',5]]:[];run.tip=null;if(run.tut)run.hint=0;
   if(level===11&&!save.cleared[11])comm('ctl',(T[save.set.lang]||T.en).laneOff,1.5);
-  if(level===1&&!save.cleared[1]){const LL=T[save.set.lang]||T.en;((save.storySeen&1)?LL.l1short:LL.l1comm).forEach((s,i)=>comm('ctl',s,i?0:1.2));}
+  if(level===1){const LL=T[save.set.lang]||T.en;(((save.storySeen&1)&&cineOn())?LL.l1short:LL.l1comm).forEach((s,i)=>comm('ctl',s,i?0:1.2));}
   input.boost=false;hypeLevel();
   state='play';show(null);sfx('start');
 }
@@ -8789,7 +8792,7 @@ function hitBoss(dmg,x,y){
   /* damage is metered: however strong the ship, a boss cannot melt in seconds */
   if(boss.guard>0)dmg*=.25;   /* shield pylons soak most of the damage until they are destroyed */
   const a=Math.min(dmg,boss.bk);boss.bk-=a;boss.hp-=a;boss.flash=a<dmg*.6?.02:.06;sfx('hit');sparks(x,y,a<dmg*.6?'#9aa4c8':boss.col,3);
-  if(boss.hp<=0){boss.hp=0;boss.state='dying';if(!save.cleared[level])comm('ctl',bossLore(boss.b).o,.6);boss.dt=2;boss.ex=0;ebul=[];foesClear();hyBossDown();kick(1,.16);run.gems=4+Math.floor(run.b/2)+(save.cleared[level]?-2:4);sfx('warning');}
+  if(boss.hp<=0){boss.hp=0;boss.state='dying';comm('ctl',bossLore(boss.b).o,.6);boss.dt=2;boss.ex=0;ebul=[];foesClear();hyBossDown();kick(1,.16);run.gems=4+Math.floor(run.b/2)+(save.cleared[level]?-2:4);sfx('warning');}
   if(boss.hp>0&&!boss.lastCall&&boss.hp<boss.max*.08){boss.lastCall=1;hype('last',t('hyLast'),{kind:'pop',col:'#ff5a6e',y:.3,dur:1.3,sz:1.2,sfx:'lastHit'});}
   return true;
 }
@@ -8819,9 +8822,9 @@ function update(dt){
       if(run.phase==='soldiers'){
         run.timer-=dt;
         if(run.spawned<run.budget&&run.timer<=0&&enemies.length<14){spawnSquad();run.timer=1.8;}
-        if(run.spawned>=run.budget&&enemies.length===0){run.phase='warn';{const cn=cineOn(),fst=!save.cleared[level],w0=cn?(fst?(run.b>=20?7.2:5.6):3.2):4.4;run.warn=w0;run.warnMax=w0;}sfx('warning');HY.intSh=-1;
+        if(run.spawned>=run.budget&&enemies.length===0){run.phase='warn';{const cn=cineOn(),w0=cn?(run.b>=20?7.2:5.6):4.4;run.warn=w0;run.warnMax=w0;}sfx('warning');HY.intSh=-1;
           {const L=T[save.set.lang]||T.en,lo=bossLore(run.b);
-           if(!save.cleared[level]&&!cineOn()){comm('ctl',L.contact+': '+bossName(run.b)+' — '+lo.e,.2);comm('ctl',lo.i);}
+           if(!cineOn()){comm('ctl',L.contact+': '+bossName(run.b)+' — '+lo.e,.2);comm('ctl',lo.i);}
            comm('tac',L.tactics[run.b-1]);}}
       }else if(run.phase==='warn'&&run.warn<=0){run.phase='boss';run.bossSpawned=true;spawnBoss();}
     }
@@ -8964,7 +8967,7 @@ function updFinale(dt){
     for(let i=0;i<2;i++)parts.push({k:0,x:p.x+rnd(-4,4),y:p.y+20,vx:rnd(-20,20),vy:rnd(200,400),life:.3,max:.3,sz:rnd(1.5,3),col:'#ffb02e'});
   }
   f.flash=f.t<2.6?0:f.t<3?(f.t-2.6)/.4:Math.max(0,1-(f.t-3)/.5);
-  if(f.t>=3&&!f.shown){f.shown=true;if(level>=100&&cineOn()&&!((save.storySeen|0)&2))cineStart('end',showResults);else showResults();}
+  if(f.t>=3&&!f.shown){f.shown=true;if(level>=100&&cineOn())cineStart('end',showResults);else showResults();}
 }
 function showResults(){
   persist();state='complete';fwT=.2;
@@ -11888,7 +11891,7 @@ function hyCombo(n){
 }
 /* boss story intro: replaces the plain red warning; the first time it also types the story line */
 function bossIntro(){
-  const L=LNG(),b=run.b,final=b>=20,lo=bossLore(b),first=!save.cleared[level],e=run.warnMax-run.warn,col=hsl2hex(BDEF[(b-1)%BDEF.length].hue,78,64);
+  const L=LNG(),b=run.b,final=b>=20,lo=bossLore(b),first=true,e=run.warnMax-run.warn,col=hsl2hex(BDEF[(b-1)%BDEF.length].hue,78,64);
   {const [fx0,fy0,fw,fh]=fullB(),a=.5+.5*Math.sin(time*10);ctx.fillStyle=`rgba(255,40,70,${.07+.09*a})`;ctx.fillRect(fx0,fy0,fw,fh);}
   hudScreen(c=>{
     const base=clamp(Math.min(cssW*.085,cssH*.07),28,72),pulse=.75+.25*Math.sin(time*9),out=clamp(run.warn/.35,0,1);
@@ -12047,7 +12050,7 @@ function applyLang(){
   document.querySelectorAll('[data-back]').forEach(b=>b.setAttribute('aria-label',t('back')));
   $('#pauseBtn').setAttribute('aria-label',t('paused'));
   $('#b-lang').textContent=rtl?'English':'العربية';
-  $('#b-reset').textContent=t('reset');$('#fresh-t').textContent=t('fresh');$('#fresh-b').textContent=t('freshBadge');
+  $('#b-reset').textContent=t('reset');$('#fresh-t').textContent=t('fresh');$('#fresh-b').textContent=t('freshBadge');$('#admin-t').textContent=t('admin');$('#admin-b').textContent=t('adminBadge');
   fillIcons();
 }
 function renderMain(){
@@ -12223,7 +12226,7 @@ function toMenu(){state='menu';player=null;run=null;boss=null;fin=null;persist()
 
 const click=(sel,fn)=>$(sel).addEventListener('click',e=>{audioInit();sfx('click');fn(e);});
 function launchLevel(L){
-  if(L===1&&!(save.storySeen&1)&&cineOn()&&!save.cleared[1])cineStart('open',()=>startLevel(1));else startLevel(L);
+  if(L===1&&cineOn())cineStart('open',()=>startLevel(1));else startLevel(L);
 }
 click('#b-play',()=>launchLevel(save.unlocked));
 click('#b-codex',()=>show('codex'));
@@ -12288,6 +12291,22 @@ click('#b-reset',()=>{
   if(!resetArm){resetArm=setTimeout(()=>{resetArm=0;$('#b-reset').textContent=t('reset');},3500);$('#b-reset').textContent=t('resetSure');return;}
   clearTimeout(resetArm);resetArm=0;
   const lang=save.set.lang;save=defaults();save.set.lang=lang;persist();applyLang();renderSettings();
+});
+/* TEMPORARY admin: finish the whole game in one tap (levels, upgrades, weapons, skills, pilots, currency) */
+let adminTm=0;
+click('#b-admin',()=>{
+  for(let L=1;L<=100;L++){save.cleared[L]=true;save.stars[L]=3;}
+  save.unlocked=100;
+  for(const u of UPS)save.up[u.id]=u.max;
+  for(const w of WEAPONS)if(!save.weapons.includes(w.id))save.weapons.push(w.id);
+  for(const k of SKILLS)if(!save.skills.includes(k.id))save.skills.push(k.id);
+  for(const pl of PILOTS)if(!save.pilots.includes(pl.id))save.pilots.push(pl.id);
+  save.prem.coins2=true;
+  save.coins=Math.max(save.coins|0,999999);save.gems=Math.max(save.gems|0,9999);
+  save.storySeen=(save.storySeen|0)|3;
+  persist();sfx('chest');
+  const b=$('#admin-t');b.textContent=t('adminDone');clearTimeout(adminTm);adminTm=setTimeout(()=>{b.textContent=t('admin');},2500);
+  renderMain();if(typeof renderLevels==='function'&&curScreen==='levels')renderLevels();
 });
 let freshArm=0;
 click('#b-fresh',()=>{
