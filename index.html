@@ -224,6 +224,9 @@ body.cine-on #pauseBtn,body.cine-on #skillBtn{opacity:0;pointer-events:none}
 #pauseBtn{position:absolute;top:calc(10px + env(safe-area-inset-top,0px));right:10px;width:44px;height:44px;border-radius:14px;border:1px solid var(--glass-b);background:rgba(10,14,34,.6);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;padding:0}
 #pauseBtn i{display:block;width:4px;height:16px;background:var(--ink);border-radius:2px}
 #skillBtn{--p:100%;--c:#ffd48a;position:absolute;left:18px;bottom:calc(22px + env(safe-area-inset-bottom,0px));width:78px;height:78px;border-radius:50%;border:0;cursor:pointer;touch-action:none;color:#8f9bc7;background:conic-gradient(var(--c) var(--p),#232c55 0);display:flex;align-items:center;justify-content:center;padding:0;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+#skillBtn.tutHi::before,#skillBtn.tutHi::after{content:'';position:absolute;inset:-9px;border-radius:50%;border:3px solid #ffd48a;box-shadow:0 0 18px rgba(255,212,138,.8);pointer-events:none;animation:tutRing 1.2s ease-out infinite}
+#skillBtn.tutHi::after{animation-delay:.6s}
+@keyframes tutRing{0%{transform:scale(.8);opacity:.95}100%{transform:scale(1.45);opacity:0}}
 #skillBtn span{display:flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:50%;background:#0c1126}
 #skillBtn svg{width:32px;height:32px}
 #skillBtn.ready{color:var(--c);animation:pulse 1.6s ease-in-out infinite}
@@ -308,6 +311,7 @@ body.cine-on #pauseBtn,body.cine-on #skillBtn{opacity:0;pointer-events:none}
         <div class="srow"><b data-i="volume"></b><input type="range" id="r-vol" min="0" max="100" step="5" aria-label="Volume"></div>
         <div class="srow"><b data-i="vibration"></b><button class="sw" id="t-vib" role="switch" aria-checked="true"></button></div>
         <div class="srow"><b data-i="shake"></b><button class="sw" id="t-shake" role="switch" aria-checked="true"></button></div>
+        <div class="srow"><b data-i="hints"></b><button class="sw" id="t-hints" role="switch" aria-checked="true"></button></div>
         <div class="srow"><b data-i="gfx"></b><div class="seg" id="seg-gfx"><button data-g="auto" data-i="gfxAuto"></button><button data-g="high" data-i="gfxHigh"></button><button data-g="low" data-i="gfxLow"></button><button data-g="2d" data-i="gfx2d"></button></div></div>
         <div class="srow"><b data-i="setCine"></b><button class="sw" id="t-cine" role="switch" aria-checked="true"></button></div>
         <div class="srow" id="r-nar"><b data-i="setNar"></b><button class="sw" id="t-nar" role="switch" aria-checked="true"></button></div>
@@ -6942,7 +6946,7 @@ const lerp=(a,b,t)=>a+(b-a)*t;
 
 /* ============ save ============ */
 const KEY='voidrunner.v1';
-function defaults(){return{coins:0,gems:0,unlocked:1,cleared:{},stars:{},up:{},prem:{coins2:false,skins:['default'],skin:'default'},weapons:['pulse'],weapon:'pulse',skills:['overdrive'],skill:'overdrive',pilots:['default'],pilot:'default',storySeen:0,ads:{},chests:0,tutChest:0,buffs:{},daily:{last:'',streak:0},adGems:{d:'',n:0},set:{sfx:true,vol:.7,vib:true,shake:true,lang:'en'}};}
+function defaults(){return{coins:0,gems:0,unlocked:1,cleared:{},stars:{},up:{},prem:{coins2:false,skins:['default'],skin:'default'},weapons:['pulse'],weapon:'pulse',skills:['overdrive'],skill:'overdrive',pilots:['default'],pilot:'default',storySeen:0,ads:{},chests:0,tutChest:0,buffs:{},daily:{last:'',streak:0},adGems:{d:'',n:0},set:{sfx:true,vol:.7,vib:true,shake:true,hints:true,lang:'en'}};}
 function loadSave(){
   const d=defaults();let s=null;
   try{s=JSON.parse(localStorage.getItem(KEY));}catch(e){}
@@ -6994,7 +6998,7 @@ tier0:'Rusted Scout',tier1:'Patched Fighter',tier2:'Raider',tier3:'Vanguard',tie
 sectors:['Outer Rim','Jade Current','Violet Reach','Ember Belt','Rose Nebula','Gilded Drift','Frost Deep','Red Wake','Midnight Core','Last Light'],tagline:'Fly forward. Break the swarm. Reach level 100.',
 play:'Play',cont:'Continue · Level {n}',levels:'Select Level',levelsHint:'Beat a level to unlock the next. Red-marked levels end with a boss.',
 shop:'Upgrade Shop',settings:'Settings',gfx:'Graphics',gfxAuto:'Auto',gfxHigh:'High',gfxLow:'Low',gfx2d:'Flat 2D',gfxFallback:'Switched to light graphics for smoother play.',back:'Back',resume:'Resume',restart:'Restart level',menu:'Main menu',paused:'Paused',
-sound:'Sound effects',volume:'Volume',vibration:'Vibration',shake:'Screen shake',language:'Language',on:'On',off:'Off',
+sound:'Sound effects',volume:'Volume',vibration:'Vibration',shake:'Screen shake',hints:'Control hints',boostHint:'Double tap to boost',boostHintK:'Hold Shift to boost',tdGood:'Nice!',tdTap:'TAP',tdHold:'HOLD',tdT0:'Move',tdT1:'Fire',tdT2:'Coins',tdT3:'Boost',tdT4:'Dodge',tdT5:'Skill',tdT6:'Power-ups',tdT7:'Finish',language:'Language',on:'On',off:'Off',
 admin:'Admin: unlock everything',adminBadge:'TEMPORARY',adminDone:'Everything unlocked',fresh:'Restart from zero',freshBadge:'LIMITED TIME',freshSure:'Tap again to erase progress and start over',reset:'Reset all progress',resetSure:'Tap again to erase everything',
 tabUp:'Upgrades',tabPrem:'Premium',max:'MAX',buy:'Buy',equip:'Equip',equipped:'Equipped',owned:'Owned',
 u_engine:'Engine',d_engine:'Higher top speed for dodging.',
@@ -7011,13 +7015,13 @@ p_skin_crimson:'Crimson paint',p_skin_emerald:'Emerald paint',p_skin_gold:'Gold 
 pd_skin:'Changes your ship and laser color.',p_default:'Factory paint',
 premNote:'Gems drop from bosses. Real-money purchases are not connected in this version.',
 boost:'BOOST',combo:'COMBO',level:'LEVEL',warning:'WARNING',phase:'PHASE {n}',enrage:'ENRAGED',
-tut0:'Drag your finger anywhere on the screen to fly your ship.',tut0k:'Use the arrow keys or WASD to fly your ship.',
-tut1:'Your ship shoots by itself. Fly into position and destroy 3 enemies!',
-tut2:'Enemies drop coins. Fly over them to collect them. Spend coins in the shop.',
-tut3:'Double-tap, then keep your finger down to boost. Lift it to stop. It drains the blue stamina bar.',tut3k:'Hold Shift or Space to boost. It drains the blue stamina bar.',
-tut4:'Dodge enemy shots! Enemies glow red just before firing, and every volley has a gap. You can only take 3 hits (top left).',
-tut5:'Tap the glowing round skill button (bottom left) to use your special skill!',
-tut6:'Grab glowing power-ups: shields, rapid fire, extra hits and more.',
+tut0:'Drag your finger anywhere on the screen to fly.',tut0k:'Use the arrow keys or WASD to fly.',
+tut1:'Your ship fires by itself. Line up under an enemy and destroy 3!',
+tut2:'Fly over coins to collect them. Spend them in the shop.',
+tut3:'Double-tap, then keep your finger down to boost. Lift to stop. It uses the blue bar.',tut3k:'Hold Shift or Space to boost. It uses the blue bar.',
+tut4:'Dodge enemy shots! They glow red before firing, and every volley has a gap. You can take 3 hits (top left).',
+tut5:'Tap the glowing skill button (bottom left) to use your special skill!',
+tut6:'Grab glowing power-ups: shields, rapid fire and more.',
 tut7:'Destroy all enemies to finish the level. Good luck, pilot!',
 tutB0:'Boss level! Soldiers attack first. Clear them all to wake the boss.',
 tutB1:'The BOSS is coming! Its health bar is at the top.',
@@ -7071,7 +7075,7 @@ tier0:'كشّاف صدئ',tier1:'مقاتلة مرقّعة',tier2:'مغيرة',t
 sectors:['الحافة الخارجية','تيار اليشم','مدى البنفسج','حزام الجمر','سديم الورد','الانجراف الذهبي','العمق المتجمد','أثر الدم','قلب منتصف الليل','النور الأخير'],tagline:'انطلق للأمام. حطّم السرب. اصل إلى المرحلة 100.',
 play:'ابدأ',cont:'تابع · المرحلة {n}',levels:'اختيار المرحلة',levelsHint:'اهزم المرحلة لتفتح التالية. المراحل الحمراء تنتهي بزعيم.',
 shop:'متجر التطويرات',settings:'الإعدادات',gfx:'الرسوم',gfxAuto:'تلقائي',gfxHigh:'عالية',gfxLow:'منخفضة',gfx2d:'2D',gfxFallback:'تم التحويل إلى رسوم أخف ليكون اللعب أسلس.',back:'رجوع',resume:'متابعة',restart:'إعادة المرحلة',menu:'القائمة الرئيسية',paused:'متوقفة مؤقتاً',
-sound:'المؤثرات الصوتية',volume:'مستوى الصوت',vibration:'الاهتزاز',shake:'اهتزاز الشاشة',language:'اللغة',on:'تشغيل',off:'إيقاف',
+sound:'المؤثرات الصوتية',volume:'مستوى الصوت',vibration:'الاهتزاز',shake:'اهتزاز الشاشة',hints:'تلميحات التحكم',boostHint:'انقر مرتين للاندفاع',boostHintK:'اضغط Shift للاندفاع',tdGood:'أحسنت!',tdTap:'انقر',tdHold:'اضغط مطولاً',tdT0:'تحرّك',tdT1:'أطلق النار',tdT2:'العملات',tdT3:'اندفاع',tdT4:'تفادَ',tdT5:'المهارة',tdT6:'الإضافات',tdT7:'النهاية',language:'اللغة',on:'تشغيل',off:'إيقاف',
 admin:'أدمن: افتح كل شيء',adminBadge:'مؤقت',adminDone:'تم فتح كل شيء',fresh:'ابدأ من الصفر',freshBadge:'لفترة محدودة',freshSure:'اضغط مرة أخرى لمسح التقدم والبدء من جديد',reset:'مسح كل التقدم',resetSure:'اضغط مرة أخرى لمسح كل شيء',
 tabUp:'التطويرات',tabPrem:'مميّز',max:'الأقصى',buy:'شراء',equip:'تجهيز',equipped:'مُجهّز',owned:'مملوك',
 u_engine:'المحرك',d_engine:'سرعة قصوى أعلى للمراوغة.',
@@ -7089,12 +7093,12 @@ pd_skin:'يغيّر لون سفينتك وليزرها.',p_default:'طلاء ا�
 premNote:'تسقط الجواهر من الزعماء. الشراء بالمال الحقيقي غير مفعّل في هذه النسخة.',
 boost:'اندفاع',combo:'كومبو',level:'المرحلة',warning:'تحذير',phase:'الطور {n}',enrage:'هائج',
 tut0:'اسحب بإصبعك في أي مكان على الشاشة لتحريك سفينتك.',tut0k:'استخدم الأسهم أو WASD لتحريك سفينتك.',
-tut1:'سفينتك تطلق النار وحدها. تحرّك ودمّر 3 أعداء!',
-tut2:'الأعداء يُسقطون عملات. مرّ عليها لتجمعها، واصرفها في المتجر.',
-tut3:'انقر مرتين وأبقِ إصبعك مضغوطاً للاندفاع، وارفعه ليتوقف. يستهلك شريط الطاقة الأزرق.',tut3k:'اضغط Shift أو المسافة للاندفاع. يستهلك شريط الطاقة الأزرق.',
-tut4:'تفادَ الطلقات! يتوهج العدو بالأحمر قبل إطلاقه، وفي كل رشقة فجوة للعبور. تتحمل 3 ضربات فقط (أعلى اليسار).',
+tut1:'سفينتك تطلق النار وحدها. قف تحت العدو ودمّر 3 أعداء!',
+tut2:'مرّ فوق العملات لتجمعها، واصرفها في المتجر.',
+tut3:'انقر مرتين وأبقِ إصبعك مضغوطاً للاندفاع، وارفعه ليتوقف. يستهلك الشريط الأزرق.',tut3k:'اضغط Shift أو المسافة للاندفاع. يستهلك الشريط الأزرق.',
+tut4:'تفادَ الطلقات! يتوهج العدو بالأحمر قبل إطلاقه، وفي كل رشقة فجوة للعبور. تتحمل 3 ضربات (أعلى اليسار).',
 tut5:'اضغط زر المهارة المضيء (أسفل اليسار) لاستخدام مهارتك الخاصة!',
-tut6:'التقط الإضافات المضيئة: دروع، نيران سريعة، ضربات إضافية وغيرها.',
+tut6:'التقط الإضافات المضيئة: دروع، نيران سريعة وغيرها.',
 tut7:'دمّر كل الأعداء لإنهاء المرحلة. بالتوفيق أيها الطيار!',
 tutB0:'مرحلة زعيم! يهاجمك الجنود أولاً. اقضِ عليهم ليظهر الزعيم.',
 tutB1:'الزعيم قادم! شريط صحته في الأعلى.',
@@ -7637,11 +7641,11 @@ function startLevel(L){
   const isBoss=level%5===0;
   run={L:level,isBoss,b:level/5,beatT:1.4,beatN:0,spawned:0,killed:0,budget:isBoss?Math.min(36,Math.round(10+level/5*1.6)):(level===1?14:Math.round(16+level*.5)),phase:isBoss?'soldiers':'main',timer:1.6,mTimer:2.5,t:0,coins:0,gems:0,revives:0,adUsed:false,
     hint:level===1?6:0,banner:2.2,done:false,endT:0,warn:0,bannerBoss:0,deadT:0,bonus:0,combo:0,comboT:0,bestCombo:0};
-  run.tut=level===1&&!save.cleared[1]?{i:0,t:0,mv:0,bt:0,lx:player.x,ly:player.y}:null;
+  run.tut=level===1&&!save.cleared[1]?{i:0,t:0,mv:0,bt:0,fin:0,lx:player.x,ly:player.y}:null;
   run.tips=level===5&&!save.cleared[5]?[['tutB0',5]]:[];run.tip=null;if(run.tut)run.hint=0;
   if(level===11&&!save.cleared[11])comm('ctl',(T[save.set.lang]||T.en).laneOff,1.5);
   if(level===1){const LL=T[save.set.lang]||T.en;LL.l1.forEach((s,i)=>comm('ctl',s,i?0:1.2));}
-  input.boost=false;bfReset();hypeLevel();
+  input.boost=false;bfReset();{const sb=$('#skillBtn');if(sb)sb.classList.remove('tutHi');}hypeLevel();
   state='play';show(null);sfx('start');
 }
 
@@ -8829,8 +8833,10 @@ function update(dt){
     }
     else{
       run.timer-=dt;
+      /* the level-1 tutorial is never cut short: while it is still teaching, the enemy budget is topped up and the level can not end */
+      if(run.tut&&run.spawned>=run.budget)run.budget=run.spawned+4;
       if(run.spawned<run.budget&&run.timer<=0&&enemies.length<16&&!(run.tut&&run.tut.i<1)){spawnGroup();run.timer=Math.max(.5,1.7-level*.01)*rnd(.8,1.2)*(2-ease());}
-      if(run.spawned>=run.budget&&enemies.length===0){run.done=true;run.endT=1.5;}
+      if(run.spawned>=run.budget&&enemies.length===0&&!run.tut){run.done=true;run.endT=1.5;}
     }
     run.mTimer-=dt;
     const mrate=Math.min(1.9,.3+level*.016)*ease();
@@ -9603,46 +9609,32 @@ function drawSkillFx(){
 function updTut(dt){
   if(run.tip){run.tip.t-=dt;run.tip.age+=dt;if(run.tip.t<=0)run.tip=null;}
   if(!run.tip&&!run.tut&&run.tips&&run.tips.length){const q=run.tips.shift();run.tip={k:q[0],t:q[1],age:0};}
-  const u=run.tut,p=player;if(!u||run.done)return;
+  const u=run.tut,p=player,sb=$('#skillBtn');
+  if(sb)sb.classList.toggle('tutHi',!!(u&&!run.done&&u.i===5&&!u.fin));
+  if(!u||run.done)return;
   u.t+=dt;u.mv+=Math.hypot(p.x-u.lx,p.y-u.ly);u.lx=p.x;u.ly=p.y;if(input.boost&&p.stam>0)u.bt+=dt;
-  let ok=false;
-  switch(u.i){
-    case 0:ok=u.mv>150&&u.t>2;break;
-    case 1:ok=run.killed>=3&&u.t>2.5;break;
-    case 2:ok=(run.coins>=4||u.t>9)&&u.t>2.5;break;
-    case 3:ok=(u.bt>.5||u.t>12)&&u.t>2.5;break;
-    case 4:ok=u.t>5;break;
-    case 5:ok=(p.sk.cd>8||u.t>14)&&u.t>2.5;break;
-    case 6:ok=u.t>6;break;
-    case 7:ok=u.t>4.5;break;
+  if(u.fin>0){u.fin-=dt;if(u.fin>0)return;u.fin=0;}      // "Nice!" is showing: wait, then go to the next step
+  else{
+    let ok=false;
+    switch(u.i){
+      case 0:ok=u.mv>150&&u.t>2;break;
+      case 1:ok=run.killed>=3&&u.t>2.5;break;
+      case 2:ok=(run.coins>=4||u.t>9)&&u.t>2.5;break;
+      case 3:ok=(u.bt>.5||u.t>12)&&u.t>2.5;break;
+      case 4:ok=u.t>5;break;
+      case 5:ok=(p.sk.cd>8||u.t>14)&&u.t>2.5;break;
+      case 6:ok=u.t>6;break;
+      case 7:ok=u.t>4.5;break;
+    }
+    if(!ok)return;
+    sfx('buy');
+    if(TD_ACT.includes(u.i)){u.fin=.8;rings.push({x:p.x,y:p.y,r:10,max:64,life:.35,maxl:.35,col:'#6bffa8'});return;}
   }
-  if(!ok)return;
-  u.i++;u.t=0;sfx('buy');
+  u.i++;u.t=0;
   if(u.i===1)run.timer=.4;
   if(u.i===5){if(p.sk.id)p.sk.cd=0;else u.i++;}
   if(u.i===6)picks.push({kind:'pow',id:'shield_cyan',x:W/2,y:-10,vy:55,t:0});
   if(u.i>7)run.tut=null;
-}
-function drawTip(){
-  if(run.done||state!=='play')return;
-  const kb=!(matchMedia&&matchMedia('(pointer:coarse)').matches);
-  let key=null,age=0,n=0;
-  if(run.tut){key='tut'+run.tut.i;age=run.tut.t;n=run.tut.i+1;if(kb&&(run.tut.i===0||run.tut.i===3))key+='k';}
-  else if(run.tip){key=run.tip.k;age=run.tip.age;}
-  if(!key)return;
-  const c=ctx,str=t(key),maxW=W-72;
-  c.font='600 14px "Chakra Petch","Tajawal",sans-serif';
-  const words=str.split(' '),lines=[];let cur='';
-  for(const w of words){const tt=cur?cur+' '+w:w;if(c.measureText(tt).width>maxW&&cur){lines.push(cur);cur=w;}else cur=tt;}
-  if(cur)lines.push(cur);
-  const bh=lines.length*19+(n?32:16),y=commH?(boss?116:64)+commH:(boss?120:100),a=clamp(age/.3,0,1);
-  c.save();c.globalAlpha=a*.95;c.translate(0,(1-a)*-10);
-  c.fillStyle='rgba(10,14,36,.84)';rr(c,20,y,W-40,bh,12);c.fill();
-  c.strokeStyle='rgba(255,176,46,.65)';c.lineWidth=1.5;rr(c,20,y,W-40,bh,12);c.stroke();
-  let ty=y+(n?30:23);
-  if(n){for(let i=0;i<8;i++){c.fillStyle=i<n?'#ffb02e':'rgba(255,255,255,.2)';c.beginPath();c.arc(W/2-49+i*14,y+13,3.2,0,TAU);c.fill();}}
-  for(const l of lines){txt(l,W/2,ty,14,'#eef2ff','center',600);ty+=19;}
-  c.restore();
 }
 /* shield durability bar: one pip per hit the shield can still absorb (a lost pip flashes), a draining bar for timed shields and Aegis */
 function drawShieldBar(c,p){
@@ -11905,7 +11897,7 @@ function drawKinetic(){
   });
 }
 function drawHype(){
-  drawKinetic();
+  drawKinetic();drawBoostHint();
   if(!HY.q.length&&flashIn<=0)return;
   hudScreen(c=>{
     const base=clamp(Math.min(cssW*.085,cssH*.07),28,72),ss=clamp(base*.34,12,21);
@@ -12139,6 +12131,239 @@ function bfScreen(c){
     }
   }
   c.restore();
+}
+
+/* ============ tutorial coach + the always-on boost hint ============
+   Level 1 teaches by showing: every step has a coach card with a looping demo (a ghost of your own ship and a touch dot),
+   highlights on the real things (enemy, coin, power-up, stamina bar, hearts, skill button), a progress bar, and a short "Nice!" when you do it.
+   Nothing here blocks the game or the touch input: it is all drawn on the HUD layer. No hands, people or animals: touches are shown as glowing dots. */
+const kbMode=()=>!(window.matchMedia&&matchMedia('(pointer:coarse)').matches);
+const sstep=(a,b,x)=>{x=clamp((x-a)/(b-a),0,1);return x*x*(3-2*x);};
+const TD_ACT=[0,1,2,3,5];                              // steps that wait for the player to actually do something
+const tdDemoKind=i=>i===0?'move':i===3?'boost':i===4?'dodge':null;
+const tdFont=(sz,w)=>`${w||600} ${sz}px "Chakra Petch","Tajawal",sans-serif`;
+
+/* ---- the small message that stays on screen: how to boost ---- */
+function drawBoostHint(){
+  if(save.set.hints===false||!run||run.done||!player||!player.alive||state!=='play')return;
+  const p=player,kb=kbMode(),s=t(kb?'boostHintK':'boostHint'),rtl=isRTL();
+  const a0=clamp((run.t||0)/1.4-.5,0,1);if(a0<=0)return;
+  hudScreen(c=>{
+    const fs=12.5,h=26,iw=24;
+    c.font=tdFont(fs,600);c.direction=rtl?'rtl':'ltr';
+    const tw=c.measureText(s).width,w=tw+iw+24;
+    let cx=cssW/2;if(!kb&&cx-w/2<110)cx=110+w/2;                         // keep clear of the round skill button
+    if(cx+w/2>cssW-8)cx=cssW-8-w/2;
+    const x=cx-w/2,y=cssH-22-h,bo=p.boost,ex=p.exh;
+    c.save();
+    c.globalAlpha=a0*(ex?.55:1);
+    // pill
+    c.fillStyle=bo?'rgba(46,32,8,.72)':'rgba(8,12,30,.6)';rr(c,x,y,w,h,h/2);c.fill();
+    c.strokeStyle=bo?'rgba(255,212,138,.95)':'rgba(255,212,138,.3)';c.lineWidth=bo?1.6:1;
+    if(bo){c.shadowColor='#ffb02e';c.shadowBlur=10;}
+    rr(c,x+.5,y+.5,w-1,h-1,h/2);c.stroke();c.shadowBlur=0;
+    // icon: a touch dot that taps twice every few seconds (a keycap arrow on keyboards)
+    const ix=rtl?x+w-iw/2-8:x+iw/2+8,iy=y+h/2;
+    if(kb){
+      c.fillStyle=bo?'#ffd48a':'rgba(255,212,138,.85)';rr(c,ix-8,iy-6,16,12,3);c.fill();
+      c.fillStyle='#1a1405';c.beginPath();c.moveTo(ix,iy-3.6);c.lineTo(ix+3.8,iy+.4);c.lineTo(ix+1.5,iy+.4);c.lineTo(ix+1.5,iy+3.4);c.lineTo(ix-1.5,iy+3.4);c.lineTo(ix-1.5,iy+.4);c.lineTo(ix-3.8,iy+.4);c.closePath();c.fill();
+    }else{
+      const ph=time%3.4;
+      c.fillStyle=bo?'#fff3d6':'#ffd48a';c.beginPath();c.arc(ix,iy,bo?3.6:3,0,TAU);c.fill();
+      c.strokeStyle='#ffd48a';c.lineWidth=1.4;
+      for(const r0 of bo?[0,.18,.36]:[0,.32]){
+        const u=bo?(((time*1.6)-r0)%1+1)%1:(ph-r0)/.55;
+        if(u>=0&&u<1){c.globalAlpha=a0*(ex?.55:1)*(1-u)*.85;c.beginPath();c.arc(ix,iy,3+u*8,0,TAU);c.stroke();}
+      }
+    }
+    c.globalAlpha=a0*(ex?.55:1);
+    c.fillStyle=bo?'#ffffff':'#ffe3b0';c.textBaseline='middle';
+    if(rtl){c.textAlign='right';c.fillText(s,ix-iw/2-4,iy+.5);}else{c.textAlign='left';c.fillText(s,ix+iw/2+4,iy+.5);}
+    c.restore();
+  });
+}
+
+/* ---- demo pieces ---- */
+function tdDot(c,x,y,press,rips){
+  c.save();
+  if(press>0){c.globalCompositeOperation='lighter';c.globalAlpha=.6*press;c.drawImage(glow('#9fe6ff'),x-17,y-17,34,34);}
+  c.globalCompositeOperation='source-over';
+  c.globalAlpha=.3+.6*press;c.fillStyle='#ffffff';c.beginPath();c.arc(x,y,press>.5?5.5:7,0,TAU);c.fill();
+  c.strokeStyle='#bfe9ff';c.lineWidth=1.5;c.globalAlpha=.55;c.beginPath();c.arc(x,y,press>.5?9:11,0,TAU);c.stroke();
+  for(const r of rips){if(r<0||r>=1)continue;c.globalAlpha=(1-r)*.85;c.beginPath();c.arc(x,y,7+r*17,0,TAU);c.stroke();}
+  c.restore();
+}
+function tdKey(c,x,y,label,down){
+  c.save();const w=44,h=20,dy=down?2:0;
+  c.fillStyle=down?'#27316a':'#3a4680';rr(c,x-w/2,y-h/2+dy,w,h,5);c.fill();
+  c.strokeStyle=down?'#ffd48a':'#9fe6ff';c.lineWidth=1.4;rr(c,x-w/2+.5,y-h/2+dy+.5,w-1,h-1,5);c.stroke();
+  c.fillStyle='#eef2ff';c.font=tdFont(10,700);c.textAlign='center';c.textBaseline='middle';c.fillText(label,x,y+dy+.5);c.restore();
+}
+function tdLabel(c,s,x,y,col,a){
+  c.save();c.globalAlpha=a;c.fillStyle=col;c.direction=isRTL()?'rtl':'ltr';c.font=tdFont(isRTL()?10:9.5,700);c.textAlign='center';c.textBaseline='middle';c.fillText(isRTL()?s:s.toUpperCase(),x,y);c.restore();
+}
+/* the looping mini scene inside the coach card */
+function tdCard(c,kind,kb,x0,y0,w,h){
+  const tm=time;
+  c.save();rr(c,x0,y0,w,h,10);c.clip();
+  const g=c.createLinearGradient(0,y0,0,y0+h);g.addColorStop(0,'#0a1030');g.addColorStop(1,'#17215c');c.fillStyle=g;c.fillRect(x0,y0,w,h);
+  c.translate(x0,y0);
+  const ship=(x,y,bank,boost)=>drawShip(c,x,y,.62,{tier:tierOf(),acc:accent(),time:tm,bank,boost,shots:1});
+  const cx=w/2;
+  c.fillStyle='rgba(255,255,255,.22)';
+  for(let i=0;i<7;i++)c.fillRect((i*29+11)%w,((i*47+tm*70)%(h+10))-5,1.2,3);
+  if(kind==='move'){
+    const s=Math.sin(tm*2.1),gx=cx+s*23;
+    c.strokeStyle='rgba(159,230,255,.45)';c.lineWidth=1.5;c.setLineDash([3,4]);c.beginPath();c.moveTo(16,66);c.lineTo(w-16,66);c.stroke();c.setLineDash([]);
+    c.fillStyle='rgba(159,230,255,.65)';
+    c.beginPath();c.moveTo(10,66);c.lineTo(17,62);c.lineTo(17,70);c.closePath();c.fill();
+    c.beginPath();c.moveTo(w-10,66);c.lineTo(w-17,62);c.lineTo(w-17,70);c.closePath();c.fill();
+    ship(gx,32,Math.cos(tm*2.1)*.7,false);
+    tdDot(c,gx,66,1,[]);
+  }else if(kind==='boost'){
+    const T=3.8,tt=tm%T,down1=tt>.25&&tt<.45,down2=tt>.62&&tt<2.7,bo=sstep(.7,.95,tt)*(1-sstep(2.7,2.95,tt));
+    // speed streaks while boosting
+    c.save();c.lineCap='round';
+    for(let i=0;i<9;i++){const sx=8+((i*53)%(w-16)),sy=((i*37+tm*(120+bo*520))%(h+30))-15,len=6+bo*20;c.strokeStyle=i%2?'rgba(255,227,176,.9)':'rgba(168,240,255,.9)';c.globalAlpha=.15+bo*.7;c.lineWidth=1.4;c.beginPath();c.moveTo(sx,sy);c.lineTo(sx,sy+len);c.stroke();}
+    c.restore();
+    ship(cx,30-bo*2,0,bo>.5);
+    if(bo>.1){c.save();c.globalCompositeOperation='lighter';c.globalAlpha=bo*.5;c.drawImage(glow('#ffd48a'),cx-24,18,48,52);c.restore();}
+    const press=down1||down2?1:0,rips=[(tt-.25)/.5,(tt-.62)/.5];
+    if(kb)tdKey(c,cx,60,'SHIFT',down2);else tdDot(c,cx,58,press,rips);
+    const lab=kb?(tt>.3&&tt<2.7?'tdHold':''):(tt>.25&&tt<.58?'tdTap':tt>.62&&tt<.95?'tdTap':tt>=.95&&tt<2.7?'tdHold':'');
+    if(lab)tdLabel(c,t(lab),cx,h-9,'#ffd48a',1);
+  }else if(kind==='dodge'){
+    const T=3.6,tt=tm%T,warn=sstep(.1,.35,tt)*(1-sstep(.85,.95,tt));
+    if(warn>0){c.fillStyle='rgba(255,70,90,'+(.2*warn).toFixed(3)+')';c.fillRect(cx-6,20,12,h-20);}
+    c.save();c.translate(cx,11);c.globalCompositeOperation='lighter';c.globalAlpha=.3+.7*warn;c.drawImage(glow('#ff4a5a'),-15,-15,30,30);c.restore();
+    c.fillStyle='#8a3a4a';c.beginPath();c.moveTo(cx-8,6);c.lineTo(cx+8,6);c.lineTo(cx,19);c.closePath();c.fill();
+    const bu=(tt-.9)/1.1;
+    if(bu>0&&bu<1){const by=20+bu*(h-12);c.save();c.globalCompositeOperation='lighter';c.drawImage(glow('#ff7a8a'),cx-8,by-8,16,16);c.restore();c.fillStyle='#ffd0d6';c.fillRect(cx-1.2,by-4,2.4,8);}
+    const mv=sstep(.7,1.2,tt)-sstep(2.3,2.8,tt),moving=(mv>.02&&mv<.98);
+    ship(cx-26*mv,64,moving?-.8*(tt<1.8?1:-1):0,false);
+  }
+  c.restore();
+  c.save();rr(c,x0+.5,y0+.5,w-1,h-1,10);c.strokeStyle='rgba(255,255,255,.16)';c.lineWidth=1;c.stroke();c.restore();
+}
+/* how far along the current step is: [0..1] and an optional "2/3" label */
+function tdProg(u){
+  switch(u.i){
+    case 0:return{f:clamp(u.mv/150,0,1)};
+    case 1:return{f:clamp(run.killed/3,0,1),l:Math.min(3,run.killed)+'/3'};
+    case 2:return{f:clamp(run.coins/4,0,1)};
+    case 3:return{f:clamp(u.bt/.5,0,1)};
+  }
+  return null;
+}
+/* highlight frames on the HUD (logical coords) */
+function tdHud(c,u){
+  const pu=.55+.45*Math.sin(time*6);
+  if(u.i===3||u.i===4){
+    const y=u.i===3?25:8,h=u.i===3?15:18,col=u.i===3?'#ffd48a':'#4ee6a0';
+    c.save();c.strokeStyle=col;c.lineWidth=2;c.globalAlpha=pu;c.shadowColor=col;c.shadowBlur=10;rr(c,7,y,136,h,7);c.stroke();c.restore();
+  }
+}
+/* guidance on the real things in the world. M maps game coords to the drawing surface, K gives pixels per game unit.
+   In 2D that is the identity; in 3D it is the camera projection (called from the 3D overlay). */
+function tdArrow(c,a,b,col){
+  c.save();c.strokeStyle=col;c.lineWidth=2.2;c.lineCap='round';c.globalAlpha=.75;c.setLineDash([5,9]);c.lineDashOffset=-time*38;
+  c.beginPath();c.moveTo(a[0],a[1]);c.lineTo(b[0],b[1]);c.stroke();c.restore();
+}
+function tdBracket(c,s,r,col){
+  const l=r*.45,pu=1+.08*Math.sin(time*7);r*=pu;
+  c.save();c.strokeStyle=col;c.lineWidth=2.4;c.lineCap='round';c.shadowColor=col;c.shadowBlur=8;
+  for(const [sx,sy] of [[-1,-1],[1,-1],[1,1],[-1,1]]){c.beginPath();c.moveTo(s[0]+sx*r,s[1]+sy*(r-l));c.lineTo(s[0]+sx*r,s[1]+sy*r);c.lineTo(s[0]+sx*(r-l),s[1]+sy*r);c.stroke();}
+  c.restore();
+}
+function tdRing(c,s,r,col){
+  c.save();c.strokeStyle=col;c.lineWidth=2.4;c.shadowColor=col;c.shadowBlur=10;
+  for(let i=0;i<2;i++){const u=((time*1.2+i*.5)%1);c.globalAlpha=(1-u)*.9;c.beginPath();c.arc(s[0],s[1],r*(.7+u*.8),0,TAU);c.stroke();}
+  c.restore();
+}
+function tdWorld(c,M,K){
+  const u=run&&run.tut,p=player;if(!u||u.fin>0||!p||!p.alive||state!=='play')return;
+  const near=(pred)=>{let b=null,bd=1e9;for(const q of pred){const d=Math.hypot(q.x-p.x,(q.y-p.y)*.6);if(d<bd){bd=d;b=q;}}return b;};
+  const ps=M(p.x,p.y),pk=K(p.x,p.y);
+  if(u.i===0&&u.mv<40){tdRing(c,ps,34*pk,'#9fe6ff');}
+  else if(u.i===1){
+    const e=near(enemies.filter(q=>q.hp>0&&q.y>24&&q.y<p.y-40));
+    if(!e)return;
+    const es=M(e.x,e.y),ek=K(e.x,e.y);
+    tdBracket(c,es,(e.sz+10)*ek,'#ffb02e');
+    if(Math.abs(e.x-p.x)>30){
+      // "move here": a ghost of the ship under the enemy and a dotted path to it
+      const gs=M(e.x,p.y),gk=K(e.x,p.y);
+      tdArrow(c,[ps[0]+(e.x>p.x?30:-30)*pk,ps[1]],[gs[0]+(e.x>p.x?-26:26)*gk,gs[1]],'#9fe6ff');
+      c.save();c.globalAlpha=.32+.12*Math.sin(time*6);drawShip(c,gs[0],gs[1],1.15*gk,{tier:tierOf(),acc:accent(),time,bank:0,boost:false,shots:p.S.shots});c.restore();
+      tdRing(c,gs,24*gk,'#9fe6ff');
+    }else{
+      tdArrow(c,[ps[0],ps[1]-26*pk],[es[0],es[1]+e.sz*ek],'#ffd48a');
+    }
+  }else if(u.i===2||u.i===6){
+    const q=near(picks.filter(k=>(u.i===2?k.kind==='coin':k.kind==='pow')&&k.y>10));
+    if(!q)return;
+    const qs=M(q.x,q.y),qk=K(q.x,q.y),col=u.i===2?'#ffd27a':'#7dffb0';
+    tdRing(c,qs,18*qk,col);
+    tdArrow(c,[ps[0],ps[1]-24*pk],[qs[0],qs[1]+10*qk],col);
+  }
+}
+
+/* ---- the coach panel (also used for the boss-level tips, without the demo) ---- */
+function drawTip(){
+  if(run.done||state!=='play')return;
+  const kb=kbMode(),u=run.tut,rtl=isRTL();
+  let key=null,age=0,n=0;
+  if(u){key='tut'+u.i;age=u.t;n=u.i+1;if(kb&&(u.i===0||u.i===3))key+='k';}
+  else if(run.tip){key=run.tip.k;age=run.tip.age;}
+  const c=ctx;
+  if(u&&!u.fin)tdHud(c,u);
+  if(!key)return;
+  const str=t(key),kind=u?tdDemoKind(u.i):null,title=u?t('tdT'+u.i):'';
+  const px=u?14:20,pw=W-px*2,cardW=kind?88:0,cardH=84,gap=kind?10:0,pad=12;
+  const tx0=u?(rtl?px+pad:px+pad+cardW+gap):px+pad,tx1=u?(rtl?px+pw-pad-cardW-gap:px+pw-pad):px+pw-pad,maxW=tx1-tx0;
+  c.font=tdFont(u?13:14,600);
+  const words=str.split(' '),lines=[];let cur='';
+  for(const w of words){const tt=cur?cur+' '+w:w;if(c.measureText(tt).width>maxW&&cur){lines.push(cur);cur=w;}else cur=tt;}
+  if(cur)lines.push(cur);
+  const lh=u?17:19,prog=u&&!u.fin?tdProg(u):null;
+  const content=u?(22+lines.length*lh+(prog?15:0)):lines.length*lh+16;
+  const bh=Math.max(content+(u?12:0),kind?cardH+16:0);
+  const y=commH?(boss?116:64)+commH:(boss?120:100),a=clamp(age/.3,0,1),fin=u&&u.fin>0?clamp(u.fin/.8,0,1):0;
+  c.save();c.globalAlpha=a*.96;c.translate(0,(1-a)*-10);c.textBaseline='alphabetic';c.direction=rtl?'rtl':'ltr';
+  c.fillStyle=u?'rgba(10,14,36,.8)':'rgba(10,14,36,.86)';rr(c,px,y,pw,bh,12);c.fill();
+  c.strokeStyle=fin>0?'rgba(107,255,168,.9)':'rgba(255,176,46,.65)';c.lineWidth=1.5;rr(c,px,y,pw,bh,12);c.stroke();
+  if(kind)tdCard(c,kind,kb,rtl?px+pw-pad-cardW:px+pad,y+(bh-cardH)/2,cardW,cardH);
+  if(u){
+    // title row: step name on one side, the 8 step dots on the other
+    const al=rtl?'right':'left',ex=rtl?tx1:tx0;
+    c.fillStyle='#ffb02e';c.font=tdFont(12,700);c.textAlign=al;c.textBaseline='alphabetic';c.fillText(rtl?title:title.toUpperCase(),ex,y+19);
+    const dx0=rtl?tx0+4:tx1-8*10+4;
+    for(let i=0;i<8;i++){c.fillStyle=i<n?'#ffb02e':'rgba(255,255,255,.2)';c.beginPath();c.arc(dx0+i*10,y+15,2.8,0,TAU);c.fill();}
+    c.font=tdFont(13,600);c.fillStyle='#eef2ff';c.textAlign=al;
+    let ty=y+39;for(const l of lines){c.fillText(l,ex,ty);ty+=lh;}
+    if(prog){
+      const by=y+bh-16,bw=maxW-(prog.l?34:0),bx=rtl?tx1-bw:tx0;
+      c.fillStyle='rgba(255,255,255,.14)';rr(c,bx,by,bw,5,2.5);c.fill();
+      c.fillStyle='#ffb02e';rr(c,rtl?bx+bw-Math.max(4,bw*prog.f):bx,by,Math.max(4,bw*prog.f),5,2.5);c.fill();
+      if(prog.l){c.fillStyle='#ffd48a';c.font=tdFont(11,700);c.textAlign=rtl?'left':'right';c.fillText(prog.l,rtl?tx0:tx1,by+6);}
+    }
+  }else{
+    c.textAlign='center';c.fillStyle='#eef2ff';
+    let ty=y+23;for(const l of lines){c.fillText(l,W/2,ty);ty+=lh;}
+  }
+  if(fin>0){
+    // success: green wash, a drawn check mark and a short word
+    const k=1-fin,pop=1+.35*(1-sstep(0,.25,k));
+    c.fillStyle='rgba(20,70,48,'+(.95*sstep(0,.12,k)).toFixed(3)+')';rr(c,px,y,pw,bh,12);c.fill();
+    const sg=rtl?-1:1;
+    c.save();c.translate(W/2-sg*40,y+bh/2);c.scale(pop,pop);c.globalAlpha=sstep(0,.15,k);
+    c.strokeStyle='#6bffa8';c.lineWidth=4.5;c.lineCap='round';c.lineJoin='round';c.shadowColor='#6bffa8';c.shadowBlur=12;
+    c.beginPath();c.moveTo(-11,1);c.lineTo(-3,9);c.lineTo(12,-9);c.stroke();c.restore();
+    c.globalAlpha=a*sstep(.05,.2,k);c.fillStyle='#eafff3';c.font=tdFont(rtl?20:19,700);c.textAlign=rtl?'right':'left';c.textBaseline='middle';
+    c.fillText(t('tdGood'),W/2-sg*18,y+bh/2+1);
+  }
+  c.restore();
+  if(u){c.save();if(R3.on){c.setTransform(dpr,0,0,dpr,0,0);tdWorld(c,P3,P3k);}else tdWorld(c,(x,y)=>[x,y],()=>1);c.restore();}
 }
 
 
@@ -12400,6 +12625,7 @@ function renderSettings(){
   $('#t-sfx').setAttribute('aria-checked',String(!!save.set.sfx));
   $('#t-vib').setAttribute('aria-checked',String(!!save.set.vib));
   $('#t-shake').setAttribute('aria-checked',String(!!save.set.shake));
+  $('#t-hints').setAttribute('aria-checked',String(save.set.hints!==false));
   $('#t-cine').setAttribute('aria-checked',String(cineOn()));
   $('#t-nar').setAttribute('aria-checked',String(save.set.nar!==false));$('#r-nar').hidden=!NAR.ok||isRTL();$('#r-nar2').hidden=!NAR.ok||isRTL()||save.set.nar===false;$('#narStat').textContent=narStatus();
   $('#b-wend').disabled=!save.cleared[100];$('#b-wend').style.opacity=save.cleared[100]?'':'.45';
@@ -12516,6 +12742,7 @@ click('#tab-pl',()=>{shopTab='pl';renderShop();});
 click('#t-sfx',()=>{save.set.sfx=!save.set.sfx;persist();renderSettings();if(save.set.sfx)sfx('click');});
 click('#t-vib',()=>{save.set.vib=!save.set.vib;persist();renderSettings();vib(30);});
 click('#t-shake',()=>{save.set.shake=!save.set.shake;persist();renderSettings();});
+click('#t-hints',()=>{save.set.hints=save.set.hints===false;persist();renderSettings();});
 click('#t-cine',()=>{save.set.cine=!cineOn();persist();renderSettings();});
 click('#t-nar',()=>{save.set.nar=save.set.nar===false;persist();renderSettings();if(save.set.nar!==false){audioInit();narUnlock();nar(LNG().cnOpen[6],{em:'firm',id:'o6'});setTimeout(renderSettings,1200);}else narStop();});
 click('#b-nartest',()=>{audioInit();narUnlock();NAR.err='';const go=()=>{nar(LNG().cnOpen[8],{em:'intense',id:'o8'},true);setTimeout(()=>{if(curScreen==='set')renderSettings();},1300);};try{if(speechSynthesis.speaking||speechSynthesis.pending){narStop();setTimeout(go,160);}else go();}catch(e){go();}renderSettings();});
@@ -12853,16 +13080,17 @@ click('#dl-claim',()=>{
     save.daily={last:todayStr(),streak:(st.broke?0:save.daily.streak)+1};
     persist();sfx('chest');
   }
-  show('main');
+  show(state==='menu'?'main':null);
 });
 function maybeDaily(){
+  if(state!=='menu'||curScreen!=='main')return;       // never pop the reward over a level or a film that has already started
   if(dailyState().can){renderDaily();show('daily');}
 }
 
 applyLang();resize();applyGfx();show('main');
 (function(){const sp=$('#splash');if(!sp)return;
   if(window.__VR_TEST){sp.remove();maybeDaily();return;}
-  let gone=false;const go=()=>{if(gone)return;gone=true;try{audioInit();sfx('click');}catch(e){}sp.classList.add('out');setTimeout(()=>{sp.remove();maybeDaily();},900);};
+  let gone=false;const go=()=>{if(gone)return;gone=true;try{audioInit();sfx('click');}catch(e){}maybeDaily();sp.classList.add('out');setTimeout(()=>sp.remove(),900);};   // the daily reward is already up under the fading splash, so the menu is never tappable before it
   sp.addEventListener('click',go);setTimeout(go,5200);})();
 requestAnimationFrame(frame);
 })();
