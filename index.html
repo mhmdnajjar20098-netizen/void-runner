@@ -7049,7 +7049,7 @@ s_drones:'Wing drones',sd_drones:'Two drones fight beside you for 12 seconds.',
 s_aegis:'Aegis barrier',sd_aegis:'Total protection for 5 seconds.',
 cdSec:'Recharge {n}s',skillKey:'Skill button or E key',
 pl_default:'Rookie',pl_viper:'Viper',pl_falcon:'Falcon',pl_phantom:'Phantom',pl_titan:'Titan',pl_nova:'Nova',pl_comet:'Comet',pl_warden:'Warden',pl_reaper:'Reaper',pl_raven:'Raven',pl_blaze:'Blaze',pl_orion:'Orion',tr_raven:'Slimmer hitbox: much harder to hit',tr_blaze:'Skills recharge 20% faster',tr_orion:'+40% stamina and faster recharge',
-tr_default:'No bonus. Your ship grows with upgrades.',tr_viper:'+8% fire rate',tr_falcon:'+8% speed',tr_phantom:'+12% coins',tr_titan:'+1 extra hit, slower',tr_nova:'+12% damage, faster fire, a bit of everything',tr_comet:'+6% speed',tr_warden:'+35% coin magnet range',tr_reaper:'+8% damage',gemOnly:'Gems only',chestGift:'Training complete! Your gift chest holds a random special pilot.',
+tr_default:'No bonus. Your ship grows with upgrades.',tr_viper:'+8% fire rate',tr_falcon:'+8% speed',tr_phantom:'+12% coins',tr_titan:'+1 extra hit, slower',tr_nova:'+12% damage, faster fire, a bit of everything',tr_comet:'+6% speed',tr_warden:'+35% coin magnet range',tr_reaper:'+8% damage',gemOnly:'Gems only',chestGift:'Training complete! Your gift chest holds a random Uncommon pilot.',
 watch:'Watch ad',freeGems:'Free gems',freeGemsD:'Watch an ad to earn 4 gems. {left} left today.',
 chest:'Chest',tapChest:'Tap the chest to open it!',chestFound:'Chest found!',chestTap:'Open it to see your reward.',chestOpen:'Open chest',chestNext:'Next chest ({n})',cont2:'Continue',chestWait:'Open chest ({n})',
 rw_gems:'{n} gems',rw_coins:'{n} coins',rw_weapon:'New weapon',rw_skill:'New skill',rw_pilot:'New pilot',rw_hp:'+{n} extra hit for {m} levels',rw_dmg:'+{n}% damage for {m} levels',rw_coinbuff:'+{n}% coins for {m} levels',
@@ -7126,7 +7126,7 @@ s_drones:'طائرات مساندة',sd_drones:'طائرتان تقاتلان ب
 s_aegis:'حاجز الإيجيس',sd_aegis:'حماية كاملة لمدة 5 ثوانٍ.',
 cdSec:'إعادة الشحن {n} ث',skillKey:'زر المهارة أو مفتاح E',
 pl_default:'المبتدئ',pl_viper:'الأفعى',pl_falcon:'الصقر',pl_phantom:'الشبح',pl_titan:'العملاق',pl_nova:'نوفا',pl_comet:'المذنّب',pl_warden:'الحارس',pl_reaper:'الحاصد',pl_raven:'الغراب',pl_blaze:'اللهب',pl_orion:'أوريون',tr_raven:'جسم أنحف: يصعب إصابته كثيراً',tr_blaze:'المهارات تتجدد أسرع بـ20%',tr_orion:'+40% طاقة وشحن أسرع',
-tr_default:'بدون ميزة. تنمو سفينتك بالتطويرات.',tr_viper:'+8% سرعة إطلاق',tr_falcon:'+8% سرعة',tr_phantom:'+12% عملات',tr_titan:'ضربة إضافية، أبطأ',tr_nova:'+12% ضرر وإطلاق أسرع وقليل من كل شيء',tr_comet:'+6% سرعة',tr_warden:'+35% مدى مغناطيس العملات',tr_reaper:'+8% ضرر',gemOnly:'بالألماس فقط',chestGift:'اكتمل التدريب! صندوق هديتك يحتوي على طيار خاص عشوائي.',
+tr_default:'بدون ميزة. تنمو سفينتك بالتطويرات.',tr_viper:'+8% سرعة إطلاق',tr_falcon:'+8% سرعة',tr_phantom:'+12% عملات',tr_titan:'ضربة إضافية، أبطأ',tr_nova:'+12% ضرر وإطلاق أسرع وقليل من كل شيء',tr_comet:'+6% سرعة',tr_warden:'+35% مدى مغناطيس العملات',tr_reaper:'+8% ضرر',gemOnly:'بالألماس فقط',chestGift:'اكتمل التدريب! صندوق هديتك يحتوي على طيار عشوائي من فئة «غير شائع».',
 watch:'شاهد إعلاناً',freeGems:'ألماس مجاني',freeGemsD:'شاهد إعلاناً لتكسب 4 ألماسات. المتبقي اليوم {left}.',
 chest:'صندوق',tapChest:'المس الصندوق لفتحه!',chestFound:'وجدت صندوقاً!',chestTap:'افتحه لترى مكافأتك.',chestOpen:'افتح الصندوق',chestNext:'الصندوق التالي ({n})',cont2:'متابعة',chestWait:'افتح الصندوق ({n})',
 rw_gems:'{n} ألماسة',rw_coins:'{n} عملة',rw_weapon:'سلاح جديد',rw_skill:'مهارة جديدة',rw_pilot:'طيار جديد',rw_hp:'+{n} ضربة إضافية لمدة {m} مراحل',rw_dmg:'+{n}% ضرر لمدة {m} مراحل',rw_coinbuff:'+{n}% عملات لمدة {m} مراحل',
@@ -13537,17 +13537,20 @@ Object.assign(SFX,{
   sparkle(){noise(.3,.08,9000,5000,'highpass');}
 });
 
+/* a pilot reward carries its real tier (prar: uncommon, rare ...) for the label and colour; rar is the reward class that sets how big the show is */
+const CH_TIER_CLASS={common:'common',uncommon:'rare',rare:'epic',epic:'epic',legendary:'legend',premium:'legend'};
+const chPilotRw=id=>{const tier=(PILOTS.find(x=>x.id===id)||{}).rar||'uncommon';return{type:'pilot',id,rar:CH_TIER_CLASS[tier]||'rare',prar:tier};};
 function rollChest(){
-  if(save.tutChest>0){
-    const sp=PILOTS.filter(x=>x.special&&!save.pilots.includes(x.id));
+  if(save.tutChest>0){                    // the first (gift) chest only ever holds an Uncommon pilot
+    const up=PILOTS.filter(x=>x.rar==='uncommon'&&!x.daily&&x.rar!=='premium'&&!save.pilots.includes(x.id));
     save.tutChest--;
-    if(sp.length)return{type:'pilot',id:sp[Math.floor(Math.random()*sp.length)].id,rar:'legend'};
-    return{type:'gems',n:60,rar:'legend'};
+    if(up.length)return chPilotRw(up[Math.floor(Math.random()*up.length)].id);
+    return{type:'gems',n:30,rar:'common'};
   }
   const r=Math.random();
   const unW=WEAPONS.filter(x=>!save.weapons.includes(x.id)),unS=SKILLS.filter(x=>!save.skills.includes(x.id)),unP=PILOTS.filter(x=>!x.special&&!x.daily&&x.rar!=='premium'&&!save.pilots.includes(x.id));   // premium ships are never in chests
   const pick=a=>a[Math.floor(Math.random()*a.length)];
-  if(r<.10&&unP.length){const W_={uncommon:6,rare:4,epic:2,legendary:.5},tot=unP.reduce((a,x)=>a+(W_[x.rar]||0),0);let q=Math.random()*tot,ch=unP[0];for(const x of unP){q-=W_[x.rar]||0;if(q<=0){ch=x;break;}}return{type:'pilot',id:ch.id,rar:'legend'};}
+  if(r<.10&&unP.length){const W_={uncommon:6,rare:4,epic:2,legendary:.5},tot=unP.reduce((a,x)=>a+(W_[x.rar]||0),0);let q=Math.random()*tot,ch=unP[0];for(const x of unP){q-=W_[x.rar]||0;if(q<=0){ch=x;break;}}return chPilotRw(ch.id);}
   if(r<.22&&unW.length)return{type:'weapon',id:pick(unW).id,rar:'epic'};
   if(r<.34&&unS.length)return{type:'skill',id:pick(unS).id,rar:'epic'};
   if(r<.50)return{type:'hp',amt:10*(1+Math.floor(Math.random()*2)),left:5,rar:'rare'};
@@ -13582,7 +13585,7 @@ function rewardHTML(rw){
   }
   const iconHtml=(ic==='gem'||ic==='coin')?`<i class="${ic}"></i>`:icon(ic);
   const eq=(rw.type==='weapon'||rw.type==='skill'||rw.type==='pilot')?`<span class="sub">${t('rw_equip')}</span>`:'';
-  return `<div class="rwic">${iconHtml}</div><div class="rar">${t('rar_'+rw.rar)}</div><b>${name}</b>${eq}`;
+  return `<div class="rwic">${iconHtml}</div><div class="rar">${t('rar_'+(rw.prar||rw.rar))}</div><b>${name}</b>${eq}`;
 }
 
 /* ---- the chest session ---- */
@@ -13641,7 +13644,7 @@ function chPrompt(){
 function chOpen(){
   if(CH.ph!==1)return;
   CH.ph=2;CH.t=0;CH.burst=false;
-  save.chests--;const rw=(window.__VR_TEST&&window.__rw)||rollChest();applyReward(rw);persist();CH.rw=rw;CH.col=RAR[rw.rar];
+  save.chests--;const rw=(window.__VR_TEST&&window.__rw)||rollChest();applyReward(rw);persist();CH.rw=rw;CH.col=(rw.prar&&RARC[rw.prar])||RAR[rw.rar];
   $('#ch-tap').hidden=true;$('#ch-sub').textContent='';
   sfx('rumble');chEvt('open');
 }
@@ -13694,7 +13697,7 @@ function showChestReward(g){
   el.style.setProperty('--rc',CH.col);
   if(rw.type==='pilot'){
     el.className='reward shipname';
-    el.innerHTML=`<div class="rar">${t('rar_'+rw.rar)}</div><b>${t('rw_pilot')}</b><b class="big">${t('pl_'+rw.id)}</b>`;
+    el.innerHTML=`<div class="rar">${t('rar_'+(rw.prar||rw.rar))}</div><b>${t('rw_pilot')}</b><b class="big">${t('pl_'+rw.id)}</b>`;
     if(!CH.m3)wrap.style.top=Math.round(g.hy+g.hs*30)+'px';
   }else{
     el.className='reward';el.innerHTML=rewardHTML(rw);
@@ -14119,7 +14122,7 @@ function ch3Bounds(o){            // the bundled three.js has no Box3: measure b
 }
 /* ---- reward models ---- */
 function ch3Item(rw){
-  const C=CH3,rc=RAR[rw.rar],G=new TH.Group(),A=[];
+  const C=CH3,rc=CH.col||RAR[rw.rar],G=new TH.Group(),A=[];
   const mat=o=>new TH.MeshStandardMaterial(o),add=(P,g,m,x,y,z)=>{const o=new TH.Mesh(g,m);o.position.set(x||0,y||0,z||0);P.add(o);return o;};
   const glowM=col=>new TH.MeshBasicMaterial({color:col,toneMapped:false});
   const dark=mat({color:0x2c3150,metalness:.85,roughness:.35}),steel=mat({color:0xaab4dc,metalness:.95,roughness:.26});
