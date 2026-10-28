@@ -376,6 +376,22 @@ button.mini:active{transform:scale(.97)}
 @keyframes wbump{0%{transform:scale(1)}35%{transform:scale(1.18);box-shadow:0 0 0 2px var(--accent),0 0 18px rgba(255,176,46,.5)}100%{transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){#rwPop.on{animation:none;opacity:1;transform:translate(-50%,0)}.wallet.bump .chip{animation:none}}
 
+/* Abyss perk screen: choose a card, then press the big button */
+.pkhow{display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 12px;border-radius:14px;background:rgba(255,176,46,.12);border:1px solid rgba(255,176,46,.45);font-weight:700;font-size:15px;color:#ffe3a6;text-align:center}
+.pkhow .pkn{flex:none;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#2a1700;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+.pkcards.idle .pkcard{animation:pkbreath 1.8s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes pkbreath{0%,100%{transform:scale(1);box-shadow:0 0 14px color-mix(in srgb,var(--rc) 22%,transparent)}50%{transform:scale(1.015);box-shadow:0 0 0 2px var(--rc),0 0 26px color-mix(in srgb,var(--rc) 60%,transparent)}}
+.pkcard.chosen{transform:scale(1.02);box-shadow:0 0 0 3px var(--rc),0 0 30px color-mix(in srgb,var(--rc) 65%,transparent);background:linear-gradient(100deg,color-mix(in srgb,var(--rc) 38%,transparent),rgba(40,52,110,.45))}
+.pkcard.dim{opacity:.55}
+.pkchk{flex:none;padding:3px 9px;border-radius:999px;background:var(--rc);color:#1a1200;font-weight:800;font-size:11px;letter-spacing:.06em}
+#pk-go{width:100%}
+#pk-go.wait{opacity:.7;animation:pkwait 1.4s ease-in-out infinite}
+@keyframes pkwait{0%,100%{box-shadow:0 0 0 rgba(255,176,46,0)}50%{box-shadow:0 0 0 2px rgba(255,176,46,.55)}}
+@media (prefers-reduced-motion:reduce){.pkcards.idle .pkcard,#pk-go.wait{animation:none}}
+@media (max-height:700px){#s-perk .big{font-size:22px}#s-perk .pkcard{padding:10px}#s-perk .pkhow{padding:7px 10px;font-size:14px}}
+.pkfoot{display:flex;flex-direction:column;gap:inherit;width:100%}
+@media (max-height:700px){.pkfoot{flex-direction:row;gap:8px}.pkfoot .btn{flex:1;min-height:44px;font-size:14px;padding-inline:8px}#s-perk .pkhave{gap:4px}#s-perk .pkhave .mchip{font-size:11px;padding:3px 8px}}
+
 </style></head><body>
 
 
@@ -464,10 +480,11 @@ button.mini:active{transform:scale(.97)}
         <div class="kicker" id="pk-kick"></div>
         <h2 class="big" id="pk-title" style="text-align:center"></h2>
         <div class="sub" id="pk-sub" style="text-align:center"></div>
+        <div class="pkhow" id="pk-how"></div>
         <div class="pkcards" id="pk-cards"></div>
+        <button class="btn primary" id="pk-go" disabled></button>
         <div class="mchips pkhave" id="pk-have"></div>
-        <button class="btn" id="pk-reroll"></button>
-        <button class="btn small" id="pk-quit"></button>
+        <div class="pkfoot"><button class="btn" id="pk-reroll"></button><button class="btn small" id="pk-quit"></button></div>
       </div>
     </section>
 
@@ -15509,7 +15526,7 @@ Object.assign(PART_IC,{
    A floor is a normal level taken from the campaign (blocks of five levels, a boss on every 5th floor), so every enemy, boss and cosmic event is reused.
    The start block follows how far you got in the campaign; past level 100 the enemies keep growing (run.xm).
    Upgrades picked between floors last for the run only. Damage carries over from floor to floor (one hit is healed between floors). */
-const AB={on:false,pending:false,f:0,cl:0,B0:1,perks:{},hp:0,rr:0,offer:[],last:null,msg:'',gems:0,g0:0,c0:0,k0:0};
+const AB={on:false,pending:false,f:0,cl:0,B0:1,perks:{},hp:0,rr:0,sel:-1,offer:[],last:null,msg:'',gems:0,g0:0,c0:0,k0:0};
 function abSave(){const a=save.ab||(save.ab={});if(!(a.best>0))a.best=0;if(!(a.runs>0))a.runs=0;if(!(a.ms>0))a.ms=0;return a;}
 const abUnlocked=()=>!!(save.cleared&&save.cleared[20]);
 const abStartBlock=()=>clamp(Math.floor((save.unlocked|0)/5)-4,1,15);
@@ -15634,21 +15651,27 @@ function renderAbyss(){
 function renderPerks(){
   $('#pk-kick').textContent=t('abTitle');
   $('#pk-title').textContent=t('abCleared',{n:AB.f});
-  $('#pk-sub').textContent=AB.msg||t('abPick');
+  const sel=AB.sel>=0&&AB.offer[AB.sel]?AB.sel:-1;
+  const sb=$('#pk-sub');sb.textContent=AB.msg||'';sb.hidden=!AB.msg;
+  $('#pk-how').innerHTML=`<span class="pkn">${sel<0?'1':'2'}</span><span>${sel<0?t('abPick'):t('abPick2')}</span>`;
+  $('#pk-cards').className='pkcards'+(sel<0?' idle':'');
   $('#pk-cards').innerHTML=AB.offer.map((o,i)=>{
     const p=PKI[o.id],rar=PKR[o.tier-1];
-    return `<button class="pkcard" data-pk="${i}" style="--rc:${RARC[rar]}"><span class="pki">${icon(p.ic)}</span><span class="pkm"><b>${t('pk_'+o.id)}</b><span class="sub">${pkText(o)}</span></span>${rbadge(rar)}</button>`;
+    return `<button class="pkcard${sel===i?' chosen':sel>=0?' dim':''}" data-pk="${i}" style="--rc:${RARC[rar]};--d:${i*.25}s" aria-pressed="${sel===i}"><span class="pki">${icon(p.ic)}</span><span class="pkm"><b>${t('pk_'+o.id)}</b><span class="sub">${pkText(o)}</span></span>${sel===i?`<span class="pkchk">${t('abSel')}</span>`:rbadge(rar)}</button>`;
   }).join('');
+  const go=$('#pk-go');go.disabled=sel<0;go.classList.toggle('wait',sel<0);
+  go.innerHTML=sel<0?`<span>${t('abGoWait')}</span>`:`<span>${t('abGo',{n:AB.f+1})}</span><span class="ic" data-ic="play"></span>`;
   const have=Object.keys(AB.perks).filter(k=>AB.perks[k].length);
   $('#pk-have').innerHTML=have.length?have.map(k=>`<span class="mchip">${t('pk_'+k)} ${AB.perks[k].length>1?'×'+AB.perks[k].length:''}</span>`).join(''):`<span class="sub">${t('abNone')}</span>`;
   const rr=$('#pk-reroll');rr.textContent=AB.rr>0?t('abReroll'):t('abRerolled');rr.disabled=AB.rr<=0;
   $('#pk-quit').textContent=t('abEnd');
+  fillIcons();
 }
 function abyssPerks(){
-  AB.offer=abOffer();AB.rr=1;renderPerks();show('perk');
+  AB.offer=abOffer();AB.rr=1;AB.sel=-1;renderPerks();show('perk');
 }
 function abyssPick(i){
-  const o=AB.offer[i];if(!o)return;
+  const o=AB.offer[i];if(!o)return;AB.sel=-1;
   const p=PKI[o.id],v=pkVal(o);
   if(p.inst){AB.hp=Math.min(AB.hp+10*v,Math.round((stats().maxHp)/10)*10);}
   else{(AB.perks[o.id]||(AB.perks[o.id]=[])).push(v);if(o.id==='hull')AB.hp+=10;}
@@ -15658,8 +15681,13 @@ function abyssPick(i){
 function abyssBind(){
   click('#b-abyss',()=>{if(abUnlocked())show('ab');else sfx('deny');});
   click('#ab-go',()=>{if(abUnlocked())abyssStart();});
-  $('#pk-cards').addEventListener('click',e=>{const b=e.target.closest('[data-pk]');if(!b)return;audioInit();abyssPick(+b.dataset.pk);});
-  click('#pk-reroll',()=>{if(AB.rr<=0)return;AB.rr--;AB.offer=abOffer();renderPerks();});
+  $('#pk-cards').addEventListener('click',e=>{          // tap = choose (highlighted), tap the chosen card again or press the button = confirm
+    const b=e.target.closest('[data-pk]');if(!b)return;audioInit();const i=+b.dataset.pk;
+    if(AB.sel===i){abyssPick(i);return;}
+    AB.sel=i;sfx('click');renderPerks();
+  });
+  click('#pk-go',()=>{if(AB.sel>=0&&AB.offer[AB.sel])abyssPick(AB.sel);else sfx('deny');});
+  click('#pk-reroll',()=>{if(AB.rr<=0)return;AB.rr--;AB.sel=-1;AB.offer=abOffer();renderPerks();});
   click('#pk-quit',()=>{abyssEnd();state='lost';renderLost();show('lost');});
 }
 function abyssMenuBtn(){
@@ -15671,7 +15699,7 @@ function abyssMenuBtn(){
 /* ---- strings ---- */
 Object.assign(T.en,{
   abTitle:'The Abyss',abKick:'Endless mode',abDesc:'Dive floor after floor. There is no last level, only deeper.',abDive:'Dive',
-  abFloor:'FLOOR {n}',abCleared:'Floor {n} cleared',abPick:'Choose one upgrade for this dive',abReroll:'Reroll (free once)',abRerolled:'Rerolled',abEnd:'End the dive',abOver:'Dive over',abAgain:'Dive again',
+  abFloor:'FLOOR {n}',abCleared:'Floor {n} cleared',abPick:'Choose 1 of these 3 upgrades',abPick2:'Now press the button to continue',abGoWait:'Choose an upgrade to continue',abGo:'Dive to floor {n}',abSel:'CHOSEN',abReroll:'Reroll (free once)',abRerolled:'Rerolled',abEnd:'End the dive',abOver:'Dive over',abAgain:'Dive again',
   abFloors:'Floors cleared',abBest:'Best floor',abRuns:'Dives',abStart:'Starts around',abRecord:'New record!',abChest:'Depth chest!',abNone:'No upgrades yet',abLock:'Clear level 20',abNew:'New',abBestShort:'Best: floor {n}',
   abL1:'Every floor is a level. Every 5th floor is a boss.',abL2:'Pick one of three random upgrades after each floor. They last for this dive only.',abL3:'Damage carries over, one hit is healed between floors. Records pay gems and chests.',
   pk_dmg:'Hot Rounds',pkd_dmg:'+{v}% damage',pk_rate:'Quick Trigger',pkd_rate:'+{v}% fire rate',pk_cannon:'Extra Barrel',pkd_cannon:'+{v} laser',pk_hull:'Reinforced Hull',pkd_hull:'+{v} max hit and heal 1',
@@ -15681,7 +15709,7 @@ Object.assign(T.en,{
 });
 Object.assign(T.ar,{
   abTitle:'الهاوية',abKick:'وضع بلا نهاية',abDesc:'اغطس طابقاً بعد طابق. لا توجد مرحلة أخيرة، فقط عمق أكبر.',abDive:'اغطس',
-  abFloor:'الطابق {n}',abCleared:'أنهيت الطابق {n}',abPick:'اختر تطويراً واحداً لهذه الغطسة',abReroll:'بدّل البطاقات (مرة مجانية)',abRerolled:'تم التبديل',abEnd:'أنهِ الغطسة',abOver:'انتهت الغطسة',abAgain:'اغطس مجدداً',
+  abFloor:'الطابق {n}',abCleared:'أنهيت الطابق {n}',abPick:'اختر واحداً من هذه التطويرات الثلاثة',abPick2:'الآن اضغط الزر للمتابعة',abGoWait:'اختر تطويراً لتتابع',abGo:'غُص إلى الطابق {n}',abSel:'تم الاختيار',abReroll:'بدّل البطاقات (مرة مجانية)',abRerolled:'تم التبديل',abEnd:'أنهِ الغطسة',abOver:'انتهت الغطسة',abAgain:'اغطس مجدداً',
   abFloors:'الطوابق المنجزة',abBest:'أفضل طابق',abRuns:'عدد الغطسات',abStart:'تبدأ حول',abRecord:'رقم قياسي جديد!',abChest:'صندوق العمق!',abNone:'لا تطويرات بعد',abLock:'أنهِ المرحلة 20',abNew:'جديد',abBestShort:'الأفضل: الطابق {n}',
   abL1:'كل طابق مرحلة. وكل طابق خامس زعيم.',abL2:'اختر واحداً من ثلاثة تطويرات عشوائية بعد كل طابق. تبقى لهذه الغطسة فقط.',abL3:'الضرر يستمر، وتُصلَح إصابة واحدة بين الطوابق. الأرقام القياسية تمنح جواهر وصناديق.',
   pk_dmg:'ذخيرة ساخنة',pkd_dmg:'ضرر +{v}%',pk_rate:'زناد سريع',pkd_rate:'سرعة إطلاق +{v}%',pk_cannon:'ماسورة إضافية',pkd_cannon:'+{v} ليزر',pk_hull:'بدن معزّز',pkd_hull:'+{v} إصابة قصوى وإصلاح واحدة',
