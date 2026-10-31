@@ -343,15 +343,6 @@ button.mini:active{transform:scale(.97)}
 .ablist{margin:0;padding:0 4px;list-style:none;display:flex;flex-direction:column;gap:6px;color:#c9d4ff;font-size:13px;line-height:1.4}
 .ablist li{padding-inline-start:16px;position:relative}
 .ablist li::before{content:"";position:absolute;inset-inline-start:2px;top:.55em;width:6px;height:6px;border-radius:50%;background:#b07bff}
-.pkcards{display:flex;flex-direction:column;gap:10px}
-.pkcard{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;border:1px solid var(--rc);background:linear-gradient(100deg,color-mix(in srgb,var(--rc) 18%,transparent),rgba(40,52,110,.3));color:var(--ink);font:600 15px var(--display);text-align:start;cursor:pointer;box-shadow:0 0 14px color-mix(in srgb,var(--rc) 22%,transparent)}
-.pkcard:active{transform:scale(.97)}
-.pkcard .pki{flex:none;width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;color:var(--rc);background:rgba(255,255,255,.06);border:1px solid var(--rc)}
-.pkcard .pki svg{width:24px;height:24px}
-.pkcard .pkm{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.pkcard .pkm b{font-size:16px}
-.pkcard .pkm .sub{color:#d6defc;font-size:13px}
-.pkhave{justify-content:center}
 @media (max-height:700px){.menu-actions{gap:8px}.tile{min-height:68px;padding:9px 6px;gap:5px}.btn.wide{min-height:42px}.freshbtn{min-height:38px;padding:5px 12px}.btn.xl{letter-spacing:.08em;font-size:19px}}
 .stat.gm{font-size:13px;color:#c9d4ff}.stat.gm.ok b{color:#7fe8b5}
 .gready{color:#7fe8b5;opacity:1;padding-top:8px}
@@ -376,21 +367,14 @@ button.mini:active{transform:scale(.97)}
 @keyframes wbump{0%{transform:scale(1)}35%{transform:scale(1.18);box-shadow:0 0 0 2px var(--accent),0 0 18px rgba(255,176,46,.5)}100%{transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){#rwPop.on{animation:none;opacity:1;transform:translate(-50%,0)}.wallet.bump .chip{animation:none}}
 
-/* Abyss perk screen: choose a card, then press the big button */
-.pkhow{display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 12px;border-radius:14px;background:rgba(255,176,46,.12);border:1px solid rgba(255,176,46,.45);font-weight:700;font-size:15px;color:#ffe3a6;text-align:center}
-.pkhow .pkn{flex:none;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#2a1700;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
-.pkcards.idle .pkcard{animation:pkbreath 1.8s ease-in-out infinite;animation-delay:var(--d,0s)}
-@keyframes pkbreath{0%,100%{transform:scale(1);box-shadow:0 0 14px color-mix(in srgb,var(--rc) 22%,transparent)}50%{transform:scale(1.015);box-shadow:0 0 0 2px var(--rc),0 0 26px color-mix(in srgb,var(--rc) 60%,transparent)}}
-.pkcard.chosen{transform:scale(1.02);box-shadow:0 0 0 3px var(--rc),0 0 30px color-mix(in srgb,var(--rc) 65%,transparent);background:linear-gradient(100deg,color-mix(in srgb,var(--rc) 38%,transparent),rgba(40,52,110,.45))}
-.pkcard.dim{opacity:.55}
-.pkchk{flex:none;padding:3px 9px;border-radius:999px;background:var(--rc);color:#1a1200;font-weight:800;font-size:11px;letter-spacing:.06em}
-#pk-go{width:100%}
-#pk-go.wait{opacity:.7;animation:pkwait 1.4s ease-in-out infinite}
-@keyframes pkwait{0%,100%{box-shadow:0 0 0 rgba(255,176,46,0)}50%{box-shadow:0 0 0 2px rgba(255,176,46,.55)}}
-@media (prefers-reduced-motion:reduce){.pkcards.idle .pkcard,#pk-go.wait{animation:none}}
-@media (max-height:700px){#s-perk .big{font-size:22px}#s-perk .pkcard{padding:10px}#s-perk .pkhow{padding:7px 10px;font-size:14px}}
-.pkfoot{display:flex;flex-direction:column;gap:inherit;width:100%}
-@media (max-height:700px){.pkfoot{flex-direction:row;gap:8px}.pkfoot .btn{flex:1;min-height:44px;font-size:14px;padding-inline:8px}#s-perk .pkhave{gap:4px}#s-perk .pkhave .mchip{font-size:11px;padding:3px 8px}}
+#ab-resume{display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:start}
+#ab-resume .two{display:flex;flex-direction:column;gap:2px}#ab-resume small{font-size:13px;opacity:.8;font-weight:600}
+#ab-go.danger{background:rgba(255,106,90,.18);border-color:#ff6a5a;color:#ffd5cf}
+@media (max-height:700px){#s-ab .ablist li:nth-child(3){display:none}}
+
+#abMiles{display:grid;grid-template-columns:1fr;gap:4px;max-height:210px;overflow:auto}
+.abm{display:flex;gap:8px;align-items:center;padding:6px 10px;border-radius:10px;background:rgba(255,255,255,.05);font-size:13px}.abm b{flex:none;min-width:64px;color:#ffd27a}.abm span{flex:1;color:#d6defc}.abm i{color:#7fe8b5;font-style:normal;font-weight:800}.abm.ok{opacity:.55}
+@media (max-height:800px){#s-ab .ablist{display:none}#abMiles{max-height:150px}}
 
 </style></head><body>
 
@@ -469,22 +453,11 @@ button.mini:active{transform:scale(.97)}
         <div class="logo" data-i="abTitle"></div>
         <p class="tag" data-i="abDesc"></p>
         <div id="abStats"></div>
+        <div class="kicker" data-i="abMile"></div><div id="abMiles"></div>
         <ul class="ablist"><li data-i="abL1"></li><li data-i="abL2"></li><li data-i="abL3"></li></ul>
+        <button class="btn primary xl" id="ab-resume" hidden></button>
         <button class="btn primary xl" id="ab-go"><span data-i="abDive"></span><span class="ic" data-ic="play"></span></button>
         <button class="btn" data-back="main"><span class="ic" data-ic="back"></span><span data-i="back"></span></button>
-      </div>
-    </section>
-
-    <section class="screen" id="s-perk" hidden>
-      <div class="panel">
-        <div class="kicker" id="pk-kick"></div>
-        <h2 class="big" id="pk-title" style="text-align:center"></h2>
-        <div class="sub" id="pk-sub" style="text-align:center"></div>
-        <div class="pkhow" id="pk-how"></div>
-        <div class="pkcards" id="pk-cards"></div>
-        <button class="btn primary" id="pk-go" disabled></button>
-        <div class="mchips pkhave" id="pk-have"></div>
-        <div class="pkfoot"><button class="btn" id="pk-reroll"></button><button class="btn small" id="pk-quit"></button></div>
       </div>
     </section>
 
@@ -528,6 +501,7 @@ button.mini:active{transform:scale(.97)}
         <button class="btn" id="p-restart" data-i="restart"></button>
         <button class="btn" id="p-set" data-i="settings"></button>
         <button class="btn" id="p-menu" data-i="menu"></button>
+        <div class="sub" id="p-note" hidden style="text-align:center"></div>
       </div>
     </section>
 
@@ -7426,8 +7400,8 @@ function rr(c,x,y,w,h,r){c.beginPath();if(c.roundRect){c.roundRect(x,y,w,h,r);}e
 function poly(c,p){c.beginPath();c.moveTo(p[0][0],p[0][1]);for(let i=1;i<p.length;i++)c.lineTo(p[i][0],p[i][1]);c.closePath();}
 
 /* ============ world look ============ */
-const HUES=[212,168,282,18,334,48,190,2,262,126];
-const wHue=w=>HUES[w%10];
+const HUES=[212,168,282,18,334,48,190,2,262,126,226];      // the 11th world is the Abyss
+const wHue=w=>HUES[w%11];
 function makeNebula(w){
   const c=document.createElement('canvas');c.width=400;c.height=1200;const g=c.getContext('2d'),rn=mulberry(w*977+13),h=wHue(w);
   g.fillStyle=hsl2hex(h,60,5);g.fillRect(0,0,400,1200);
@@ -7522,7 +7496,7 @@ function newPlanet(init,i){
 }
 function setWorld(w){
   world=w;nebula=makeNebula(w);planets=[];
-  for(let i=0;i<3;i++)planets.push(newPlanet(true,i));
+  if(w<10)for(let i=0;i<3;i++)planets.push(newPlanet(true,i));      // the Abyss has no planets: only darkness and snow
   if(R3.ok)r3setWorld(w);
 }
 function updateBackground(dt){
@@ -7862,7 +7836,7 @@ function makePlayer(S){
 function startLevel(L){
   audioInit();abyssBegin();
   level=clamp(L,1,100);
-  const w=Math.floor((level-1)/10);if(w!==world||!nebula)setWorld(w);
+  const w=AB.on?10:Math.floor((level-1)/10);if(w!==world||!nebula)setWorld(w);
   const S=stats();player=makePlayer(S);
   bullets=[];ebul=[];enemies=[];meteors=[];picks=[];parts=[];rings=[];floats=[];bolts=[];lanes=[];foes=[];skFlash=0;boss=null;armReset();
   const isBoss=level%5===0;
@@ -7888,6 +7862,7 @@ function makeEnemy(type,x,y,o){
   e.max=e.hp;return e;
 }
 function spawnGroup(){
+  if(level>=4&&!run.tut&&!AB.on&&Math.random()<.7){const n0=enemies.length;abForm();run.spawned+=Math.max(1,enemies.length-n0);return;}   // formations also in campaign levels
   const L=level,types=Object.keys(ET).filter(k=>ET[k].unlock<=L);
   let tot=0;const ws=types.map(k=>{const w=ET[k].w*(ET[k].unlock>L-6?1.4:1);tot+=w;return w;});
   let r=Math.random()*tot,pick=types[0];
@@ -7982,6 +7957,7 @@ function hurt(dmg,src){
 }
 function die(){
   if(abyssWind())return;
+  if(AB.on)abSnapClear();               // a dive ends when you fall; a paid revive saves it again
   const p=player;p.alive=false;state='dead';run.deadT=0;gAdd('deaths',1);
   boom(p.x,p.y,34,'#ffb02e',40);boom(p.x,p.y,20,'#ff6a5a',20);addShake(14);sfx('bigboom');vib([120,60,200]);
 }
@@ -7991,13 +7967,14 @@ function giveShield(type){
   sfx('shield');
 }
 function killEnemy(e){
+  if(AB.on)abyssKill(e);
   boom(e.x,e.y,e.sz*1.3,e.col);sfx('boom');addShake(e.sz>20?4:2);kick(e.elite?.5:.16,e.elite?.06:0);
   run.killed++;run.combo++;run.comboT=2.6;if(run.combo>run.bestCombo)run.bestCombo=run.combo;hyCombo(run.combo);gAdd('kills',1);gMax('combo',run.combo);
   if(player&&player.sk)player.sk.cd=Math.max(0,player.sk.cd-.6);
   const val=Math.max(1,Math.round(e.coin*(1+Math.floor(level/10)*.8)*(1+Math.min(2,run.combo*.04))));
   dropCoins(e.x,e.y,val,e.elite?3:1+(Math.random()<.4?1:0));
   dropPower(e.x,e.y,e.elite?.15:0);dropPart(e.x,e.y,e.elite);
-  if(e.type==='splitter'){for(let i=0;i<2;i++){const c=makeEnemy('drone',e.x+(i?18:-18),e.y,{noElite:true,sc:.75,hp:.7,spd:1.3});c.vx=i?60:-60;c.canShoot=false;enemies.push(c);}}
+  if(e.type==='splitter'){for(let i=0;i<2;i++){const c=makeEnemy('drone',e.x+(i?18:-18),e.y,{noElite:true,sc:.75,hp:.7,spd:1.3});c.vx=i?60:-60;c.canShoot=false;if(AB.on)abyssSplit(c);enemies.push(c);}}
 }
 function killMeteor(m,silent){
   boom(m.x,m.y,m.r*1.1,'#ffb066',Math.round(m.r*.7)+6);sfx('rock');addShake(m.r>24?3:1);
@@ -8168,6 +8145,7 @@ function patrol(e,dt){
   e.y+=(ty-e.y)*Math.min(1,dt*2);
 }
 function updEnemy(e,dt){
+  if(e.stream){abyssMove(e,dt);return;}                  // the Abyss: enemies fly through in formations
   e.t+=dt;if(e.flash>0)e.flash-=dt;
   const sp=ebSpeed(),p=player;
   if(e.type==='diver'){
@@ -8880,7 +8858,8 @@ function updBoss(dt){
       boom(B.x,B.y,B.sz*1.2,B.col,80);boom(B.x,B.y,B.sz*.7,'#ffffff',40);sfx('bigboom');addShake(16);vib([100,50,100,50,300]);
       const val=6+Math.floor(level/4);
       for(let i=0;i<18;i++){picks.push({kind:'coin',x:B.x+rnd(-40,40),y:B.y+rnd(-30,30),vy:rnd(-60,40),vx:rnd(-90,90),val,t:rnd(0,TAU),mag:true});}
-      boss=null;run.done=true;run.endT=2;ebul=[];foes=[];
+      boss=null;ebul=[];foes=[];
+      if(AB.on)abyssBossDown();else{run.done=true;run.endT=2;}      // a Warden does not end the dive
     }
     return;
   }
@@ -9069,7 +9048,8 @@ function update(dt){
   const p=player,edt=(p.sk.slow>0?dt*.4:dt)*phTime();
   if(run.comboT>0){run.comboT-=dt;if(run.comboT<=0)run.combo=0;}
   // director
-  if(!run.done){
+  if(!run.done&&AB.on)abyssTick(dt,edt);                    // the Abyss runs its own director
+  else if(!run.done){
     if(run.isBoss){
       if(run.phase==='soldiers'){
         run.timer-=dt;
@@ -9088,7 +9068,9 @@ function update(dt){
     }
     run.mTimer-=dt;
     const mrate=Math.min(1.9,.3+level*.016)*ease();
-    if(run.mTimer<=0&&run.t>(level===1?10:3)&&(!run.isBoss||run.phase!=='warn')){spawnMeteor();run.mTimer=rnd(.6,1.4)/mrate;}
+    /* rocks never pile onto the big moments: not during cosmic events (or right before one), not while the boss warns or fights, not in the last wave before a boss */
+    const calm=!PHS.on.length&&!(PHS.q.length&&PHS.gap<3&&run.spawned>=run.budget&&enemies.length===0)&&!(run.isBoss&&(run.phase!=='soldiers'||(run.spawned>=run.budget&&enemies.length===0)))&&enemies.length<11;
+    if(run.mTimer<=0&&run.t>(level===1?10:3)){if(calm)spawnMeteor();run.mTimer=rnd(.9,1.9)/Math.min(1.2,mrate);}
   }else{p.inv=Math.max(p.inv,1);ebul=[];foes=[];run.endT-=dt;if(run.endT<=0){finishLevel();return;}}
   updBeat(edt);updLanes(edt);
   // player bullets
@@ -9138,9 +9120,11 @@ function update(dt){
   }
   // enemies
   for(let i=enemies.length-1;i>=0;i--){
-    const e=enemies[i];updEnemy(e,edt);
+    const e=enemies[i];
+    if(e.gone){enemies.splice(i,1);continue;}
+    updEnemy(e,edt);
     if(e.hp<=0){killEnemy(e);enemies.splice(i,1);continue;}
-    e.x=clamp(e.x,12,W-12);if(e.y>H-30)e.y=H-30;
+    if(!e.stream){e.x=clamp(e.x,12,W-12);if(e.y>H-30)e.y=H-30;}
     if(p.alive&&Math.hypot(p.x-e.x,p.y-e.y)<e.sz*.8+9){
       if(p.shield&&p.shield.thorn){e.hp=0;killEnemy(e);enemies.splice(i,1);hurt(0);continue;}
       hurt(18+level*.25,'ram');e.hp-=60+level*3;if(e.hp<=0){killEnemy(e);enemies.splice(i,1);}
@@ -9198,9 +9182,9 @@ function finishLevel(){
   const bonus=Math.round((20+level*6)*(1+(stars-1)*.25)*(run.hzMult||1));run.bonus=bonus;save.coins+=bonus;metaFinish();
   if(run.isBoss)save.gems+=run.gems;
   const wasCleared=!!save.cleared[level];
-  run.chest=!AB.on&&(level%10===0||level===1)&&!wasCleared;if(run.chest){save.chests++;if(level===1)save.tutChest++;}
+  run.chest=(level%10===0||level===1)&&!wasCleared;if(run.chest){save.chests++;if(level===1)save.tutChest++;}
   for(const k of Object.keys(save.buffs||{})){const b=save.buffs[k];if(b&&b.left>0&&run.buffUsed!==false){b.left--;if(b.left<=0)delete save.buffs[k];}}
-  if(AB.on)abyssCleared();else{save.unlocked=Math.max(save.unlocked,Math.min(100,level+1));save.cleared[level]=true;save.stars[level]=Math.max(save.stars[level]||0,stars);}persist();
+  save.unlocked=Math.max(save.unlocked,Math.min(100,level+1));save.cleared[level]=true;save.stars[level]=Math.max(save.stars[level]||0,stars);persist();
   enemies=[];meteors=[];ebul=[];foes=[];bullets=[];p.inv=99;input.boost=false;drag=null;
   fin={t:0,v:0,flash:0,flew:false,shown:false};state='finale';sfx('win');
   if(!run.dmgTaken)hype('perf',t('hyPerfect'),{kind:'slam',sz:.8,y:.16,dur:2.3,delay:.5,col:'#7dff9a',gcol:'#4ee6a0',sfx:'glint'});
@@ -9222,11 +9206,10 @@ function updFinale(dt){
     for(let i=0;i<2;i++)parts.push({k:0,x:p.x+rnd(-4,4),y:p.y+20,vx:rnd(-20,20),vy:rnd(200,400),life:.3,max:.3,sz:rnd(1.5,3),col:'#ffb02e'});
   }
   f.flash=f.t<2.6?0:f.t<3?(f.t-2.6)/.4:Math.max(0,1-(f.t-3)/.5);
-  if(f.t>=3&&!f.shown){f.shown=true;if(level>=100&&cineOn()&&!AB.on)cineStart('end',showResults);else showResults();}
+  if(f.t>=3&&!f.shown){f.shown=true;if(level>=100&&cineOn())cineStart('end',showResults);else showResults();}
 }
 function showResults(){
   persist();state='complete';fwT=.2;
-  if(AB.on){abyssPerks();return;}
   if(level>=100){renderOver();show('over');}else{renderDone();show('done');}
 }
 let fwT=0;
@@ -9236,12 +9219,12 @@ function drawFinale(){
     const a=clamp(f.t/.35,0,1)*clamp((2.5-f.t)/.5,0,1),sc=1+.45*Math.pow(1-clamp(f.t/.5,0,1),2);
     c.save();c.translate(W/2,H*.3);c.scale(sc,sc);c.globalAlpha=a;
     c.shadowColor='#ffb02e';c.shadowBlur=24;
-    txt(AB.on?t('abCleared',{n:AB.f}):t('done',{n:level}),0,0,run.isBoss?32:30,'#ffffff','center');
+    txt(t('done',{n:level}),0,0,run.isBoss?32:30,'#ffffff','center');
     c.shadowBlur=0;
     if(run.isBoss&&bossName(run.b))txt(bossName(run.b),0,30,15,'#ffd7dd','center',500);
     c.restore();
     c.globalAlpha=a;
-    for(let i=0;i<(AB.on?0:3);i++){
+    for(let i=0;i<3;i++){
       const on=i<run.stars,t0=.7+i*.35,k=clamp((f.t-t0)/.3,0,1);
       if(k<=0)continue;
       c.save();c.translate(W/2+(i-1)*44,H*.3+68);const sk=(1+(1-k)*1.4)*(i===1?1.15:1);c.scale(sk,sk);c.globalAlpha=a*k;
@@ -9261,6 +9244,7 @@ function reviveGame(kind){
   for(let i=meteors.length-1;i>=0;i--){if(Math.hypot(meteors[i].x-p.x,meteors[i].y-p.y)<170){killMeteor(meteors[i],true);meteors.splice(i,1);}}
   rings.push({x:p.x,y:p.y,r:10,max:200,life:.6,maxl:.6,col:'#52c8ff'});
   run.revives++;if(kind==='ad')run.adUsed=true;
+  if(AB.on)abyssRevived();
   state='play';show(null);sfx('revive');vib(40);
 }
 
@@ -9946,9 +9930,10 @@ function drawHUD(){
   for(const [k,col] of defs){if(p.pw[k]>0){c.fillStyle=col;c.fillRect(px,76,26*clamp(p.pw[k]/12,0,1),3);c.globalAlpha=.3;c.fillRect(px,76,26,3);c.globalAlpha=1;px+=32;}}
   drawPartsHud(c,p);
   // level + progress
-  txt(AB.on?t('abFloor',{n:AB.f}):t('level')+' '+level,W/2+4,22,15,'#e8edff','center');
+  if(AB.on)abyssHud(c,p);
+  else txt(t('level')+' '+level,W/2+4,22,15,'#e8edff','center');
   if(run.hzMult>1)txt(t('hzHud',{m:run.hzMult.toFixed(1)}),W/2+4,50,10,'#ff9a7a','center',700);
-  if(!run.isBoss||run.phase==='soldiers'){
+  if(!AB.on&&(!run.isBoss||run.phase==='soldiers')){
     const f=run.budget?clamp((run.spawned-enemies.length)/run.budget,0,1):0;
     c.fillStyle='rgba(8,10,24,.7)';rr(c,W/2-50,29,108,6,3);c.fill();c.fillStyle='#ffb02e';rr(c,W/2-50,29,108*f,6,3);c.fill();
   }
@@ -10048,6 +10033,7 @@ function render(){
     drawBullets();
     drawPlayer();
     drawFx();
+    if(AB.on)abyssOver(c,(x,y)=>[x,y],()=>1,false);
     if(state==='finale')drawFinale();else if(state!=='complete')drawHUD();
     drawHype();
   }else{
@@ -10165,7 +10151,7 @@ function fbmField(N,M,seed,cells,oct,gain){
   return out;
 }
 const mix3=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
-const WSTYLE=['ocean','gas','ice','lava','gas','ocean','ice','lava','gas','ocean'];
+const WSTYLE=['ocean','gas','ice','lava','gas','ocean','ice','lava','gas','ocean','gas'];
 function planetCanvas(seed,hue,style,N,M){
   const f=fbmField(N,M,seed,4,5,.52),f2=fbmField(N,M,seed+7,6,4,.5);
   const c=document.createElement('canvas');c.width=N;c.height=M;const g=c.getContext('2d'),im=g.createImageData(N,M),d=im.data;
@@ -10368,7 +10354,7 @@ function r3placePlanet(p,i,init){
 }
 function r3setWorld(w){
   if(!R3.ok||R3.world===w)return;R3.world=w;
-  const hue=wHue(w),style=WSTYLE[w%10];
+  const hue=wHue(w),style=WSTYLE[w%11];
   const fl=tex2(wispCanvas(900+w,hue,256,true),3);floor3.material.map=fl;floor3.material.needsUpdate=true;floor3.userData.tex=fl;
   decks.forEach((d,i)=>{const t=tex2(wispCanvas(300+w*5+i,hue+i*35,256,false),i?3:4);d.mesh.material.map=t;d.mesh.material.needsUpdate=true;d.tex=t;});
   planets3.forEach((p,i)=>{
@@ -10381,6 +10367,7 @@ function r3setWorld(w){
   });
   if(keyL)keyL.color.set(hsl2hex(((hue+30)%360+360)%360,40,92));
   if(rimL)rimL.color.set(hsl2hex(((hue+180)%360+360)%360,60,66));
+  r3quality();
 }
 function r3worldUpdate(dt){
   const sm=scrollMul;
@@ -11187,7 +11174,8 @@ function r3overlayWorld(){
   // safe lanes (only the first ten levels)
   for(const l of lanes)if(l.k==='tele')teleDraw(c,l,P3);
   foeDraw(c,P3,P3k);phOver(c,P3,P3k,true);
-  if(level<=10)for(const l of lanes){
+  if(AB.on)abyssOver(c,P3,P3k,true);
+  if(level<=10&&!AB.on)for(const l of lanes){
     if(l.k==='tele')continue;
     const a=clamp(l.life/l.max,0,1)*Math.min(1,l.age*3);
     if(l.k==='strip'){
@@ -11240,7 +11228,7 @@ function toast3(msg){
 function r3quality(){
   const hi=R3.q==='high';
   decks.forEach(d=>d.mesh.visible=hi);starLines.visible=hi;
-  planets3.forEach((p,i)=>p.mesh.visible=hi||i<2);
+  planets3.forEach((p,i)=>p.mesh.visible=R3.world!==10&&(hi||i<2));
 }
 function r3draw(){
   const dt=Math.min(.05,Math.max(.001,(performance.now()-(R3._lt||performance.now()))/1000||.016));R3._lt=performance.now();
@@ -11280,7 +11268,7 @@ function applyGfx(){
   if(q!=='2d'){R3.q=q;}
   R3.on=q!=='2d';
   document.body.classList.toggle('gl3',R3.on);
-  if(R3.on){r3quality();r3setWorld(clamp(world,0,9));}
+  if(R3.on){r3quality();r3setWorld(clamp(world,0,10));}
   resize();
 }
 
@@ -12220,8 +12208,8 @@ function hypeLevel(){
   const L=LNG(),sec=Math.ceil(level/10),first=level===1&&flashIn>0;
   run.hyB=true;
   const ab=AB.on;
-  hype('lvl',ab?t('abFloor',{n:AB.f}):t('level')+' '+level,{kind:'slam',sz:1.15,y:.3,dur:2.6,delay:first?.8:.05,col:'#ffffff',gcol:ab?'#b07bff':'#52c8ff',
-    sub:ab?t('abTitle')+' · '+t('sector')+' '+sec+' · '+L.sectors[sec-1]:t('sector')+' '+sec+' · '+L.sectors[sec-1],sub2:ab?t('abBestShort',{n:abSave().best}):t('hyLight',{n:level}),subCol:ab?'#d9c2ff':'#9fd6ff'});
+  hype('lvl',ab?t('abTitle'):t('level')+' '+level,{kind:'slam',sz:1.15,y:.3,dur:2.6,delay:first?.8:.05,col:'#ffffff',gcol:ab?'#7aa8ff':'#52c8ff',
+    sub:ab?t('abz'+abZone(AB.d)):t('sector')+' '+sec+' · '+L.sectors[sec-1],sub2:ab?(AB.d>0?abM(AB.d):t('abKick')):t('hyLight',{n:level}),subCol:ab?'#bcd0ff':'#9fd6ff'});
 }
 function hyBossName(){
   const b=boss,lo=bossLore(b.b);
@@ -12250,7 +12238,7 @@ function bossIntro(){
     const base=clamp(Math.min(cssW*.085,cssH*.07),28,72),pulse=.75+.25*Math.sin(time*9),out=clamp(run.warn/.35,0,1);
     cnVignette(c,.5*cnOut(e/.6)*out);
     cnSlam(c,final?L.cnFinal:t('warning'),cssW/2,cssH*.3,base*(final?1.05:1.1),'#ff5a6e',e,{a:pulse*out,gcol:'#ff2a3a'});
-    cnText(c,t('level')+' '+level,cssW/2,cssH*.3+base*.62,clamp(base*.34,12,20),'#ffd7dd',{a:cnSm(.4,.8,e)*out,w:600,track:2});
+    cnText(c,AB.on?abM(AB.d):t('level')+' '+level,cssW/2,cssH*.3+base*.62,clamp(base*.34,12,20),'#ffd7dd',{a:cnSm(.4,.8,e)*out,w:600,track:2});
     if(e>.9)cnText(c,lo.e,cssW/2,cssH*.3+base*1.2,clamp(base*.38,13,23),col,{a:cnSm(.9,1.4,e)*out,w:700,track:1.5,glow:10});
     if(e>1.7){
       const u=e-1.7,sz=clamp(cssW*.045,15,24),k=1+.35*(1-cnOut(u/.22));
@@ -14523,7 +14511,7 @@ Object.assign(GAP,{zap:.12,flare:.5,pulsar:.3,thump:.1,crystal:.06,holepulse:.6}
 
 /* ----- planning ----- */
 function phPlan(L){
-  if(AB.on)return abyssPlan(AB.f);
+  if(AB.on)return[];                          // the Abyss queues its own events by depth (abyssTick)
   if(L<3)return[];
   const sec=Math.floor((L-1)/10),pos=(L-1)%10+1,mk=(w,ids,hp)=>ids.map((id,i)=>({id,w,hp:hp?hp[i]:0}));
   if(L%5===0){
@@ -14539,14 +14527,14 @@ function phPlan(L){
     96:['flare','chrono','crystal','nova'],97:['rift','hole','ion','comet','pulsar'],98:['nova','crystal','chrono','flare','hole','rift'],99:PHO.slice()};
   return mk('lvl',tb[L]||[]);
 }
-function phIntensity(L){const sec=Math.floor((L-1)/10),pos=(L-1)%10;return clamp((sec<9?pos/9:.5+.5*clamp((L-91)/8,0,1))+sec*.015,0,1);}
+function phIntensity(L){if(AB.on)return clamp(.3+AB.d/5200,.3,1);const sec=Math.floor((L-1)/10),pos=(L-1)%10;return clamp((sec<9?pos/9:.5+.5*clamp((L-91)/8,0,1))+sec*.015,0,1);}
 function phReset(){
   const S=PHS;S.on=[];S.q=phPlan(level);S.hold=level>=91||level%10===0||AB.on;S.gap=level%5===0?1.5:level>=91?4:(level<=10?9:7);S.slow=1;S.snapT=0;S.inside=false;S.flash=0;S.pulse=0;
 }
 /* may this queued event start right now? (boss levels: escort events only while escorts still arrive, arena events once the boss is hurt enough) */
 function phCan(e){
   if(!run.isBoss)return true;
-  if(e.w==='esc')return run.phase==='soldiers'&&run.t>3.5&&(run.spawned<run.budget||PHS.hold);
+  if(e.w==='esc')return run.phase==='soldiers'&&run.t>3.5&&run.spawned>=run.budget&&enemies.length===0;      /* events begin once the soldiers are gone */
   if(e.w==='fight')return run.phase==='boss'&&!!boss&&boss.state==='fight'&&boss.hp<=boss.max*e.hp&&boss.msgT<=0;
   return false;
 }
@@ -14557,6 +14545,7 @@ function phActive(id){return PHS.on.find(o=>o.id===id);}
 function phStart(id,w,e){
   const fight=w==='fight',D=PHD[id],k=phIntensity(level)*(fight?.62:run.isBoss?.9:1)*((e&&e.kf)||1),ph={id,st:0,t:0,age:0,k,fight,tele:D.tele,dur:D.dur(k)*(fight||level===100?.8:1),out:D.out||1.2,vis:0};
   D.init(ph);PHS.on.push(ph);
+  for(const m of meteors)boom(m.x,m.y,m.r*.7,'#8a96b8',Math.round(m.r*.4)+4);meteors=[];      /* the rocks clear out while an event runs */
   const L=T[save.set.lang]||T.en,col=PHC[id],conv=level>=91;
   hype('phev',L['phn_'+id]+(e&&e.of>1?'  '+e.n+'/'+e.of:''),{kind:'slam',sz:.98,y:.3,dur:2.6,col:'#ffffff',gcol:col,sub:conv&&!run.isBoss?L.phConv:L['pht_'+id],sub2:conv&&!run.isBoss?L['pht_'+id]:undefined,subCol:col,sfx:'phalert'});
   addShake(3);
@@ -15229,7 +15218,8 @@ const MIS=[
   {id:'combo',w:2,min:3,ic:'rate',n:L=>clamp(8+Math.floor(L/8),8,30)},
   {id:'perfect',w:3,min:4,ic:'armor',n:()=>1},
   {id:'events',w:3,min:3,ic:'gravity',n:L=>L<30?1:2},
-  {id:'bosses',w:3,min:5,ic:'cannon',n:()=>1}
+  {id:'bosses',w:3,min:5,ic:'cannon',n:()=>1},
+  {id:'depth',w:2,min:21,ic:'gravity',n:L=>clamp(Math.round((250+L*5)/50)*50,350,1000)}
 ];
 const MI={};MIS.forEach(m=>MI[m.id]=m);
 function newGoals(d){
@@ -15271,7 +15261,7 @@ const ACH=[
   {id:'chests',ic:'chest',t:[1,10,50],g:[2,6,20],get:()=>gLife().chests||0},
   {id:'login',ic:'gift',t:[3,30,100],g:[2,6,20],get:()=>(save.daily&&save.daily.total)||0},
   {id:'fleet',ic:'pilot',t:[3,8,14],g:[2,6,20],get:()=>(save.pilots||[]).length},
-  {id:'abyss',ic:'gravity',t:[10,30,60],g:[3,10,30],get:()=>(save.ab&&save.ab.best)||0},
+  {id:'abyss',ic:'gravity',t:[400,1500,5000],g:[3,10,30],get:()=>(save.ab&&save.ab.bd)||0},
   {id:'time',ic:'engine',t:[1,10,50],g:[2,6,20],get:()=>Math.floor((gLife().time||0)/3600)},
   {id:'hazard',ic:'bolt',t:[1,15,100],g:[2,6,20],get:()=>gLife().hzClears||0}
 ];
@@ -15410,7 +15400,7 @@ function goalsStats(box){
     ['sLevels',ACH[2].get()+' / 100'],['sBosses',ACH[3].get()+' / 20'],['sStars',totalStars()+' / 300'],
     ['sCombo','x'+(L.combo||0)],['sPerfect',fmt(L.perfect||0)],['sEvents',fmt(L.events||0)],
     ['sSkills',fmt(L.skills||0)],['sRocks',fmt(L.rocks||0)],['sPows',fmt(L.pows||0)],
-    ['sChests',fmt(L.chests||0)],['sDeaths',fmt(L.deaths||0)],['sAbyss',String((save.ab&&save.ab.best)||0)]
+    ['sChests',fmt(L.chests||0)],['sDeaths',fmt(L.deaths||0)],['sAbyss',fmt((save.ab&&save.ab.bd)||0)+' '+t('abM')]
   ];
   box.innerHTML=rows.map(([k,v])=>statRow(t(k),v)).join('');
   const note=document.createElement('div');note.className='sub gnote';note.textContent=t('sNote');box.appendChild(note);
@@ -15482,15 +15472,15 @@ Object.assign(T.en,{
   goals:'Goals',gMissions:'Missions',gAch:'Achievements',gStats:'Stats',gMissionsH:'Daily missions',gReset:'resets in {t}',gDone:'Done',
   gReadyRow:'Rewards are waiting in Goals',gBonus:'All three done: bonus chest',gNote:'New missions every day. Progress counts in every mode.',sNote:'Your lifetime numbers.',
   ms_kills:'Destroy {n} enemies',ms_coins:'Collect {n} coins',ms_levels:'Clear {n} levels',ms_levels2:'Clear 2 levels',ms_combo:'Reach a x{n} combo',ms_perfect:'Clear a level without taking a hit',
-  ms_skills:'Use your skill {n} times',ms_pows:'Collect {n} power-ups',ms_rocks:'Shatter {n} asteroids',ms_boost:'Boost for {n} seconds',ms_events1:'Survive a cosmic event',ms_events2:'Survive 2 cosmic events',ms_bosses:'Defeat a boss',
+  ms_depth:'Dive {n} m in the Abyss',ms_skills:'Use your skill {n} times',ms_pows:'Collect {n} power-ups',ms_rocks:'Shatter {n} asteroids',ms_boost:'Boost for {n} seconds',ms_events1:'Survive a cosmic event',ms_events2:'Survive 2 cosmic events',ms_bosses:'Defeat a boss',
   an_kills:'Scrap Collector',an_coins:'Coin Baron',an_cleared:'Road Runner',an_bosses:'Boss Breaker',an_stars:'Star Hunter',an_combo:'Chain Master',an_perfect:'Untouchable',an_events:'Storm Chaser',an_skills:'Skill Master',
   an_boost:'Afterburner',an_pows:'Power Grabber',an_rocks:'Rock Smasher',an_chests:'Treasure Finder',an_login:'Loyal Runner',an_fleet:'Hangar Boss',an_abyss:'Deep Diver',an_time:'Veteran',an_hazard:'Daredevil',
   ad_kills:'Destroy {n} enemies',ad_coins:'Collect {n} coins',ad_cleared:'Clear {n} different levels',ad_bosses:'Defeat {n} bosses',ad_bosses_1:'Defeat a boss',ad_stars:'Earn {n} stars in total',ad_combo:'Reach a x{n} combo',
   ad_perfect:'Clear {n} levels without taking a hit',ad_perfect_1:'Clear a level without taking a hit',ad_events:'Survive {n} cosmic events',ad_events_1:'Survive a cosmic event',ad_skills:'Use skills {n} times',
   ad_boost:'Boost for {n} seconds in total',ad_pows:'Collect {n} power-ups',ad_rocks:'Shatter {n} asteroids',ad_chests:'Open {n} chests',ad_chests_1:'Open a chest',ad_login:'Log in on {n} different days',
-  ad_fleet:'Own {n} ships',ad_abyss:'Reach floor {n} of the Abyss',ad_time:'Play for {n} hours',ad_hazard:'Clear {n} levels with hazards on',ad_hazard_1:'Clear a level with hazards on',
+  ad_fleet:'Own {n} ships',ad_abyss:'Dive {n} m deep in the Abyss',ad_time:'Play for {n} hours',ad_hazard:'Clear {n} levels with hazards on',ad_hazard_1:'Clear a level with hazards on',
   sTime:'Time played',sKills:'Enemies destroyed',sCoins:'Coins collected',sLevels:'Levels cleared',sBosses:'Bosses defeated',sStars:'Stars',sCombo:'Best combo',sPerfect:'Flawless clears',sEvents:'Cosmic events survived',
-  sSkills:'Skills used',sRocks:'Asteroids shattered',sPows:'Power-ups collected',sChests:'Chests opened',sDeaths:'Times destroyed',sAbyss:'Deepest Abyss floor',
+  sSkills:'Skills used',sRocks:'Asteroids shattered',sPows:'Power-ups collected',sChests:'Chests opened',sDeaths:'Times destroyed',sAbyss:'Deepest dive',
   stRw:'Star rewards',rwTitle:'Reward claimed!',rwCoins:'coins',rwGems:'gems',rwChestHint:'Open it from the main menu.',stNext:'Next reward at {n} stars',stAll:'Every star reward claimed',
   hz:'Hazards',hzSub:'{n} on · rewards x{m}',hzOff2:'Tap for bigger rewards',hzHint:'Tap to switch on. Every heat point adds 20% to coins, gems and the level bonus.',stClaim:'Claim reward',hzLock:'Unlocks after you clear level 10.',
   hz_swarm:'Swarm',hzd_swarm:'50% more enemies',hz_fast:'Overclock',hzd_fast:'Enemy bullets 15% faster',hz_armor:'Iron Hulls',hzd_armor:'Tougher enemies and bosses',
@@ -15501,15 +15491,15 @@ Object.assign(T.ar,{
   goals:'الأهداف',gMissions:'المهام',gAch:'الإنجازات',gStats:'الإحصائيات',gMissionsH:'المهام اليومية',gReset:'تتجدد بعد {t}',gDone:'تم',
   gReadyRow:'جوائز بانتظارك في الأهداف',gBonus:'أنجزت الثلاث: صندوق إضافي',gNote:'مهام جديدة كل يوم. التقدّم يُحسب في كل الأوضاع.',sNote:'أرقامك منذ البداية.',
   ms_kills:'دمّر {n} عدواً',ms_coins:'اجمع {n} عملة',ms_levels:'أنهِ {n} مراحل',ms_levels2:'أنهِ مرحلتين',ms_combo:'حقق كومبو x{n}',ms_perfect:'أنهِ مرحلة دون أن تُصاب',
-  ms_skills:'استخدم مهارتك {n} مرات',ms_pows:'التقط {n} تعزيزات',ms_rocks:'حطّم {n} صخرة',ms_boost:'اندفع {n} ثانية',ms_events1:'اجتز حدثاً كونياً',ms_events2:'اجتز حدثين كونيين',ms_bosses:'اهزم زعيماً',
+  ms_depth:'اغطس {n} م في الهاوية',ms_skills:'استخدم مهارتك {n} مرات',ms_pows:'التقط {n} تعزيزات',ms_rocks:'حطّم {n} صخرة',ms_boost:'اندفع {n} ثانية',ms_events1:'اجتز حدثاً كونياً',ms_events2:'اجتز حدثين كونيين',ms_bosses:'اهزم زعيماً',
   an_kills:'جامع الخردة',an_coins:'بارون العملات',an_cleared:'عدّاء الطريق',an_bosses:'قاهر الزعماء',an_stars:'صائد النجوم',an_combo:'سيّد السلسلة',an_perfect:'لا يُمسّ',an_events:'مطارد العواصف',an_skills:'خبير المهارات',
   an_boost:'الاندفاع الأقصى',an_pows:'جامع القوى',an_rocks:'محطّم الصخور',an_chests:'كاشف الكنوز',an_login:'العدّاء الوفي',an_fleet:'قائد الحظيرة',an_abyss:'غوّاص الهاوية',an_time:'المحارب القديم',an_hazard:'المتحدّي',
   ad_kills:'دمّر {n} عدو',ad_coins:'اجمع {n} عملة',ad_cleared:'أنهِ {n} مرحلة مختلفة',ad_bosses:'اهزم {n} من الزعماء',ad_bosses_1:'اهزم زعيماً',ad_stars:'اكسب {n} نجمة',ad_combo:'حقق كومبو x{n}',
   ad_perfect:'أنهِ {n} مرحلة دون أن تُصاب',ad_perfect_1:'أنهِ مرحلة دون أن تُصاب',ad_events:'اجتز {n} حدثاً كونياً',ad_events_1:'اجتز حدثاً كونياً',ad_skills:'استخدم المهارات {n} مرة',
   ad_boost:'اندفع {n} ثانية في المجموع',ad_pows:'التقط {n} تعزيزاً',ad_rocks:'حطّم {n} صخرة',ad_chests:'افتح {n} صندوقاً',ad_chests_1:'افتح صندوقاً',ad_login:'سجّل الدخول في {n} يوماً مختلفاً',
-  ad_fleet:'امتلك {n} طائرات',ad_abyss:'بلغ الطابق {n} في الهاوية',ad_time:'العب لمدة {n} ساعة',ad_hazard:'أنهِ {n} مرحلة مع تفعيل المخاطر',ad_hazard_1:'أنهِ مرحلة مع تفعيل المخاطر',
+  ad_fleet:'امتلك {n} طائرات',ad_abyss:'اغطس إلى عمق {n} م في الهاوية',ad_time:'العب لمدة {n} ساعة',ad_hazard:'أنهِ {n} مرحلة مع تفعيل المخاطر',ad_hazard_1:'أنهِ مرحلة مع تفعيل المخاطر',
   sTime:'مدة اللعب',sKills:'الأعداء المدمَّرون',sCoins:'العملات المجموعة',sLevels:'المراحل المنجزة',sBosses:'الزعماء المهزومون',sStars:'النجوم',sCombo:'أفضل كومبو',sPerfect:'مراحل بلا إصابة',sEvents:'أحداث كونية اجتزتها',
-  sSkills:'مرات استخدام المهارة',sRocks:'صخور محطّمة',sPows:'تعزيزات ملتقطة',sChests:'صناديق مفتوحة',sDeaths:'مرات التدمير',sAbyss:'أعمق طابق في الهاوية',
+  sSkills:'مرات استخدام المهارة',sRocks:'صخور محطّمة',sPows:'تعزيزات ملتقطة',sChests:'صناديق مفتوحة',sDeaths:'مرات التدمير',sAbyss:'أعمق غطسة',
   stRw:'مكافآت النجوم',rwTitle:'تم استلام الجائزة!',rwCoins:'عملات',rwGems:'جواهر',rwChestHint:'افتحه من القائمة الرئيسية.',stNext:'المكافأة التالية عند {n} نجمة',stAll:'استلمت كل مكافآت النجوم',
   hz:'المخاطر',hzSub:'{n} مفعّل · x{m}',hzOff2:'اضغط لمكافآت أكبر',hzHint:'اضغط للتفعيل. كل درجة خطر تضيف 20% إلى العملات والجواهر ومكافأة المرحلة.',stClaim:'استلم المكافأة',hzLock:'تُفتح بعد إنهاء المرحلة 10.',
   hz_swarm:'السرب',hzd_swarm:'أعداء أكثر بنسبة 50%',hz_fast:'فرط السرعة',hzd_fast:'رصاص الأعداء أسرع بنسبة 15%',hz_armor:'أبدان الحديد',hzd_armor:'أعداء وزعماء أقوى',
@@ -15522,56 +15512,96 @@ Object.assign(PART_IC,{
   trophy:'<path d="M8 4h8v5a4 4 0 01-8 0zM8 6H5v1a3 3 0 003 3M16 6h3v1a3 3 0 01-3 3M12 13v4M8 21h8M10 17h4"/>'
 });
 
-/* ============ The Abyss: endless floors, one random upgrade after every floor ============
-   A floor is a normal level taken from the campaign (blocks of five levels, a boss on every 5th floor), so every enemy, boss and cosmic event is reused.
-   The start block follows how far you got in the campaign; past level 100 the enemies keep growing (run.xm).
-   Upgrades picked between floors last for the run only. Damage carries over from floor to floor (one hit is healed between floors). */
-const AB={on:false,pending:false,f:0,cl:0,B0:1,perks:{},hp:0,rr:0,sel:-1,offer:[],last:null,msg:'',gems:0,g0:0,c0:0,k0:0};
-function abSave(){const a=save.ab||(save.ab={});if(!(a.best>0))a.best=0;if(!(a.runs>0))a.runs=0;if(!(a.ms>0))a.ms=0;return a;}
+/* ============ THE ABYSS: one endless dive ============
+   Not a level mode. There are no levels, no results screens and no menus while you play:
+   - depth in metres is the score; the zone and the difficulty follow the depth
+   - THE DARK rises from the bottom of the screen. It is held back by destroying enemies and fed by the ones that get past you;
+     while it covers the ship it hurts
+   - enemies do not hover and shoot: they fly through in formations (columns, wedges, snakes, rings, pincers, pickets, strikers, anchors)
+   - pressure mines drift down; shoot them near a crowd and the blast chains
+   - upgrades are GATES you steer the ship into (no cards, no menu), a checkpoint every 300 m
+   - a Warden (one of the 20 campaign bosses, tougher) guards every 1000 m
+   The dive is saved at every checkpoint, so leaving never loses it. */
+const AB={on:false,pending:false,L0:26,d:0,dk:0,mode:'dive',after:'',n:0,nc:150,nb:1000,mg:0,perks:{},hp:0,offer:[],gates:[],gt:0,hinted:0,rare:false,
+  last:null,msg:'',g0:0,c0:0,k0:0,sp:2,mn:22,ev:45,mt:5,hit:.6,wt:0,w0:0,zone:0,top:0,kills:0,esc:0,snow:null,ic:null,dAcc:0};
+function abSave(){const a=save.ab||(save.ab={});for(const k of['best','runs','ms','bd'])if(!(a[k]>0))a[k]=0;return a;}
 const abUnlocked=()=>!!(save.cleared&&save.cleared[20]);
-const abStartBlock=()=>clamp(Math.floor((save.unlocked|0)/5)-4,1,15);
-const abBlock=f=>Math.min(19,AB.B0+Math.floor((f-1)/5));
-const abLevel=f=>abBlock(f)*5+((f-1)%5)+1;                 // the 5th floor of a block is the boss of that block
-const abOverBy=f=>Math.max(0,AB.B0+Math.floor((f-1)/5)-19);  // 5-floor steps past the last campaign block
+const abStartLevel=()=>clamp(Math.floor((save.unlocked|0)/5)-4,1,15)*5+1;      // the dive starts at the difficulty you have reached in the campaign
+const abLvl=d=>clamp(Math.round(AB.L0+d/70),1,100);
+const abXm=d=>1+Math.max(0,d-Math.max(0,(100-AB.L0)*70))/2600;               // beyond level 100 everything keeps growing
+const ZN=[0,600,1200,2000,3200,5000];
+const abZone=d=>{let z=0;for(let i=0;i<ZN.length;i++)if(d>=ZN[i])z=i;return z;};
+const abM=d=>fmt(Math.floor(d))+' '+t('abM');
+const abD=()=>AB.on?AB.d:Math.max(0,(level-1)*30);      // campaign levels borrow the same formations, scaled by level
+const abDkMax=()=>H*.62;
+const cloneJ=o=>JSON.parse(JSON.stringify(o));
 
 /* called first thing in startLevel: is this start part of a dive? */
-function abyssBegin(){AB.on=AB.pending;AB.pending=false;if(!AB.on)AB.last=null;}
+function abyssBegin(){AB.on=AB.pending;AB.pending=false;if(!AB.on){AB.last=null;AB.perks={};AB.hp=0;AB.gates=[];AB.mode='dive';}}      // a campaign start can never inherit dive upgrades
 function abyssStart(){
-  const a=abSave();a.runs++;
-  AB.f=1;AB.cl=0;AB.B0=abStartBlock();AB.perks={};AB.hp=0;AB.rr=0;AB.offer=[];AB.last=null;AB.msg='';
-  AB.g0=save.gems;AB.c0=save.coins;AB.k0=gLife().kills||0;AB.gems=0;
-  AB.pending=true;persist();startLevel(abLevel(1));
+  const a=abSave();a.runs++;a.run=null;
+  AB.L0=abStartLevel();AB.d=0;AB.n=0;AB.nc=150;AB.nb=1000;AB.perks={};AB.hp=0;AB.msg='';AB.last=null;AB.rare=false;
+  AB.mg=Math.floor(a.bd/250);AB.g0=save.gems;AB.c0=save.coins;AB.k0=gLife().kills||0;AB.kills=0;
+  AB.pending=true;persist();startLevel(AB.L0);
 }
 /* called in startLevel once run and player exist */
 function abyssInit(){
   if(!AB.on)return;
-  const xm=1+abOverBy(AB.f)*.2;
-  run.ab=AB.f;run.xm=xm;run.tut=null;run.tips=[];run.hint=0;
-  run.budget=Math.round(run.budget*(1+(xm-1)*.5));
-  if(AB.hp>0)player.hp=clamp(AB.hp+10,10,player.maxHp);
-}
-/* events of the Abyss: any cosmic event, random; every 10th floor a staged event with the escorts (like the campaign), the 5th floors stay plain */
-function abyssPlan(f){
-  const pick=()=>PHO[Math.floor(Math.random()*PHO.length)];
-  const one=(id,w)=>({id,w,hp:0,kf:1,n:1,of:1});
-  if(f%5===0){
-    if(f%10!==0)return[];
-    const id=pick(),kf=[.55,.8,1];
-    return kf.map((k,i)=>({id,w:'esc',hp:0,kf:k,n:i+1,of:3}));
-  }
-  if(f<3||Math.random()<.3)return[];
-  const out=[one(pick(),'lvl')];
-  if(f>=20&&Math.random()<.5)out.push(one(pick(),'lvl'));
-  return out;
+  level=abLvl(AB.d);
+  run.ab=1;run.xm=abXm(AB.d);run.tut=null;run.tips=[];run.hint=0;run.banner=0;run.budget=1e9;run.isBoss=false;run.phase='main';
+  if(AB.hp>0)player.hp=clamp(AB.hp,10,player.maxHp);
+  AB.dk=0;AB.mode='dive';AB.after='';AB.gates=[];AB.gt=0;AB.hinted=0;AB.sp=2.2;AB.mn=24;AB.ev=48;AB.mt=5;AB.hit=.6;AB.wt=0;AB.zone=abZone(AB.d);AB.top=0;AB.esc=0;AB.dAcc=0;
+  AB.snow=null;
+  const a=abSave();
+  if(!a.tut){a.tut=1;comm('ctl',t('abT1'),1.6);comm('ctl',t('abT2'),.4);comm('ctl',t('abT3'),.4);}
+  abSnap();
 }
 
-/* ---- upgrades ---- */
+/* ---- the dive is saved ----
+   A snapshot is taken when the dive starts and at every checkpoint (after each gate, after each Warden). Leaving to the menu or closing the game keeps it;
+   continuing restarts from the last checkpoint with the same upgrades and health. Only dying or starting a new dive ends it. */
+function abSnap(){
+  if(!AB.on||!player)return;
+  const a=abSave();AB.hp=player.hp;
+  a.run={v:2,d:Math.floor(AB.d),n:AB.n,nc:AB.nc,nb:AB.nb,L0:AB.L0,perks:cloneJ(AB.perks),hp:AB.hp,gd:save.gems-AB.g0,cd:save.coins-AB.c0,kd:(gLife().kills||0)-AB.k0};
+  persist();
+}
+function abSnapClear(){const a=abSave();if(a.run){a.run=null;persist();}}
+const abHasRun=()=>{const r=save.ab&&save.ab.run;return !!(r&&r.v===2&&abUnlocked());};
+const abRunDepth=()=>{const r=abSave().run;return r?r.d|0:0;};
+function abyssSuspend(){if(!AB.on)return;AB.on=false;AB.pending=false;persist();}      // keep the saved dive, just leave
+function abyssResume(){
+  const a=abSave(),r=a.run;if(!r||r.v!==2)return false;
+  AB.L0=r.L0||abStartLevel();AB.d=r.d|0;AB.n=r.n|0;AB.nc=r.nc||AB.d+150;AB.nb=r.nb||(Math.floor(AB.d/1000)+1)*1000;AB.perks=cloneJ(r.perks||{});AB.hp=r.hp|0;AB.msg='';AB.last=null;AB.rare=false;
+  for(const k in AB.perks)if(!PKI[k]||!Array.isArray(AB.perks[k])||PKI[k].inst)delete AB.perks[k];
+  AB.mg=Math.floor(a.bd/250);AB.g0=save.gems-(r.gd|0);AB.c0=save.coins-(r.cd|0);AB.k0=(gLife().kills||0)-(r.kd|0);AB.kills=0;
+  AB.pending=true;startLevel(AB.L0);return true;
+}
+
+/* ---- depth rewards: reached once, paid once, forever ---- */
+const ABM=[{d:500,g:5},{d:1000,ch:1},{d:1500,g:15},{d:2200,ship:'lancer'},{d:3000,ch:1,g:20},{d:4000,ship:'tempest'},{d:5000,ch:2},{d:6500,ship:'blaze'},{d:8000,ch:1,g:50},{d:10000,ship:'eclipse'}];
+function abMileTxt(m){
+  const p=[];if(m.g)p.push(m.g+' '+t('rwGems'));if(m.ch)p.push((m.ch>1?m.ch+' ':'')+t('chest'));if(m.ship)p.push(t('rw_pilot')+': '+t('pl_'+m.ship));
+  return p.join(' + ');
+}
+function abyssMiles(){
+  const a=abSave();
+  ABM.forEach((m,i)=>{
+    if(AB.d<m.d||((a.ms>>i)&1))return;
+    a.ms|=1<<i;let g=m.g||0;
+    if(m.ship){if(save.pilots.includes(m.ship))g+=40;else save.pilots.push(m.ship);}
+    save.gems+=g;if(m.ch)save.chests=(save.chests||0)+m.ch;
+    hype('abm'+i,abM(m.d)+'  ·  '+abMileTxt(m),{kind:'pop',col:'#ffd27a',y:.62,dur:2.6,sz:1.1,sfx:'chest'});persist();
+  });
+}
+
+/* ---- upgrades (gates) ---- */
 const PK=[
   {id:'dmg',ic:'laser',w:10,min:1,v:[12,20,30],fx:(S,v)=>{S.dmg*=1+v/100;}},
   {id:'rate',ic:'rate',w:10,min:1,v:[10,17,25],fx:(S,v)=>{S.fireDelay/=1+v/100;}},
   {id:'cannon',ic:'cannon',w:5,min:2,v:[1,1,1],max:2,fx:(S,v)=>{S.shots+=v;}},
   {id:'hull',ic:'armor',w:8,min:1,v:[1,1,2],max:4,fx:(S,v)=>{S.maxHp+=10*v;}},
-  {id:'shield',ic:'shieldp',w:8,min:1,v:[1,1,2],max:3,fx:(S,v)=>{S.startShield+=v;}},
+  {id:'shield',ic:'shieldp',w:8,min:1,v:[1,1,2],inst:true},
   {id:'speed',ic:'engine',w:7,min:1,v:[8,13,20],fx:(S,v)=>{S.speed*=1+v/100;}},
   {id:'magnet',ic:'magnet',w:6,min:1,v:[35,60,90],fx:(S,v)=>{S.magnet*=1+v/100;}},
   {id:'loot',ic:'loot',w:7,min:1,v:[15,25,40],fx:(S,v)=>{S.loot*=1+v/100;}},
@@ -15592,7 +15622,7 @@ function abyssMods(S){
   }
 }
 function abTierRoll(){
-  const f=AB.f,w=f<5?[80,20,0]:f<15?[60,32,8]:[45,38,17];
+  const n=AB.n,w=AB.rare?[0,62,38]:n<2?[80,20,0]:n<5?[60,32,8]:[45,38,17];
   let r=Math.random()*100;for(let i=0;i<3;i++){r-=w[i];if(r<=0)return i+1;}return 1;
 }
 function abOffer(){
@@ -15611,14 +15641,245 @@ function abOffer(){
 const PKR=['common','rare','epic'];
 const pkVal=o=>PKI[o.id].v[o.tier-1];
 const pkText=o=>t('pkd_'+o.id,{v:pkVal(o)});
+/* new stats while flying (the ship keeps its health, the maximum moves) */
+function abyssRefresh(){
+  const p=player,S=stats(),old=p.maxHp;
+  p.S=S;p.maxHp=S.maxHp;if(p.maxHp>old)p.hp+=p.maxHp-old;p.hp=Math.min(p.hp,p.maxHp);
+}
+function abyssTake(o){
+  const v=pkVal(o),pl=player;
+  if(o.id==='repair')pl.hp=Math.min(pl.maxHp,pl.hp+10*v);
+  else if(o.id==='shield'){if(pl.shield&&pl.shield.type==='cyan'){pl.shield.hits+=v;pl.shield.max=Math.max(pl.shield.max,pl.shield.hits);}else{giveShield('cyan');pl.shield.hits=v;pl.shield.max=v;}}
+  else{(AB.perks[o.id]||(AB.perks[o.id]=[])).push(v);abyssRefresh();if(o.id==='hull')pl.hp=Math.min(pl.maxHp,pl.hp+10);}
+  const col=RARC[PKR[o.tier-1]];
+  rings.push({x:pl.x,y:pl.y,r:10,max:160,life:.55,maxl:.55,col},{x:pl.x,y:pl.y,r:6,max:90,life:.4,maxl:.4,col:'#ffffff'});
+  sfx('power');kick(.3,0);addShake(4);
+  hype('abp',t('pk_'+o.id),{kind:'pop',col,y:.46,dur:1.5,sz:1.2});
+  AB.gates=[];AB.mode='dive';AB.n++;AB.nc=Math.floor(AB.d)+300;AB.rare=false;
+  AB.dk*=.35;AB.sp=2.4;AB.mn=Math.max(AB.mn,10);AB.ev=Math.max(AB.ev,25);
+  abSnap();
+}
 
-/* ---- floor cleared / run over ---- */
-function abyssCleared(){
-  const a=abSave();AB.hp=player.hp;AB.cl=AB.f;AB.msg='';
-  const parts=[];
-  if(AB.f>a.best){a.best=AB.f;const g=1+(AB.f%5===0?1:0);save.gems+=g;parts.push(t('abRecord')+' +'+g);}
-  [10,25,50,75,100].forEach((m,i)=>{if(AB.f>=m&&!((a.ms>>i)&1)){a.ms|=1<<i;save.chests=(save.chests||0)+1;parts.push(t('abChest'));}});
-  AB.msg=parts.join(' · ');
+/* ---- enemies that fly through ---- */
+const ABU={drone:0,zig:0,gunner:140,diver:300,tank:450,splitter:560,weaver:900,hunter:1200};
+function abPick(list){
+  const ok=list.filter(k=>abD()>=(ABU[k]||0)),pool=ok.length?ok:['drone'];
+  let tot=0;const ws=pool.map(k=>{const w=ET[k].w;tot+=w;return w;});let r=Math.random()*tot;
+  for(let i=0;i<pool.length;i++){r-=ws[i];if(r<=0)return pool[i];}
+  return pool[0];
+}
+function abE(type,x,y,mv,o){
+  const e=makeEnemy(type,x,y,o);
+  e.stream=true;e.mv=mv;e.sfT=rnd(1.3,2.8);e.arrived=false;e.vy=e.spd*1.3;e.x0=x;e.ph0=rnd(0,TAU);
+  enemies.push(e);return e;
+}
+const ABF={
+  column(){
+    const n=Math.min(7,3+Math.floor(abD()/600)),ty=abPick(['drone','zig','gunner','hunter']),x0=rnd(70,W-70);
+    for(let i=0;i<n;i++)abE(ty,x0,-30-i*42,(e,dt)=>{e.y+=e.vy*dt;e.x=e.x0+Math.sin(e.t*1.5+e.ph0)*18;});
+  },
+  snake(){
+    const n=Math.min(9,5+Math.floor(abD()/800)),ty=abPick(['drone','zig']),dir=Math.random()<.5?1:-1,ph=rnd(0,TAU);
+    for(let i=0;i<n;i++){
+      const e=abE(ty,W/2,-60,(e,dt)=>{if(e.dly>0){e.dly-=dt;return;}e.age+=dt;e.y+=e.vy*dt*.85;e.x=W/2+Math.sin(e.age*1.25*dir+ph)*(W*.36);});
+      e.dly=i*.34;e.age=0;
+    }
+  },
+  wedge(){
+    const rows=Math.min(4,2+Math.floor(abD()/900)),ty=abPick(['zig','gunner','drone']),cx=rnd(110,W-110);
+    for(let r=0;r<rows;r++)for(const s of(r?[-1,1]:[0])){
+      const e=abE(ty,cx+s*r*40,-34-r*38,(e,dt)=>{e.y+=e.vy*dt;e.x=e.x0+Math.sin(e.t*1.1+e.ph0)*8;});e.vy*=.92;
+    }
+  },
+  picket(){
+    [W*.26,W*.74].forEach((x,i)=>{
+      const e=abE('gunner',x,-40-i*26,(e,dt)=>{
+        if(e.t<1.3+i*.2)e.y+=e.vy*1.6*dt;
+        else if(e.t<7){e.y+=((92+i*16)-e.y)*Math.min(1,dt*3);e.x=e.x0+Math.sin(e.t*.9)*30;}
+        else e.y+=e.vy*2.2*dt;
+      });
+      e.sfT=.9+i*.5;e.hold=true;
+    });
+  },
+  pincer(){
+    const n=Math.min(5,3+Math.floor(abD()/1000)),ty=abPick(['drone','zig']);
+    for(const side of[-1,1])for(let i=0;i<n;i++)abE(ty,side<0?-24:W+24,66+i*30,(e,dt)=>{e.x-=side*108*dt;e.y+=36*dt;});
+  },
+  strikers(){
+    const n=Math.min(4,2+Math.floor(abD()/1100));
+    for(let i=0;i<n;i++){
+      const x=W*(i+1)/(n+1)+rnd(-20,20);
+      const e=abE('diver',x,-34-i*20,(e,dt)=>{
+        if(e.mode===0){e.y+=e.vy*1.7*dt;if(e.y>=e.sy){e.mode=1;e.t=0;}}
+        else if(e.mode===1){e.flash=(Math.floor(e.t*14)%2)?.04:0;if(e.t>.75){e.mode=2;e.t=0;const a=aim(e.x,e.y,player.x,player.y),v=360+level*2;e.dash=[Math.cos(a)*v,Math.sin(a)*v];sfx('eshot');}}
+        else{e.x+=e.dash[0]*dt;e.y+=e.dash[1]*dt;}
+      });
+      e.sy=rnd(80,170);e.mode=0;e.canShoot=false;
+    }
+  },
+  ring(){
+    const ty=abPick(['drone','zig']),cx=rnd(150,W-150);
+    for(let i=0;i<8;i++){const a0=i/8*TAU;abE(ty,cx,-80,(e,dt)=>{const R=Math.max(34,150-e.t*16),a=a0+e.t*1.25;e.x=cx+Math.cos(a)*R;e.y=-70+e.t*58+Math.sin(a)*R*.55;});}
+  },
+  anchor(){
+    const x=rnd(110,W-110);
+    const e=abE('tank',x,-50,(e,dt)=>{e.y+=e.vy*dt*.8;e.x=e.x0+Math.sin(e.t*.8)*40;});
+    e.elite=true;e.sz*=1.2;e.hp*=2.4;e.max=e.hp;e.coin*=3;e.cell=true;e.sfT=1.4;
+    [-1,1].forEach(s=>abE('drone',x+s*58,-70,(q,dt)=>{q.y+=e.vy*dt*.8;q.x=x+s*58+Math.sin(q.t*1.5)*10;}));
+  }
+};
+const ABW=[['column',6,0],['snake',3,120],['wedge',3,220],['picket',2,260],['pincer',2.4,360],['strikers',2,420],['ring',2,520],['anchor',1.4,520]];
+function abForm(){
+  const pool=ABW.filter(f=>abD()>=f[2]);let tot=0;pool.forEach(f=>tot+=f[1]);
+  let r=Math.random()*tot,id='column';for(const f of pool){r-=f[1];if(r<=0){id=f[0];break;}}
+  ABF[id]();
+}
+function abyssMove(e,dt){
+  e.t+=dt;if(e.flash>0)e.flash-=dt;
+  e.mv(e,dt);
+  if(e.gone)return;
+  if(e.canShoot!==false&&e.y>24&&e.y<H-150&&e.x>10&&e.x<W-10&&player&&player.alive){
+    e.sfT-=dt;
+    if(e.sfT<=0){e.sfT=(e.hold?rnd(1,1.7):rnd(1.7,3.2))*(1-Math.min(.35,abD()/7000));if(ebul.length<64)enemyFire(e);}
+  }
+  if(e.y>H+44||e.x<-90||e.x>W+90){e.gone=true;abyssEscape(e);}
+}
+function abyssEscape(e){
+  AB.dk=Math.min(abDkMax(),AB.dk+(e.cell?40:14));AB.esc++;
+  rings.push({x:clamp(e.x,20,W-20),y:H-6,r:4,max:46,life:.35,maxl:.35,col:'#9a6bff'});
+}
+/* a Splitter's halves keep flying down */
+function abyssSplit(c){c.stream=true;c.arrived=false;c.vy=c.spd*1.3;c.x0=c.x;c.ph0=rnd(0,TAU);c.sfT=9;c.mv=(e,dt)=>{e.y+=e.vy*dt;e.x+=e.vx*dt;e.vx*=1-1.2*dt;};}
+function abyssKill(e){
+  AB.dk=Math.max(0,AB.dk-(7+e.sz*.45)*(e.elite?1.8:1));AB.kills++;
+  if(e.cell)abyssLight(e.x,e.y);
+}
+function abyssLight(x,y){
+  AB.dk=Math.max(0,AB.dk-170);
+  rings.push({x,y,r:10,max:230,life:.75,maxl:.75,col:'#9fd6ff'},{x,y,r:6,max:120,life:.5,maxl:.5,col:'#ffffff'});
+  floatText(x,y-22,t('abLight'),'#bfe6ff');sfx('revive');
+}
+/* pressure mines: slow drifting spheres. A shot (or the ship touching one) sets off a blast that also hurts enemies and sets off the next mine. */
+function abMines(){
+  const n=Math.min(5,2+Math.floor(abD()/1000));
+  for(let i=0;i<n;i++){
+    const x=clamp(W*(i+.5)/n+rnd(-30,30),30,W-30);
+    foe({k:'dmine',x,y:-30-rnd(0,90),vy:rnd(46,70),ph:rnd(0,TAU),r:15,hp:fhp(.7),blast:78,col:'#59d3ff'});
+  }
+}
+
+/* the mine: drifts down, a shot or a touch sets it off; the blast hurts enemies, meteors and the ship, and sets off every mine inside it a moment later */
+function dmBlast(f){
+  boom(f.x,f.y,f.blast*.42,'#7fe0ff',22);rings.push({x:f.x,y:f.y,r:8,max:f.blast,life:.34,maxl:.34,col:'#7fe0ff'},{x:f.x,y:f.y,r:4,max:f.blast*.55,life:.22,maxl:.22,col:'#ffffff'});
+  sfx('boom');addShake(5);kick(.2,0);
+  dropCoins(f.x,f.y,Math.max(1,Math.round(1+level/14)),1);
+  const R=f.blast;
+  if(player.alive&&Math.hypot(player.x-f.x,player.y-f.y)<R+2)hurt(1,'mine');
+  for(const e of enemies){if(e.hp>0&&Math.hypot(e.x-f.x,e.y-f.y)<R+e.sz*.5){e.hp-=Math.max(e.max*.55,70+level*3);e.flash=.12;}}
+  for(const m of meteors){if(Math.hypot(m.x-f.x,m.y-f.y)<R+m.r*.5)m.hp-=m.r*6;}
+  for(const g of foes){if(g!==f&&g.k==='dmine'&&!(g.fuse>0)&&Math.hypot(g.x-f.x,g.y-f.y)<R+g.r)g.fuse=.2;}
+  if(boss&&boss.state==='fight'&&Math.hypot(boss.x-f.x,boss.y-f.y)<R+boss.sz*.6)hitBoss(boss.max*.012,f.x,f.y);
+}
+PHK.dmine={
+  upd(f,dt,p){
+    f.y+=f.vy*dt;f.x+=Math.sin(f.age*1.3+f.ph)*10*dt;
+    if(f.fuse>0){f.fuse-=dt;if(f.fuse<=0)f.hp=0;}
+    if(p.alive&&f.hp>0&&Math.hypot(p.x-f.x,p.y-f.y)<f.r+hrad()+2)f.hp=0;                 // a touch sets it off
+    if(f.hp<=0){dmBlast(f);return true;}
+    return f.y>H+50;
+  },
+  draw(c,P,K,f){
+    const s=P(f.x,f.y),k=K(f.x,f.y),r=f.r*k,bl=.5+.5*Math.sin(f.age*4+f.ph),arm=f.fuse>0;
+    c.globalCompositeOperation='lighter';
+    fcirc(c,P,f.x,f.y,f.blast,26);c.globalAlpha=(arm?.22:.05)+.03*bl;c.fillStyle='#59d3ff';c.fill();
+    c.globalAlpha=(arm?.95:.3)+.15*bl;c.strokeStyle=arm?'#ffffff':'#8fe3ff';c.lineWidth=1.6;c.setLineDash([7,8]);c.stroke();c.setLineDash([]);
+    c.globalCompositeOperation='source-over';c.globalAlpha=1;
+    c.fillStyle='#07182a';c.strokeStyle=arm?'#ffffff':f.col;c.lineWidth=2;c.beginPath();c.arc(s[0],s[1],r,0,TAU);c.fill();c.stroke();
+    c.lineWidth=2;for(let j=0;j<6;j++){const an=j*Math.PI/3+f.age*.8;c.beginPath();c.moveTo(s[0]+Math.cos(an)*r,s[1]+Math.sin(an)*r);c.lineTo(s[0]+Math.cos(an)*r*1.45,s[1]+Math.sin(an)*r*1.45);c.stroke();}
+    fglow(c,P,K,f.x,f.y,arm?'#ffffff':'#59d3ff',f.r*(1.3+.9*bl),.35+.45*bl);
+    c.globalCompositeOperation='source-over';c.globalAlpha=1;
+    fbar(c,P,K,f);
+  },
+  glow(f,x,z){fxGlow(x,4,z,24+6*Math.sin(f.age*6),f.fuse>0?'#ffffff':f.col,.8);}
+};
+
+/* ---- the dive itself ---- */
+function abyssTick(dt,edt){
+  const p=player,a=abSave();
+  AB.top+=dt;
+  // snow of the deep (a purely visual layer)
+  if(!AB.snow){AB.snow=[];for(let i=0;i<46;i++)AB.snow.push({x:rnd(0,W),y:rnd(0,H),v:rnd(18,58),s:rnd(.8,2.1),a:rnd(.12,.4),w:rnd(0,TAU)});}
+  for(const q of AB.snow){q.y+=q.v*dt;q.x+=Math.sin(AB.top*.6+q.w)*6*dt;if(q.y>H+6){q.y=-6;q.x=rnd(0,W);}}
+  const diving=AB.mode==='dive',moving=diving||AB.mode==='cache';
+  if(moving){
+    const dm=dt*(p.boost?9:6)*(diving?1:.35);AB.d+=dm;AB.dAcc+=dm;
+    if(AB.dAcc>=10){gAdd('depth',Math.floor(AB.dAcc));AB.dAcc%=10;}
+    const nl=abLvl(AB.d);if(nl!==level)level=nl;run.xm=abXm(AB.d);
+    const z=abZone(AB.d);
+    if(z>AB.zone){AB.zone=z;hype('abz',t('abz'+z),{kind:'slam',sz:1,y:.3,dur:2.6,col:'#ffffff',gcol:'#7aa8ff',sub:t('abZone'),subCol:'#bcd0ff',sfx:'slam'});}
+    // records
+    if(AB.d>a.bd)a.bd=Math.floor(AB.d);
+    const m=Math.floor(AB.d/250);
+    if(m>AB.mg){const g=m-AB.mg+(m%4===0?1:0);AB.mg=m;save.gems+=g;hype('abr',t('abRecord')+'  +'+g,{kind:'pop',col:'#d9b8ff',y:.58,dur:1.6,sz:1.05});sfx('glint');}
+    abyssMiles();
+  }
+  /* the Dark */
+  if(diving){AB.dk=Math.min(abDkMax(),AB.dk+(3.2+AB.d/250)*dt);}
+  if(AB.dk>3&&p.alive&&p.y+10>H-AB.dk){
+    AB.hit-=dt;
+    if(AB.hit<=0){AB.hit=1.5;hurt(1,'dark');sfx('abdark');}
+  }else AB.hit=Math.min(.6,AB.hit+dt);
+  if(p.alive&&diving&&AB.dk>3&&(H-AB.dk)-p.y<110&&Math.floor(AB.top*.55)!==Math.floor((AB.top-dt)*.55))sfx('abdark');
+  /* modes */
+  if(diving){
+    AB.sp-=edt;
+    const calm=PHS.on.length>0,cap=9+Math.floor(AB.d/500)-(calm?3:0);
+    if(AB.sp<=0&&enemies.length<cap){abForm();AB.sp=clamp(3.3-AB.d/1100,1.25,3.3)*rnd(.85,1.2)*(calm?1.5:1);}
+    AB.mn-=edt;if(AB.mn<=0&&AB.d>180){abMines();AB.mn=clamp(15-AB.d/350,6,15)*rnd(.8,1.2);}
+    AB.mt-=edt;if(AB.mt<=0&&AB.d>90){if(!PHS.on.length&&!PHS.q.length&&AB.d<AB.nb-80&&AB.d<AB.nc-40&&enemies.length<8)spawnMeteor();AB.mt=rnd(2.4,4.6)/(1+AB.d/2500);}
+    AB.ev-=dt;
+    if(AB.ev<=0&&AB.d>=350&&!PHS.on.length&&!PHS.q.length&&enemies.length<8){PHS.q.push({id:PHO[rint(0,PHO.length-1)],w:'lvl',hp:0,kf:1,n:1,of:1});AB.ev=rnd(60,95)*(1-Math.min(.35,AB.d/9000));}
+    if(AB.d>=AB.nb)abyssClearThen('boss');else if(AB.d>=AB.nc)abyssClearThen('gates');
+  }else if(AB.mode==='cache'){
+    AB.wt-=dt;
+    if(AB.wt<=0||(AB.w0-AB.wt>1&&!enemies.length&&!PHS.on.length)){
+      for(const e of enemies)e.gone=true;
+      ebul=[];foes=[];PHS.q.length=0;
+      if(AB.after==='boss')abyssBossStart();else abyssGates();
+    }
+  }else if(AB.mode==='gates'){
+    AB.gt+=dt;
+    for(const g of AB.gates)g.a=Math.min(1,g.a+dt*2);
+    if(p.alive)for(const g of AB.gates){if(g.a>.7&&Math.abs(p.x-g.x)<g.w/2+4&&Math.abs(p.y-g.y)<g.h/2){abyssTake(g.o);break;}}
+    if(AB.gt>9&&!AB.hinted){AB.hinted=1;comm('ctl',t('abGateHint'),0);}
+  }else if(AB.mode==='bwarn'){
+    if(run.warn<=0){run.phase='boss';run.bossSpawned=true;spawnBoss();AB.mode='boss';}
+  }
+}
+function abyssClearThen(w){
+  AB.mode='cache';AB.after=w;AB.wt=AB.w0=w==='boss'?9:6;PHS.q.length=0;
+  for(const ph of PHS.on){if(ph.st===0)ph.tele=Math.min(ph.tele,ph.t+.2);else if(ph.st===1)ph.dur=Math.min(ph.dur,ph.t+.8);}
+}
+function abyssGates(){
+  AB.offer=abOffer();AB.mode='gates';AB.gt=0;AB.hinted=0;
+  const xs=[W*.2,W*.5,W*.8];
+  AB.gates=AB.offer.map((o,i)=>({o,x:xs[i],y:H*.34,w:84,h:150,ph:rnd(0,TAU),a:0}));
+  hype('abg',t('abGates'),{kind:'slam',sz:1,y:.28,dur:2.6,col:'#ffffff',gcol:'#7dd3ff',sub:t('abGatesSub'),subCol:'#bfe6ff',sfx:'phalert'});
+  AB.msg='';
+}
+function abyssBossStart(){
+  const b=clamp(Math.round(level/5),1,20),L=LNG();
+  run.isBoss=true;run.b=b;run.phase='warn';run.warn=run.warnMax=4.4;run.hyI=0;sfx('warning');HY.intSh=-1;
+  AB.mode='bwarn';
+  if(L.tactics&&L.tactics[b-1])comm('tac',L.tactics[b-1]);
+}
+/* hooked into the boss's death: the dive goes on, with a reward and a gate of better upgrades */
+function abyssBossDown(){
+  run.isBoss=false;run.phase='main';
+  const g=Math.max(1,run.gems|0);save.gems+=g;run.gems=0;
+  AB.nb=Math.floor(AB.d)+1000;AB.d+=40;AB.rare=true;
+  hype('abw',t('abWardenDown')+'  +'+g,{kind:'pop',col:'#ffd27a',y:.6,dur:2,sz:1.05});
+  AB.mode='cache';AB.after='gates';AB.wt=AB.w0=4;
 }
 function abyssWind(){
   if(!AB.on||!player)return false;
@@ -15626,94 +15887,159 @@ function abyssWind(){
   w.pop();if(!w.length)delete AB.perks.wind;
   const p=player;p.hp=Math.max(10,Math.round(p.maxHp*.6/10)*10);p.inv=2.5;giveShield('gold');ebul=[];foes=foes.filter(f=>f.k==='pylon');
   for(let i=enemies.length-1;i>=0;i--){const e=enemies[i];if(Math.hypot(e.x-p.x,e.y-p.y)<170){e.hp-=e.max*.6;if(e.hp<=0){killEnemy(e);enemies.splice(i,1);}}}
+  AB.dk=Math.max(0,AB.dk-120);
   rings.push({x:p.x,y:p.y,r:10,max:200,life:.6,maxl:.6,col:'#52c8ff'});floatText(p.x,p.y-30,t('pk_wind'),'#9fd6ff');
   sfx('revive');vib(40);return true;
 }
+/* a paid revive: the Dark falls back and the checkpoint is saved again */
+function abyssRevived(){AB.dk=0;AB.hit=.6;abSnap();}
 function abyssEnd(){
   if(!AB.on)return;
   const a=abSave();
-  AB.last={floors:AB.cl,best:a.best,gems:save.gems-AB.g0,coins:save.coins-AB.c0,kills:(gLife().kills||0)-AB.k0,perks:Object.keys(AB.perks).reduce((n,k)=>n+AB.perks[k].length,0)};
-  AB.on=false;persist();
+  AB.last={depth:Math.floor(AB.d),best:a.bd,gems:save.gems-AB.g0,coins:save.coins-AB.c0,kills:(gLife().kills||0)-AB.k0,perks:Object.keys(AB.perks).reduce((n,k)=>n+AB.perks[k].length,0)};
+  AB.on=false;a.run=null;persist();
 }
 function abyssLostHTML(){
   const L=AB.last;
   $('#s-lost h2').textContent=t('abOver');
   $('#l-retry').textContent=t('abAgain');
-  $('#lostStats').innerHTML=statRow(t('abFloors'),L.floors)+statRow(t('abBest'),L.best)+statRow(t('kills'),fmt(L.kills))+statRow(t('collected'),`<i class="coin"></i>${fmt(Math.max(0,L.coins))}`)+(L.gems>0?statRow(t('gemsGot'),`<i class="gem"></i>${L.gems}`):'')+(L.floors&&L.floors>=L.best?`<div class="sub gnote">${t('abRecord')}</div>`:'');
+  $('#lostStats').innerHTML=statRow(t('abDepth'),abM(L.depth))+statRow(t('abBest'),abM(L.best))+statRow(t('kills'),fmt(L.kills))+statRow(t('collected'),`<i class="coin"></i>${fmt(Math.max(0,L.coins))}`)+(L.gems>0?statRow(t('gemsGot'),`<i class="gem"></i>${L.gems}`):'')+(L.depth&&L.depth>=L.best?`<div class="sub gnote">${t('abRecord')}</div>`:'');
+}
+
+/* ---- drawing: the Dark, snow, gates (overlay canvas, both renderers) ---- */
+function abIconImg(id,col){
+  const k=id+col;AB.ic=AB.ic||{};
+  if(AB.ic[k])return AB.ic[k];
+  const im=new Image();
+  im.src='data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="96" height="96" fill="none" stroke="${col}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${IC[PKI[id].ic]||''}</svg>`);
+  return AB.ic[k]=im;
+}
+function abyssOver(c,P,K,scr){
+  if(!AB.on||!player)return;
+  c.save();c.lineCap='round';
+  const cw=scr?cssW:W,ch=scr?cssH:H;
+  /* marine snow */
+  if(AB.snow){c.globalCompositeOperation='lighter';c.fillStyle='#a9c2ff';for(const q of AB.snow){const s=P(q.x,q.y),k=K(q.x,q.y);c.globalAlpha=q.a;c.beginPath();c.arc(s[0],s[1],Math.max(.6,q.s*k),0,TAU);c.fill();}}
+  /* depth tint at the edges of the screen */
+  {const dv=.14+clamp(AB.d/4500,0,1)*.34;c.globalCompositeOperation='source-over';
+   const g=c.createRadialGradient(cw/2,ch*.52,ch*.3,cw/2,ch*.52,ch*.8);g.addColorStop(0,'rgba(0,0,14,0)');g.addColorStop(1,`rgba(0,0,16,${dv.toFixed(3)})`);
+   c.globalAlpha=1;c.fillStyle=g;c.fillRect(0,0,cw,ch);}
+  /* the Dark */
+  if(AB.dk>3){
+    const yT=H-AB.dk,bot=scr?cssH+40:H+40,n=14,top=[];
+    for(let i=0;i<=n;i++){const x=-80+(W+160)*i/n,y=yT+Math.sin(time*1.5+i*.8)*7+Math.sin(time*.8+i*2.1)*5;top.push(P(x,y));}
+    let t0=1e9;for(const q of top)t0=Math.min(t0,q[1]);
+    const g=c.createLinearGradient(0,t0-30,0,bot);g.addColorStop(0,'rgba(70,30,140,0)');g.addColorStop(.12,'rgba(60,24,120,.55)');g.addColorStop(.5,'rgba(14,4,42,.88)');g.addColorStop(1,'rgba(0,0,8,.94)');
+    c.globalCompositeOperation='source-over';c.globalAlpha=1;c.fillStyle=g;c.beginPath();top.forEach((q,i)=>i?c.lineTo(q[0],q[1]):c.moveTo(q[0],q[1]));c.lineTo(top[n][0]+300,bot);c.lineTo(top[0][0]-300,bot);c.closePath();c.fill();
+    const kk=K(W/2,yT),pul=.5+.5*Math.sin(time*3);
+    c.globalCompositeOperation='lighter';c.strokeStyle='rgba(140,100,255,'+(.2+.12*pul).toFixed(3)+')';c.lineWidth=Math.max(5,13*kk);c.beginPath();top.forEach((q,i)=>i?c.lineTo(q[0],q[1]):c.moveTo(q[0],q[1]));c.stroke();
+    c.strokeStyle='rgba(190,160,255,'+(.5+.25*pul).toFixed(3)+')';c.lineWidth=Math.max(1.5,3*kk);c.stroke();
+    for(let i=0;i<12;i++){const u=(time*.18+i*.0833)%1,x=W*((i*.381+.07)%1),y=yT+10-u*84,s=P(x,y);c.globalAlpha=(1-u)*.7;c.fillStyle='#b9a2ff';c.beginPath();c.arc(s[0],s[1],Math.max(.8,2*kk*(1-u*.5)),0,TAU);c.fill();}
+  }
+  /* upgrade gates */
+  for(const g of AB.gates)abDrawGate(c,P,K,g);
+  if(AB.mode==='gates'&&AB.gates.length){
+    const s=P(W/2,H*.58),k=K(W/2,H*.58),pul=.55+.45*Math.sin(time*4);
+    c.globalCompositeOperation='source-over';c.globalAlpha=pul;c.textAlign='center';c.font=`700 ${Math.max(11,15*k)}px "Chakra Petch","Tajawal",sans-serif`;c.fillStyle='#d8efff';c.shadowColor='#3aa8ff';c.shadowBlur=12;
+    c.fillText(t('abGateHint'),s[0],s[1]);c.shadowBlur=0;
+  }
+  c.restore();
+}
+function abDrawGate(c,P,K,g){
+  const col=RARC[PKR[g.o.tier-1]],a=g.a,pul=.5+.5*Math.sin(time*3+g.ph),hw=g.w/2,hh=g.h/2;
+  const tl=P(g.x-hw,g.y-hh),tr=P(g.x+hw,g.y-hh),br=P(g.x+hw,g.y+hh),bl=P(g.x-hw,g.y+hh),m=P(g.x,g.y),k=K(g.x,g.y);
+  c.globalCompositeOperation='lighter';
+  const gr=c.createLinearGradient(0,tl[1],0,bl[1]);gr.addColorStop(0,hexA(col,0));gr.addColorStop(.5,hexA(col,.3+.14*pul));gr.addColorStop(1,hexA(col,0));
+  c.globalAlpha=a;c.fillStyle=gr;c.beginPath();c.moveTo(tl[0],tl[1]);c.lineTo(tr[0],tr[1]);c.lineTo(br[0],br[1]);c.lineTo(bl[0],bl[1]);c.closePath();c.fill();
+  c.strokeStyle=hexA(col,.85);c.lineWidth=Math.max(1.5,2.6*k);
+  c.beginPath();c.moveTo(tl[0],tl[1]);c.lineTo(bl[0],bl[1]);c.moveTo(tr[0],tr[1]);c.lineTo(br[0],br[1]);c.stroke();
+  c.strokeStyle=hexA(col,.5+.3*pul);c.lineWidth=Math.max(1.5,2.2*k);
+  c.beginPath();c.moveTo(tl[0]-3*k,tl[1]);c.lineTo(tr[0]+3*k,tr[1]);c.moveTo(bl[0]-3*k,bl[1]);c.lineTo(br[0]+3*k,br[1]);c.stroke();
+  c.globalAlpha=a*(.5+.4*pul);c.drawImage(glow(col),m[0]-hw*1.7*k,m[1]-hw*1.7*k,hw*3.4*k,hw*3.4*k);
+  c.globalCompositeOperation='source-over';c.globalAlpha=a;
+  const im=abIconImg(g.o.id,'#ffffff'),isz=Math.max(20,42*k);
+  if(im.complete&&im.naturalWidth)c.drawImage(im,m[0]-isz/2,m[1]-isz/2-6*k,isz,isz);
+  c.textAlign='center';c.shadowColor='rgba(0,0,0,.9)';c.shadowBlur=6;c.fillStyle='#ffffff';
+  c.font=`700 ${Math.max(10,13*k)}px "Chakra Petch","Tajawal",sans-serif`;c.fillText(t('pk_'+g.o.id),m[0],bl[1]+16*k);
+  c.fillStyle=hexA(col,1);c.font=`600 ${Math.max(9,11*k)}px "Chakra Petch","Tajawal",sans-serif`;c.fillText(pkText(g.o),m[0],bl[1]+31*k);
+  c.shadowBlur=0;c.globalAlpha=1;
+}
+/* the HUD part: depth, zone, and how close the Dark is */
+function abyssHud(c,p){
+  const x=W/2+4;
+  txt(abM(AB.d),x,22,17,'#e8edff','center',700);
+  txt(t('abz'+abZone(AB.d)),x,38,10,'#9fb4ff','center',600);
+  const gap=(H-AB.dk)-p.y,r=AB.dk>3?clamp(1-gap/260,0,1):0,bw=108,bx=W/2-50,by=47;
+  c.fillStyle='rgba(8,10,24,.7)';rr(c,bx,by,bw,6,3);c.fill();
+  if(r>0){c.fillStyle=r>.75?'#ff5a6e':r>.45?'#ffb02e':'#a08aff';rr(c,bx,by,bw*r,6,3);c.fill();}
+  if(r>.6){c.globalAlpha=.55+.45*Math.sin(time*9);txt(t('abDarkWarn'),x,66,10,'#ff8a9a','center',700);c.globalAlpha=1;}
+  else txt(t('abBestShort',{n:fmt(abSave().bd)}),x,62,9,'#7f8fc4','center',500);
 }
 
 /* ---- screens ---- */
+let abAsk=0;
 function renderAbyss(){
-  const a=abSave(),B0=abStartBlock();
-  $('#abStats').innerHTML=statRow(t('abBest'),a.best)+statRow(t('abRuns'),a.runs)+statRow(t('abStart'),t('level')+' ~'+(B0*5+1));
-  $('#ab-go').disabled=!abUnlocked();
-}
-function renderPerks(){
-  $('#pk-kick').textContent=t('abTitle');
-  $('#pk-title').textContent=t('abCleared',{n:AB.f});
-  const sel=AB.sel>=0&&AB.offer[AB.sel]?AB.sel:-1;
-  const sb=$('#pk-sub');sb.textContent=AB.msg||'';sb.hidden=!AB.msg;
-  $('#pk-how').innerHTML=`<span class="pkn">${sel<0?'1':'2'}</span><span>${sel<0?t('abPick'):t('abPick2')}</span>`;
-  $('#pk-cards').className='pkcards'+(sel<0?' idle':'');
-  $('#pk-cards').innerHTML=AB.offer.map((o,i)=>{
-    const p=PKI[o.id],rar=PKR[o.tier-1];
-    return `<button class="pkcard${sel===i?' chosen':sel>=0?' dim':''}" data-pk="${i}" style="--rc:${RARC[rar]};--d:${i*.25}s" aria-pressed="${sel===i}"><span class="pki">${icon(p.ic)}</span><span class="pkm"><b>${t('pk_'+o.id)}</b><span class="sub">${pkText(o)}</span></span>${sel===i?`<span class="pkchk">${t('abSel')}</span>`:rbadge(rar)}</button>`;
-  }).join('');
-  const go=$('#pk-go');go.disabled=sel<0;go.classList.toggle('wait',sel<0);
-  go.innerHTML=sel<0?`<span>${t('abGoWait')}</span>`:`<span>${t('abGo',{n:AB.f+1})}</span><span class="ic" data-ic="play"></span>`;
-  const have=Object.keys(AB.perks).filter(k=>AB.perks[k].length);
-  $('#pk-have').innerHTML=have.length?have.map(k=>`<span class="mchip">${t('pk_'+k)} ${AB.perks[k].length>1?'×'+AB.perks[k].length:''}</span>`).join(''):`<span class="sub">${t('abNone')}</span>`;
-  const rr=$('#pk-reroll');rr.textContent=AB.rr>0?t('abReroll'):t('abRerolled');rr.disabled=AB.rr<=0;
-  $('#pk-quit').textContent=t('abEnd');
+  const a=abSave(),has=abHasRun();
+  $('#abStats').innerHTML=statRow(t('abBest'),abM(a.bd))+statRow(t('abRuns'),a.runs)+statRow(t('abStart'),t('level')+' ~'+abStartLevel());
+  $('#abMiles').innerHTML=ABM.map((m,i)=>`<div class="abm${(a.ms>>i)&1?' ok':''}"><b>${abM(m.d)}</b><span>${abMileTxt(m)}</span><i>${(a.ms>>i)&1?'✓':''}</i></div>`).join('');
+  const rs=$('#ab-resume'),go=$('#ab-go');
+  rs.hidden=!has;
+  if(has){const r=a.run,n=Object.keys(r.perks||{}).reduce((s,k)=>s+((r.perks[k]||[]).length),0);
+    rs.innerHTML=`<span class="two"><b>${t('abCont')}</b><small>${t('abContSub',{n:abM(r.d),p:n})}</small></span><span class="ic" data-ic="play"></span>`;}
+  go.className='btn xl'+(has?(abAsk?' danger':''):' primary');
+  go.innerHTML=`<span>${has?(abAsk?t('abSure'):t('abNewDive')):t('abDive')}</span>`+(has?'':'<span class="ic" data-ic="play"></span>');
+  go.disabled=!abUnlocked();
   fillIcons();
-}
-function abyssPerks(){
-  AB.offer=abOffer();AB.rr=1;AB.sel=-1;renderPerks();show('perk');
-}
-function abyssPick(i){
-  const o=AB.offer[i];if(!o)return;AB.sel=-1;
-  const p=PKI[o.id],v=pkVal(o);
-  if(p.inst){AB.hp=Math.min(AB.hp+10*v,Math.round((stats().maxHp)/10)*10);}
-  else{(AB.perks[o.id]||(AB.perks[o.id]=[])).push(v);if(o.id==='hull')AB.hp+=10;}
-  AB.f++;AB.pending=true;sfx('buy');persist();
-  startLevel(abLevel(AB.f));
 }
 function abyssBind(){
   click('#b-abyss',()=>{if(abUnlocked())show('ab');else sfx('deny');});
-  click('#ab-go',()=>{if(abUnlocked())abyssStart();});
-  $('#pk-cards').addEventListener('click',e=>{          // tap = choose (highlighted), tap the chosen card again or press the button = confirm
-    const b=e.target.closest('[data-pk]');if(!b)return;audioInit();const i=+b.dataset.pk;
-    if(AB.sel===i){abyssPick(i);return;}
-    AB.sel=i;sfx('click');renderPerks();
+  click('#ab-go',()=>{
+    if(!abUnlocked())return;
+    if(abHasRun()&&!abAsk){abAsk=setTimeout(()=>{abAsk=0;renderAbyss();},3500);sfx('click');renderAbyss();return;}   // a saved dive exists: ask once before throwing it away
+    clearTimeout(abAsk);abAsk=0;abyssStart();
   });
-  click('#pk-go',()=>{if(AB.sel>=0&&AB.offer[AB.sel])abyssPick(AB.sel);else sfx('deny');});
-  click('#pk-reroll',()=>{if(AB.rr<=0)return;AB.rr--;AB.sel=-1;AB.offer=abOffer();renderPerks();});
-  click('#pk-quit',()=>{abyssEnd();state='lost';renderLost();show('lost');});
+  click('#ab-resume',()=>{clearTimeout(abAsk);abAsk=0;abyssResume();});
 }
+function abPauseNote(){const n=$('#p-note');if(!n)return;n.hidden=!AB.on;n.textContent=AB.on?t('abPauseNote'):'';}
 function abyssMenuBtn(){
   const b=$('#b-abyss');if(!b)return;const u=abUnlocked(),a=abSave();
   b.disabled=!u;
-  b.innerHTML=`<span class="ic">${icon(u?'gravity':'lock')}</span><span class="two"><b>${t('abTitle')}</b><small>${u?(a.best?t('abBestShort',{n:a.best}):t('abNew')):t('abLock')}</small></span>`;
+  b.innerHTML=`<span class="ic">${icon(u?'gravity':'lock')}</span><span class="two"><b>${t('abTitle')}</b><small>${u?(abHasRun()?t('abMenuRun',{n:abM(abRunDepth())}):a.bd?t('abBestShort',{n:fmt(a.bd)}):t('abNew')):t('abLock')}</small></span>`;
 }
+
+/* ---- sounds: noise and falling low tones only ---- */
+Object.assign(SFX,{
+  abdark(){tone(54,36,.55,'sine',.2);noise(.45,.07,320,70,'lowpass');},
+  abdive(){noise(.9,.2,900,90,'lowpass');tone(90,40,.8,'sine',.2);}
+});
+Object.assign(GAP,{abdark:1.1});
 
 /* ---- strings ---- */
 Object.assign(T.en,{
-  abTitle:'The Abyss',abKick:'Endless mode',abDesc:'Dive floor after floor. There is no last level, only deeper.',abDive:'Dive',
-  abFloor:'FLOOR {n}',abCleared:'Floor {n} cleared',abPick:'Choose 1 of these 3 upgrades',abPick2:'Now press the button to continue',abGoWait:'Choose an upgrade to continue',abGo:'Dive to floor {n}',abSel:'CHOSEN',abReroll:'Reroll (free once)',abRerolled:'Rerolled',abEnd:'End the dive',abOver:'Dive over',abAgain:'Dive again',
-  abFloors:'Floors cleared',abBest:'Best floor',abRuns:'Dives',abStart:'Starts around',abRecord:'New record!',abChest:'Depth chest!',abNone:'No upgrades yet',abLock:'Clear level 20',abNew:'New',abBestShort:'Best: floor {n}',
-  abL1:'Every floor is a level. Every 5th floor is a boss.',abL2:'Pick one of three random upgrades after each floor. They last for this dive only.',abL3:'Damage carries over, one hit is healed between floors. Records pay gems and chests.',
+  abTitle:'The Abyss',abKick:'Endless dive',abDesc:'No levels. One endless dive. Depth is your score.',abDive:'Dive',
+  abCont:'Continue the dive',abContSub:'Checkpoint {n} · upgrades: {p}',abNewDive:'New dive',abSure:'Tap again: ends the saved dive',abMenuRun:'Dive saved · {n}',abSaved:'Your dive is saved automatically.',abPauseNote:'The dive is saved at every checkpoint. Leaving resumes from the last one.',
+  abM:'m',abDepth:'Depth',abBest:'Best depth',abRuns:'Dives',abStart:'Difficulty starts at',abRecord:'New depth record!',abChest:'Depth chest!',abMile:'Depth rewards',abNone:'No upgrades yet',abLock:'Clear level 20',abNew:'New',abBestShort:'Best: {n} m',
+  abL1:'No levels, no stops. The ship dives and the depth is your score.',abL2:'The Dark rises behind you. Destroy enemies to push it back. Every one that gets past feeds it.',abL3:'Fly into a gate to take an upgrade. A Warden guards every 1000 m. Records pay gems and chests.',
+  abOver:'Dive over',abAgain:'Dive again',abDarkWarn:'THE DARK IS CLOSE',abLight:'LIGHT',abZone:'NEW ZONE',
+  abz0:'Sunless Shelf',abz1:'Midnight Reach',abz2:'The Crush',abz3:'Hollow Deep',abz4:'Black Trench',abz5:'The Bottomless',
+  abGates:'UPGRADE GATES',abGatesSub:'Fly into one gate to take its upgrade',abGateHint:'Steer your ship into a glowing gate',abWardenDown:'WARDEN DOWN',
+  abT1:'The Dark rises from below. Destroy enemies to push it back.',abT2:'Enemies that fly past you feed the Dark.',abT3:'Shoot the blue mines near a crowd: the blast chains. Fly into gates to take upgrades.',
   pk_dmg:'Hot Rounds',pkd_dmg:'+{v}% damage',pk_rate:'Quick Trigger',pkd_rate:'+{v}% fire rate',pk_cannon:'Extra Barrel',pkd_cannon:'+{v} laser',pk_hull:'Reinforced Hull',pkd_hull:'+{v} max hit and heal 1',
-  pk_shield:'Shield Cell',pkd_shield:'+{v} shield at every floor start',pk_speed:'Thrusters',pkd_speed:'+{v}% speed',pk_magnet:'Magnet Core',pkd_magnet:'+{v}% coin magnet',pk_loot:'Salvage Rights',pkd_loot:'+{v}% coins',
+  pk_shield:'Shield Cell',pkd_shield:'+{v} shield charge now',pk_speed:'Thrusters',pkd_speed:'+{v}% speed',pk_magnet:'Magnet Core',pkd_magnet:'+{v}% coin magnet',pk_loot:'Salvage Rights',pkd_loot:'+{v}% coins',
   pk_cool:'Cold Cells',pkd_cool:'-{v}% skill cooldown',pk_crit:'Sharp Eye',pkd_crit:'+{v}% critical hits',pk_repair:'Field Kit',pkd_repair:'Restore {v} hit(s) now',pk_wind:'Second Wind',pkd_wind:'Survive one fatal hit',
   pk_glass:'Glass Cannon',pkd_glass:'+{v}% damage, but 1 max hit less'
 });
 Object.assign(T.ar,{
-  abTitle:'الهاوية',abKick:'وضع بلا نهاية',abDesc:'اغطس طابقاً بعد طابق. لا توجد مرحلة أخيرة، فقط عمق أكبر.',abDive:'اغطس',
-  abFloor:'الطابق {n}',abCleared:'أنهيت الطابق {n}',abPick:'اختر واحداً من هذه التطويرات الثلاثة',abPick2:'الآن اضغط الزر للمتابعة',abGoWait:'اختر تطويراً لتتابع',abGo:'غُص إلى الطابق {n}',abSel:'تم الاختيار',abReroll:'بدّل البطاقات (مرة مجانية)',abRerolled:'تم التبديل',abEnd:'أنهِ الغطسة',abOver:'انتهت الغطسة',abAgain:'اغطس مجدداً',
-  abFloors:'الطوابق المنجزة',abBest:'أفضل طابق',abRuns:'عدد الغطسات',abStart:'تبدأ حول',abRecord:'رقم قياسي جديد!',abChest:'صندوق العمق!',abNone:'لا تطويرات بعد',abLock:'أنهِ المرحلة 20',abNew:'جديد',abBestShort:'الأفضل: الطابق {n}',
-  abL1:'كل طابق مرحلة. وكل طابق خامس زعيم.',abL2:'اختر واحداً من ثلاثة تطويرات عشوائية بعد كل طابق. تبقى لهذه الغطسة فقط.',abL3:'الضرر يستمر، وتُصلَح إصابة واحدة بين الطوابق. الأرقام القياسية تمنح جواهر وصناديق.',
+  abTitle:'الهاوية',abKick:'غطس بلا نهاية',abDesc:'لا مراحل. غطسة واحدة بلا نهاية. العمق هو نتيجتك.',abDive:'اغطس',
+  abCont:'تابع الغطسة',abContSub:'نقطة الحفظ {n} · التطويرات: {p}',abNewDive:'غطسة جديدة',abSure:'اضغط مرة أخرى: تنتهي الغطسة المحفوظة',abMenuRun:'غطسة محفوظة · {n}',abSaved:'غطستك تُحفظ تلقائياً.',abPauseNote:'تُحفظ الغطسة عند كل نقطة حفظ. الخروج يكمل من آخر واحدة.',
+  abM:'م',abDepth:'العمق',abBest:'أفضل عمق',abRuns:'عدد الغطسات',abStart:'تبدأ الصعوبة من',abRecord:'رقم عمق قياسي جديد!',abChest:'صندوق العمق!',abMile:'مكافآت العمق',abNone:'لا تطويرات بعد',abLock:'أنهِ المرحلة 20',abNew:'جديد',abBestShort:'الأفضل: {n} م',
+  abL1:'لا مراحل ولا توقف. السفينة تغطس والعمق هو نتيجتك.',abL2:'الظلام يصعد خلفك. دمّر الأعداء لتدفعه للخلف، وكل عدو يفلت منك يغذّيه.',abL3:'ادخل بالسفينة في بوابة لتأخذ تطويراً. يحرس كل 1000 م حارس. الأرقام القياسية تمنح جواهر وصناديق.',
+  abOver:'انتهت الغطسة',abAgain:'اغطس مرة أخرى',abDarkWarn:'الظلام قريب',abLight:'ضوء',abZone:'منطقة جديدة',
+  abz0:'الرف المظلم',abz1:'بلوغ منتصف الليل',abz2:'السحق',abz3:'العمق الأجوف',abz4:'الخندق الأسود',abz5:'اللاقاع',
+  abGates:'بوابات التطوير',abGatesSub:'ادخل بالسفينة في بوابة لتأخذ تطويرها',abGateHint:'وجّه سفينتك إلى بوابة متوهجة',abWardenDown:'سقط الحارس',
+  abT1:'الظلام يصعد من الأسفل. دمّر الأعداء لتدفعه للخلف.',abT2:'الأعداء الذين يمرّون من أمامك يغذّون الظلام.',abT3:'أطلق على الألغام الزرقاء قرب الحشود: الانفجار يتسلسل. وادخل البوابات لتأخذ التطويرات.',
   pk_dmg:'ذخيرة ساخنة',pkd_dmg:'ضرر +{v}%',pk_rate:'زناد سريع',pkd_rate:'سرعة إطلاق +{v}%',pk_cannon:'ماسورة إضافية',pkd_cannon:'+{v} ليزر',pk_hull:'بدن معزّز',pkd_hull:'+{v} إصابة قصوى وإصلاح واحدة',
-  pk_shield:'خلية درع',pkd_shield:'+{v} درع عند بداية كل طابق',pk_speed:'دافعات',pkd_speed:'سرعة +{v}%',pk_magnet:'نواة مغناطيس',pkd_magnet:'مغناطيس العملات +{v}%',pk_loot:'حقوق الإنقاذ',pkd_loot:'عملات +{v}%',
+  pk_shield:'خلية درع',pkd_shield:'شحنة درع +{v} فوراً',pk_speed:'دافعات',pkd_speed:'سرعة +{v}%',pk_magnet:'نواة مغناطيس',pkd_magnet:'مغناطيس العملات +{v}%',pk_loot:'حقوق الإنقاذ',pkd_loot:'عملات +{v}%',
   pk_cool:'خلايا باردة',pkd_cool:'-{v}% من وقت المهارة',pk_crit:'عين حادة',pkd_crit:'+{v}% ضربات حرجة',pk_repair:'عدّة إصلاح',pkd_repair:'استعد {v} إصابة الآن',pk_wind:'نَفَس ثانٍ',pkd_wind:'تنجو من ضربة قاضية واحدة',
   pk_glass:'مدفع زجاجي',pkd_glass:'ضرر +{v}% لكن إصابة قصوى أقل بواحدة'
 });
@@ -15851,7 +16177,7 @@ const IC={
 Object.assign(IC,PART_IC);
 const icon=n=>`<svg class="ic-${n}" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||''}</svg>`;
 function fillIcons(){document.querySelectorAll('[data-ic]').forEach(el=>{if(!el.firstChild)el.innerHTML=icon(el.dataset.ic);});}
-const screens=['main','levels','shop','set','pause','revive','ad','lost','done','over','chest','daily','codex','goals','ab','perk'];
+const screens=['main','levels','shop','set','pause','revive','ad','lost','done','over','chest','daily','codex','goals','ab'];
 let curScreen='main',setFrom='main',shopFrom='main',shopTab='up',lastBought=null;
 function show(n){
   curScreen=n;
@@ -15985,7 +16311,7 @@ function renderSettings(){
   $('#b-reset').textContent=t('reset');
 }
 function showRevive(){
-  const L=AB.on?Math.round(AB.f*1.6):level,cost=60+L*20+run.revives*80;
+  const L=AB.on?Math.round(level*.9):level,cost=60+L*20+run.revives*80;
   $('#rv-info').textContent=t('reviveInfo');
   const ad=$('#rv-ad');ad.textContent=run.adUsed?t('reviveAdUsed'):t('reviveAd');ad.disabled=run.adUsed;
   const rc=$('#rv-coin');rc.innerHTML=`<i class="coin"></i><span>${t('reviveCoin',{n:cost})}</span>`;rc.dataset.cost=cost;rc.disabled=save.coins<cost;
@@ -16045,9 +16371,9 @@ function renderLost(){
   $('#l-retry').textContent=t('retry');
   $('#lostStats').innerHTML=statRow(t('level'),level)+statRow(t('progress'),Math.round(runProgress()*100)+'%')+statRow(t('kills'),run.killed)+statRow(t('bestCombo'),'x'+run.bestCombo)+statRow(t('collected'),`<i class="coin"></i>${run.coins}`);
 }
-function pause(){if(state!=='play')return;state='paused';input.boost=false;drag=null;persist();show('pause');}
+function pause(){if(state!=='play')return;state='paused';input.boost=false;drag=null;persist();show('pause');abPauseNote();}
 function resume(){if(state!=='paused')return;state='play';show(null);}
-function toMenu(){if(AB.on)abyssEnd();state='menu';player=null;run=null;boss=null;fin=null;persist();show('main');}
+function toMenu(){if(AB.on)abyssSuspend();state='menu';player=null;run=null;boss=null;fin=null;persist();show('main');}
 
 const click=(sel,fn)=>$(sel).addEventListener('click',e=>{audioInit();sfx('click');fn(e);});
 function launchLevel(L){
@@ -16179,7 +16505,7 @@ click('#o-shop',()=>{shopFrom='over';show('shop');});
 click('#o-menu',toMenu);
 
 /* ============ boot ============ */
-if(window.__VR_TEST)window.__vr={HG,PILOTS,PN,drawShip,buildShip,hgFlush,fleetPvSelect,hgPreviewRender,NAR,narEst,openSubs,endSubs,cnSubs,LNG,BF,BR,updateBackground,get rings(){return rings;},hitBoss,HY,updHype,hySpeed,hype,cineStart,cineEnd,get cine(){return cine;},CS,CAM,R3,applyGfx,r3draw,get shake(){return shake;},set shake(v){shake=v;},get world(){return world;},setWorld,get meteors(){return meteors;},get picks(){return picks;},get ebul(){return ebul;},get parts(){return parts;},spawnMeteor,makeEnemy,spawnSquad,spawnBoss,set boss(v){boss=v;},mkEsc,dropCoins,boom,giveShield,get scrollMul(){return scrollMul;},set scrollMul(v){scrollMul=v;},get time(){return time;},set time(v){time=v;},startLevel,update,updFx,render,updCine,hurt,get state(){return state;},set state(v){state=v;},get level(){return level;},get run(){return run;},get player(){return player;},get boss(){return boss;},get enemies(){return enemies;},stats,save:()=>save,finishLevel,updFinale,useSkill,fireWeapon,get bullets(){return bullets;},get bolts(){return bolts;},get lanes(){return lanes;},get foes(){return foes;},get H(){return H;},get W(){return W;},foe:o=>foe(o),updFoes,get rings(){return rings;},get fin(){return fin;},showRevive,reviveGame,die,renderShop,renderLevels,applyLang,frame,drawBossPortrait,show,renderCodex,drawLoreCard,applyPart,partsAbsorb,dropPart,partsUpdate,PARTS,PART_COST,partLv,WEAPONS,SKILLS,get rails(){return rails;},get strikes(){return strikes;},sfxNames:()=>Object.keys(SFX),dailyReward,renderDaily,dailyState,DAILY_SHIPS,shipOnDay,CH,CH3,openChestScreen,chOpen,chestAuto,rollChest,applyReward,chestBack,chestTick,PHS,PHD,PHO,PHK,phStart,phReset,phPlan,phIntensity,holeDraw2D,gAdd,gMax,goalsToday,newGoals,MIS,ACH,achReady,achTier,goalsReady,renderGoals,metaLevelsTop,hzInit,HZ,hzMultOf,totalStars,STAR_MS,starReady,AB,abyssStart,abLevel,abyssPlan,abOffer,abyssPick,abyssEnd,abyssPerks,abyssCleared,PK,abStartBlock,renderAbyss,renderPerks,renderLost,get chestSnooze(){return chestSnooze;},set chestSnooze(v){chestSnooze=v;},RAR};
+if(window.__VR_TEST)window.__vr={HG,PILOTS,PN,drawShip,buildShip,hgFlush,fleetPvSelect,hgPreviewRender,NAR,narEst,openSubs,endSubs,cnSubs,LNG,BF,BR,updateBackground,get rings(){return rings;},hitBoss,HY,updHype,hySpeed,hype,cineStart,cineEnd,get cine(){return cine;},CS,CAM,R3,applyGfx,r3draw,get shake(){return shake;},set shake(v){shake=v;},get world(){return world;},setWorld,get meteors(){return meteors;},get picks(){return picks;},get ebul(){return ebul;},get parts(){return parts;},spawnMeteor,makeEnemy,spawnSquad,spawnBoss,set boss(v){boss=v;},mkEsc,dropCoins,boom,giveShield,get scrollMul(){return scrollMul;},set scrollMul(v){scrollMul=v;},get time(){return time;},set time(v){time=v;},startLevel,update,updFx,render,updCine,hurt,get state(){return state;},set state(v){state=v;},get level(){return level;},get run(){return run;},get player(){return player;},get boss(){return boss;},get enemies(){return enemies;},stats,save:()=>save,finishLevel,updFinale,useSkill,fireWeapon,get bullets(){return bullets;},get bolts(){return bolts;},get lanes(){return lanes;},get foes(){return foes;},get H(){return H;},get W(){return W;},foe:o=>foe(o),updFoes,get rings(){return rings;},get fin(){return fin;},showRevive,reviveGame,die,renderShop,renderLevels,applyLang,frame,drawBossPortrait,show,renderCodex,drawLoreCard,applyPart,partsAbsorb,dropPart,partsUpdate,PARTS,PART_COST,partLv,WEAPONS,SKILLS,get rails(){return rails;},get strikes(){return strikes;},sfxNames:()=>Object.keys(SFX),dailyReward,renderDaily,dailyState,DAILY_SHIPS,shipOnDay,CH,CH3,openChestScreen,chOpen,chestAuto,rollChest,applyReward,chestBack,chestTick,PHS,PHD,PHO,PHK,phStart,phReset,phPlan,phIntensity,holeDraw2D,gAdd,gMax,goalsToday,newGoals,MIS,ACH,achReady,achTier,goalsReady,renderGoals,metaLevelsTop,hzInit,HZ,hzMultOf,totalStars,STAR_MS,starReady,AB,abyssStart,abOffer,abyssEnd,abSnap,abHasRun,abyssResume,abyssSuspend,abSave,PK,abyssTick,abyssTake,abForm,abMines,abyssGates,abyssClearThen,abLvl,renderAbyss,renderLost,abyssBossDown,get chestSnooze(){return chestSnooze;},set chestSnooze(v){chestSnooze=v;},RAR};
 chestBind();
 document.addEventListener('click',e=>{
   const b=e.target.closest&&e.target.closest('#m-load .lchip');if(!b)return;
