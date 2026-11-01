@@ -381,6 +381,9 @@ button.mini:active{transform:scale(.97)}
 #s-ab .panel{overflow-y:auto}#s-ab .panel>*{flex-shrink:0}#ab-dif button{white-space:nowrap}
 @media (max-height:920px){#s-ab .ablist{display:none}#abMiles{max-height:132px}}
 @media (max-height:700px){#s-ab .tag{display:none}#abMiles{max-height:80px}#s-ab .panel{gap:8px}}
+.rwit{display:inline-flex;align-items:center;gap:4px;color:#ffe3a6;font-weight:700}.rwit svg{width:16px;height:16px;flex:none}
+.gre{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+#rwPop .rwn{font-size:15px;line-height:1.2;text-shadow:0 0 14px rgba(255,200,90,.5)}#rwPop .rwi{max-width:130px;text-align:center}
 
 </style></head><body>
 
@@ -15238,7 +15241,7 @@ function newGoals(d){
   for(const ws of [[1],[2],[3,2]]){
     const m=pick(avail.filter(x=>ws.includes(x.w)))||pick(avail.filter(x=>x.w===2))||pick(avail);
     if(!m)continue;used.push(m.id);
-    out.push({id:m.id,n:m.n(L),c:Math.round((60+L*5)*m.w/10)*10,g:m.w===1?0:m.w===2?1:2});
+    out.push({id:m.id,n:m.n(L),c:Math.round((120+L*8)*m.w/10)*10,g:m.w===1?1:m.w===2?2:4,b:m.w===3?['hp','dmg','coin'][Math.floor(r()*3)]:undefined});
   }
   return{d,m:out,p:{},cl:out.map(()=>0),bn:0};
 }
@@ -15256,24 +15259,24 @@ function misText(m){return t('ms_'+m.id+(m.id==='levels'&&m.n===2?'2':m.id==='ev
 /* ---- achievements: chains of three tiers ---- */
 const totalStars=()=>{let n=0;for(const k in save.stars)n+=save.stars[k]||0;return n;};
 const ACH=[
-  {id:'kills',ic:'target',t:[100,1500,15000],g:[2,6,20],get:()=>gLife().kills||0},
-  {id:'coins',ic:'coins2',t:[2000,50000,500000],g:[2,6,20],get:()=>gLife().coins||0},
-  {id:'cleared',ic:'levels',t:[10,50,100],g:[2,6,20],get:()=>Object.keys(save.cleared||{}).length},
-  {id:'bosses',ic:'cannon',t:[1,10,20],g:[2,6,20],get:()=>{let n=0;for(let b=1;b<=20;b++)if(save.cleared&&save.cleared[b*5])n++;return n;}},
-  {id:'stars',ic:'pilot',t:[30,150,300],g:[2,6,20],get:totalStars},
-  {id:'combo',ic:'rate',t:[20,50,100],g:[2,6,20],get:()=>gLife().combo||0},
-  {id:'perfect',ic:'armor',t:[1,10,50],g:[2,6,20],get:()=>gLife().perfect||0},
-  {id:'events',ic:'gravity',t:[1,25,150],g:[2,6,20],get:()=>gLife().events||0},
-  {id:'skills',ic:'overdrive',t:[10,100,600],g:[2,6,20],get:()=>gLife().skills||0},
-  {id:'boost',ic:'stamina',t:[60,600,3600],g:[2,6,20],get:()=>Math.floor(gLife().boost||0)},
-  {id:'pows',ic:'shieldp',t:[25,250,1500],g:[2,6,20],get:()=>gLife().pows||0},
-  {id:'rocks',ic:'plasma',t:[100,1500,15000],g:[2,6,20],get:()=>gLife().rocks||0},
-  {id:'chests',ic:'chest',t:[1,10,50],g:[2,6,20],get:()=>gLife().chests||0},
-  {id:'login',ic:'gift',t:[3,30,100],g:[2,6,20],get:()=>(save.daily&&save.daily.total)||0},
-  {id:'fleet',ic:'pilot',t:[3,8,14],g:[2,6,20],get:()=>(save.pilots||[]).length},
-  {id:'abyss',ic:'gravity',t:[400,1500,5000],g:[3,10,30],get:()=>(save.ab&&save.ab.bd)||0},
-  {id:'time',ic:'engine',t:[1,10,50],g:[2,6,20],get:()=>Math.floor((gLife().time||0)/3600)},
-  {id:'hazard',ic:'bolt',t:[1,15,100],g:[2,6,20],get:()=>gLife().hzClears||0}
+  {id:'kills',ic:'target',t:[100,1500,15000],rw:[{c:500},{g:6,b:'dmg'},{w:'rail',g:15}],get:()=>gLife().kills||0},
+  {id:'coins',ic:'coins2',t:[2000,50000,500000],rw:[{g:3},{b:'hp',c:600},{ch:2,g:10}],get:()=>gLife().coins||0},
+  {id:'cleared',ic:'levels',t:[10,50,100],rw:[{c:700},{g:10,b:'coin'},{p:'lancer',ch:1}],get:()=>Object.keys(save.cleared||{}).length},
+  {id:'bosses',ic:'cannon',t:[1,10,20],rw:[{g:5,c:400},{s:'beam',g:8},{p:'tempest',g:25}],get:()=>{let n=0;for(let b=1;b<=20;b++)if(save.cleared&&save.cleared[b*5])n++;return n;}},
+  {id:'stars',ic:'pilot',t:[30,150,300],rw:[{c:500},{ch:1,g:5},{p:'raven',g:20}],get:totalStars},
+  {id:'combo',ic:'rate',t:[20,50,100],rw:[{g:3},{b:'coin',g:5},{s:'thunder',g:10}],get:()=>gLife().combo||0},
+  {id:'perfect',ic:'armor',t:[1,10,50],rw:[{g:4},{b:'dmg',g:6},{p:'phantom',g:15}],get:()=>gLife().perfect||0},
+  {id:'events',ic:'gravity',t:[1,25,150],rw:[{c:400,g:2},{ch:1,g:8},{w:'wave',g:12}],get:()=>gLife().events||0},
+  {id:'skills',ic:'overdrive',t:[10,100,600],rw:[{c:400},{g:8,b:'hp'},{s:'nova',g:12}],get:()=>gLife().skills||0},
+  {id:'boost',ic:'stamina',t:[60,600,3600],rw:[{c:300},{b:'hp',g:4},{g:25,ch:1}],get:()=>Math.floor(gLife().boost||0)},
+  {id:'pows',ic:'shieldp',t:[25,250,1500],rw:[{c:300},{g:8,c:400},{ch:2,b:'dmg'}],get:()=>gLife().pows||0},
+  {id:'rocks',ic:'plasma',t:[100,1500,15000],rw:[{c:400},{ch:1,g:4},{w:'missile',g:10}],get:()=>gLife().rocks||0},
+  {id:'chests',ic:'chest',t:[1,10,50],rw:[{g:3},{c:1500,b:'coin'},{p:'bulwark',g:20}],get:()=>gLife().chests||0},
+  {id:'login',ic:'gift',t:[3,30,100],rw:[{g:4},{ch:1,g:8},{p:'orion',g:30}],get:()=>(save.daily&&save.daily.total)||0},
+  {id:'fleet',ic:'pilot',t:[3,8,14],rw:[{g:5},{g:15,ch:1},{p:'obsidian',g:30}],get:()=>(save.pilots||[]).length},
+  {id:'abyss',ic:'gravity',t:[400,1500,5000],rw:[{g:5,c:300},{ch:1,g:12,b:'hp'},{p:'blaze',ch:1,g:25}],get:()=>(save.ab&&save.ab.bd)||0},
+  {id:'time',ic:'engine',t:[1,10,50],rw:[{c:500},{g:12,b:'dmg'},{ch:2,g:25}],get:()=>Math.floor((gLife().time||0)/3600)},
+  {id:'hazard',ic:'bolt',t:[1,15,100],rw:[{g:4},{b:'hp',g:8,c:500},{s:'strike',g:20}],get:()=>gLife().hzClears||0}
 ];
 const ROM=['I','II','III'];
 const achTier=a=>Math.min(3,(save.ach&&save.ach[a.id])|0);
@@ -15282,6 +15285,34 @@ function achText(a,n){
   const L=T[save.set.lang]||T.en,k1='ad_'+a.id+'_1';
   return t(n===1&&L[k1]!==undefined?k1:'ad_'+a.id,{n:fmt(n)});
 }
+
+/* ---- rich rewards: coins, gems, chests, weapons, skills, ships and short power-ups. Anything you already own turns into gems. ---- */
+const RBUFF={hp:{type:'hp',amt:10,left:5},dmg:{type:'dmg',amt:.15,left:5},coin:{type:'coinbuff',amt:.5,left:5}};
+function rwResolve(r){
+  const o={c:r.c||0,g:r.g||0,ch:r.ch||0,it:[]};
+  if(r.w){if(save.weapons.includes(r.w))o.g+=Math.round((WEAPONS.find(x=>x.id===r.w)||{gem:40}).gem*.6);else o.it.push({type:'weapon',id:r.w});}
+  if(r.s){if(save.skills.includes(r.s))o.g+=Math.round((SKILLS.find(x=>x.id===r.s)||{gem:40}).gem*.6);else o.it.push({type:'skill',id:r.s});}
+  if(r.p){if(save.pilots.includes(r.p))o.g+=Math.round(((PILOTS.find(x=>x.id===r.p)||{gem:60}).gem||60)*.6);else o.it.push({type:'pilot',id:r.p});}
+  if(r.b)o.it.push(Object.assign({},RBUFF[r.b]));
+  return o;
+}
+function rwGive(o){save.coins+=o.c;save.gems+=o.g;if(o.ch)save.chests=(save.chests||0)+o.ch;for(const it of o.it)applyReward(it);}
+function rwItemName(it){
+  switch(it.type){
+    case 'weapon':return t('w_'+it.id);case 'skill':return t('s_'+it.id);case 'pilot':return t('pl_'+it.id);
+    case 'hp':return t('rw_hp',{n:it.amt/10,m:it.left});case 'dmg':return t('rw_dmg',{n:Math.round(it.amt*100),m:it.left});
+    default:return t('rw_coinbuff',{n:Math.round(it.amt*100),m:it.left});
+  }
+}
+const rwItemIc=it=>it.type==='pilot'?'pilot':it.type==='hp'?'armor':it.type==='dmg'?'cannon':it.type==='coinbuff'?'coin':it.id;
+/* short inline version for buttons and cards */
+function rwInline(r){
+  const o=rwResolve(r),p=[];
+  if(o.c)p.push(coinH(fmt(o.c)));if(o.g)p.push(gemH(fmt(o.g)));if(o.ch)p.push(icon('chest')+'×'+o.ch);
+  for(const it of o.it)p.push(`<span class="rwit">${icon(rwItemIc(it))}${rwItemName(it)}</span>`);
+  return p.join(' ');
+}
+const BONUS_RW={ch:1,g:5,b:'coin'};
 function giveRw(r){if(r.c)save.coins+=r.c;if(r.g)save.gems+=r.g;if(r.ch)save.chests=(save.chests||0)+r.ch;}
 /* a floating "you got this" card after every claim: never blocks a tap, fades by itself */
 let rwT=0;
@@ -15290,6 +15321,7 @@ function rwPop(r,from){
   if(r.c)parts.push(`<div class="rwi"><i class="coin"></i><b>+${fmt(r.c)}</b><span>${t('rwCoins')}</span></div>`);
   if(r.g)parts.push(`<div class="rwi"><i class="gem"></i><b>+${fmt(r.g)}</b><span>${t('rwGems')}</span></div>`);
   if(r.ch)parts.push(`<div class="rwi"><span class="rwic">${icon('chest')}</span><b>+${r.ch}</b><span>${t('chest')}</span></div>`);
+  for(const it of (r.it||[]))parts.push(`<div class="rwi"><span class="rwic">${icon(rwItemIc(it))}</span><b class="rwn">${rwItemName(it)}</b><span>${it.type==='weapon'||it.type==='skill'||it.type==='pilot'?t('rw_equip'):''}</span></div>`);
   if(!parts.length)return;
   let el=document.getElementById('rwPop');
   if(!el){el=document.createElement('div');el.id='rwPop';el.setAttribute('role','status');el.setAttribute('aria-live','polite');document.body.appendChild(el);}
@@ -15382,12 +15414,12 @@ function goalsMissions(box){
   hd.className='shead';hd.textContent=t('gMissionsH')+' · '+t('gReset',{t:resetIn()});box.appendChild(hd);
   g.m.forEach((m,i)=>{
     const have=Math.min(m.n,g.p[m.id]||0),done=have>=m.n,cl=g.cl[i];
-    const rw=(m.c?coinH(m.c):'')+(m.g?' '+gemH(m.g):'');
+    const rw=rwInline(m);
     const btn=cl?mkBtn('owned',t('gDone'),'mclaim',i,true):done?mkBtn('',t('claim'),'mclaim',i):mkBtn('',`${fmt(have)}/${fmt(m.n)}`,'mclaim',i,true);
     box.appendChild(mkCard('m'+i,done&&!cl?'goal ready':'goal',ciH(MI[m.id].ic),misText(m),`<span class="gre">${rw}</span>`,gbar(have/m.n,''),[btn]));
   });
   const all=g.cl.every(x=>x),bonusBtn=g.bn?mkBtn('owned',t('gDone'),'bclaim','',true):all?mkBtn('',t('claim'),'bclaim',''):mkBtn('',`${g.cl.filter(x=>x).length}/${g.cl.length}`,'bclaim','',true);
-  box.appendChild(mkCard('bn',all&&!g.bn?'goal ready bonus':'goal bonus',ciH('chest','#c79bff'),t('gBonus'),`<span class="gre">${icon('chest')} ×1 ${gemH(2)}</span>`,'',[bonusBtn]));
+  box.appendChild(mkCard('bn',all&&!g.bn?'goal ready bonus':'goal bonus',ciH('chest','#c79bff'),t('gBonus'),`<span class="gre">${rwInline(BONUS_RW)}</span>`,'',[bonusBtn]));
   const note=document.createElement('div');note.className='sub gnote';note.textContent=t('gNote');box.appendChild(note);
 }
 function goalsAch(box){
@@ -15397,8 +15429,8 @@ function goalsAch(box){
   for(const {a,c,rd} of list){
     const done=c>=3,cur=done?a.t[2]:a.t[c],have=Math.min(cur,a.get());
     let pips='';for(let i=0;i<3;i++)pips+=`<i class="pip${i<c?' on':''}"></i>`;
-    const extra=`<div class="pips">${pips}</div>`+gbar(done?1:have/cur,done?t('gDone'):`${fmt(have)} / ${fmt(cur)}`);
-    const btn=done?mkBtn('owned',t('gDone'),'aclaim',a.id,true):rd?mkBtn('',t('claim'),'aclaim',a.id):mkBtn('',gemH(a.g[c]),'aclaim',a.id,true);
+    const extra=(done?'':`<div class="gre">${t('gRewardL')}: ${rwInline(a.rw[c])}</div>`)+`<div class="pips">${pips}</div>`+gbar(done?1:have/cur,done?t('gDone'):`${fmt(have)} / ${fmt(cur)}`);
+    const btn=done?mkBtn('owned',t('gDone'),'aclaim',a.id,true):rd?mkBtn('',t('claim'),'aclaim',a.id):mkBtn('',icon('lock'),'aclaim',a.id,true);
     box.appendChild(mkCard('a'+a.id,(rd?'goal ready':'goal'),ciH(a.ic),t('an_'+a.id)+' '+ROM[Math.min(2,c)],achText(a,cur),extra,[btn]));
   }
 }
@@ -15418,9 +15450,9 @@ function goalsStats(box){
 function goalsClick(e){
   const b=e.target.closest('button');if(!b||b.disabled)return;audioInit();
   const a=b.dataset.act,id=b.dataset.id,by=b.getBoundingClientRect().top;let got=null;
-  if(a==='mclaim'){const g=goalsToday(),i=+id,m=g.m[i];if(m&&!g.cl[i]&&(g.p[m.id]||0)>=m.n){g.cl[i]=1;giveRw(m);got={c:m.c,g:m.g};persist();sfx('chest');lastBought='m'+i;renderGoals();}}
-  else if(a==='bclaim'){const g=goalsToday();if(g.cl.every(x=>x)&&!g.bn){g.bn=1;got={ch:1,g:2};giveRw(got);persist();sfx('chest');lastBought='bn';renderGoals();}}
-  else if(a==='aclaim'){const ac=ACH.find(x=>x.id===id);if(ac&&achReady(ac)){const c=achTier(ac);(save.ach||(save.ach={}))[ac.id]=c+1;got={g:ac.g[c]};giveRw(got);persist();sfx('chest');lastBought='a'+ac.id;renderGoals();}}
+  if(a==='mclaim'){const g=goalsToday(),i=+id,m=g.m[i];if(m&&!g.cl[i]&&(g.p[m.id]||0)>=m.n){g.cl[i]=1;got=rwResolve(m);rwGive(got);persist();sfx('chest');lastBought='m'+i;renderGoals();}}
+  else if(a==='bclaim'){const g=goalsToday();if(g.cl.every(x=>x)&&!g.bn){g.bn=1;got=rwResolve(BONUS_RW);rwGive(got);persist();sfx('chest');lastBought='bn';renderGoals();}}
+  else if(a==='aclaim'){const ac=ACH.find(x=>x.id===id);if(ac&&achReady(ac)){const c=achTier(ac);(save.ach||(save.ach={}))[ac.id]=c+1;got=rwResolve(ac.rw[c]);rwGive(got);persist();sfx('chest');lastBought='a'+ac.id;renderGoals();}}
   if(got)rwPop(got,by);
 }
 
@@ -15491,7 +15523,7 @@ Object.assign(T.en,{
   ad_fleet:'Own {n} ships',ad_abyss:'Dive {n} m deep in the Abyss',ad_time:'Play for {n} hours',ad_hazard:'Clear {n} levels with hazards on',ad_hazard_1:'Clear a level with hazards on',
   sTime:'Time played',sKills:'Enemies destroyed',sCoins:'Coins collected',sLevels:'Levels cleared',sBosses:'Bosses defeated',sStars:'Stars',sCombo:'Best combo',sPerfect:'Flawless clears',sEvents:'Cosmic events survived',
   sSkills:'Skills used',sRocks:'Asteroids shattered',sPows:'Power-ups collected',sChests:'Chests opened',sDeaths:'Times destroyed',sAbyss:'Deepest dive',
-  stRw:'Star rewards',rwTitle:'Reward claimed!',rwCoins:'coins',rwGems:'gems',rwChestHint:'Open it from the main menu.',stNext:'Next reward at {n} stars',stAll:'Every star reward claimed',
+  stRw:'Star rewards',rwTitle:'Reward claimed!',gRewardL:'Reward',rwCoins:'coins',rwGems:'gems',rwChestHint:'Open it from the main menu.',stNext:'Next reward at {n} stars',stAll:'Every star reward claimed',
   hz:'Hazards',hzSub:'{n} on · rewards x{m}',hzOff2:'Tap for bigger rewards',hzHint:'Tap to switch on. Every heat point adds 20% to coins, gems and the level bonus.',stClaim:'Claim reward',hzLock:'Unlocks after you clear level 10.',
   hz_swarm:'Swarm',hzd_swarm:'50% more enemies',hz_fast:'Overclock',hzd_fast:'Enemy bullets 15% faster',hz_armor:'Iron Hulls',hzd_armor:'Tougher enemies and bosses',
   hz_scarce:'Scarcity',hzd_scarce:'No power-ups or modules drop',hz_silent:'Skill Lock',hzd_silent:'Your skill is disabled',hz_fragile:'Fragile Hull',hzd_fragile:'One hit less',
@@ -15510,7 +15542,7 @@ Object.assign(T.ar,{
   ad_fleet:'امتلك {n} طائرات',ad_abyss:'اغطس إلى عمق {n} م في الهاوية',ad_time:'العب لمدة {n} ساعة',ad_hazard:'أنهِ {n} مرحلة مع تفعيل المخاطر',ad_hazard_1:'أنهِ مرحلة مع تفعيل المخاطر',
   sTime:'مدة اللعب',sKills:'الأعداء المدمَّرون',sCoins:'العملات المجموعة',sLevels:'المراحل المنجزة',sBosses:'الزعماء المهزومون',sStars:'النجوم',sCombo:'أفضل كومبو',sPerfect:'مراحل بلا إصابة',sEvents:'أحداث كونية اجتزتها',
   sSkills:'مرات استخدام المهارة',sRocks:'صخور محطّمة',sPows:'تعزيزات ملتقطة',sChests:'صناديق مفتوحة',sDeaths:'مرات التدمير',sAbyss:'أعمق غطسة',
-  stRw:'مكافآت النجوم',rwTitle:'تم استلام الجائزة!',rwCoins:'عملات',rwGems:'جواهر',rwChestHint:'افتحه من القائمة الرئيسية.',stNext:'المكافأة التالية عند {n} نجمة',stAll:'استلمت كل مكافآت النجوم',
+  stRw:'مكافآت النجوم',rwTitle:'تم استلام الجائزة!',gRewardL:'الجائزة',rwCoins:'عملات',rwGems:'جواهر',rwChestHint:'افتحه من القائمة الرئيسية.',stNext:'المكافأة التالية عند {n} نجمة',stAll:'استلمت كل مكافآت النجوم',
   hz:'المخاطر',hzSub:'{n} مفعّل · x{m}',hzOff2:'اضغط لمكافآت أكبر',hzHint:'اضغط للتفعيل. كل درجة خطر تضيف 20% إلى العملات والجواهر ومكافأة المرحلة.',stClaim:'استلم المكافأة',hzLock:'تُفتح بعد إنهاء المرحلة 10.',
   hz_swarm:'السرب',hzd_swarm:'أعداء أكثر بنسبة 50%',hz_fast:'فرط السرعة',hzd_fast:'رصاص الأعداء أسرع بنسبة 15%',hz_armor:'أبدان الحديد',hzd_armor:'أعداء وزعماء أقوى',
   hz_scarce:'الندرة',hzd_scarce:'لا تسقط تعزيزات ولا وحدات',hz_silent:'قفل المهارة',hzd_silent:'مهارتك معطّلة',hz_fragile:'بدن هش',hzd_fragile:'إصابة أقل بواحدة',
