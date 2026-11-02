@@ -15789,14 +15789,20 @@ function abyssMove(e,dt){
   e.t+=dt;if(e.flash>0)e.flash-=dt;
   e.mv(e,dt);
   if(e.gone)return;
-  if(e.canShoot!==false&&e.y>24&&e.y<H-150&&e.x>10&&e.x<W-10&&player&&player.alive){
+  if(e.canShoot!==false&&e.y>24&&player&&player.alive&&e.y<player.y-24&&e.x>10&&e.x<W-10){      // never shoots from below the ship, where it cannot be hit
     e.sfT-=dt;
     if(e.sfT<=0){e.sfT=(e.hold?rnd(1,1.7):rnd(1.7,3.2))*(1-Math.min(.35,abD()/7000));if(ebul.length<64)enemyFire(e);}
   }
-  if(e.y>H+44||e.x<-90||e.x>W+90){e.gone=true;abyssEscape(e);}
+  if(e.y>H+44||e.x<-90||e.x>W+90){
+    /* a ship that gets past does not simply vanish: it feeds the Dark and comes back from the top, until the player destroys it */
+    abyssEscape(e);e.wraps=(e.wraps|0)+1;
+    if(!AB.on||e.wraps>4){e.gone=true;return;}      // story levels keep the old behaviour: a ship that leaves is simply gone
+    e.t=0;e.y=-30-rnd(0,50);e.x=clamp(e.x0!=null?e.x0:W/2,40,W-40);if(e.mode>0)e.mode=0;e.sfT=rnd(1.4,2.6);e.flash=0;
+  }
 }
 function abyssEscape(e){
-  AB.dk=Math.min(abDkMax(),AB.dk+(e.cell?40:14));AB.esc++;
+  if(!AB.on)return;
+  AB.dk=Math.min(abDkMax(),AB.dk+(e.cell?40:(e.wraps?7:14)));AB.esc++;
   rings.push({x:clamp(e.x,20,W-20),y:H-6,r:4,max:46,life:.35,maxl:.35,col:'#9a6bff'});
 }
 /* a Splitter's halves keep flying down */
